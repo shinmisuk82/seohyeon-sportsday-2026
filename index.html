@@ -162,7 +162,7 @@ details{border:1px solid var(--line);border-radius:15px;padding:0 14px;backgroun
     <div class="currentTime" id="curTime">08:30~08:50</div>
     <div class="currentEvent" id="curEvent">경기장 정렬</div>
     <div class="muted" id="curPlace">운동장 · 1~3학년</div>
-    <div style="margin-top:14px"><span class="status"><span class="dot"></span>운영본부 실시간 반영</span></div>
+    <div id="currentProgramStatusWrap" style="margin-top:14px"><span class="status"><span class="dot"></span>운영본부 실시간 반영</span></div>
   </div>
   <div class="card">
     <div class="kicker">EVENT INFO</div>
@@ -649,8 +649,31 @@ function isSelectedProgramLive(scheduleRow){
 
 function renderCurrentProgramLive(){
   if(typeof currentProgramCard==="undefined")return;
+
+  const kst=getKoreaNowParts();
+  const isEventDay=kst.year===2026&&kst.month===9&&kst.day===18;
   const r=SCHEDULE[data.current]||SCHEDULE[0];
-  currentProgramCard.classList.toggle("is-live",isSelectedProgramLive(r));
+
+  // LIVE 표시는 대회 당일 + 해당 프로그램의 실제 시간일 때만
+  currentProgramCard.classList.toggle("is-live",isEventDay&&isSelectedProgramLive(r));
+
+  if(!isEventDay){
+    curTime.textContent="";
+    const eventDateNum=20260918;
+    const todayNum=kst.year*10000+kst.month*100+kst.day;
+    curEvent.textContent=todayNum<eventDateNum
+      ?"선수등록, 대진표 추첨 진행중"
+      :"대회 기간이 아닙니다";
+    curPlace.textContent="";
+    if(typeof currentProgramStatusWrap!=="undefined")currentProgramStatusWrap.style.display="none";
+    return;
+  }
+
+  // 대회 당일에는 운영본부가 선택한 CURRENT PROGRAM 정상 표시
+  curTime.textContent=r[0];
+  curEvent.textContent=r[1];
+  curPlace.textContent=`${r[3]} · ${r[2]}`;
+  if(typeof currentProgramStatusWrap!=="undefined")currentProgramStatusWrap.style.display="";
 }
 
 function renderSchedule(){
