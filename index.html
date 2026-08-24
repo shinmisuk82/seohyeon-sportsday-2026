@@ -473,9 +473,34 @@ details{border:1px solid var(--line);border-radius:15px;padding:0 14px;backgroun
 <p class="muted" style="font-size:11px">관리자 화면에서는 신청자가 입력한 원래 학번·이름을 확인할 수 있습니다. 공개 신청목록에는 개인정보 보호를 위해 학년·반 + 마스킹된 이름만 표시됩니다.</p>
 </div>
 
+
+<div class="card">
+<h3>♻️ 점수 초기화</h3>
+<div class="admin">
+  <select id="resetGrade">
+    <option value="1">1학년</option>
+    <option value="2">2학년</option>
+    <option value="3">3학년</option>
+    <option value="all">전체 학년</option>
+  </select>
+
+  <select id="resetScoreType">
+    <option value="game">경기점수만</option>
+    <option value="cheer">응원점수만</option>
+    <option value="both">경기점수 + 응원점수</option>
+  </select>
+
+  <button class="btn danger" type="button" onclick="resetSelectedScores()">선택한 점수 초기화</button>
+</div>
+<p class="muted" style="font-size:11px;line-height:1.6">
+  선택한 학년과 점수 종류만 0점 상태로 되돌립니다.
+  현재 일정·본부 공지·노래 신청·학급 깃발·선수명단은 삭제되지 않습니다.
+</p>
+</div>
+
 <div class="card">
 <h3>💾 데이터</h3>
-<div style="display:flex;gap:7px;flex-wrap:wrap"><button class="btn" onclick="exportData()">JSON 내보내기</button><button class="btn" onclick="resetData()">초기화</button></div>
+<div style="display:flex;gap:7px;flex-wrap:wrap"><button class="btn" onclick="exportData()">JSON 내보내기</button></div>
 <p class="muted" style="font-size:11px">경기점수·응원점수·현재 일정·공지·깃발 등 실시간 데이터는 Supabase에 저장됩니다. localStorage는 화면 캐시 및 아직 미연결된 선수명단 용도로만 사용합니다.</p>
 </div>
 </div>
@@ -1137,13 +1162,63 @@ async function addNotice(){
  await loadNoticesFromCloud();
 }
 
+
+async function resetSelectedScores(){
+  const grade=resetGrade.value;
+  const type=resetScoreType.value;
+
+  const gradeLabel=grade==="all"?"전체 학년":`${grade}학년`;
+  const typeLabel={
+    game:"경기점수",
+    cheer:"응원점수",
+    both:"경기점수와 응원점수"
+  }[type];
+
+  const message=
+    `${gradeLabel}의 ${typeLabel}를 모두 초기화할까요?\n\n`+
+    `이 작업은 점수를 0점 상태로 되돌리며 되돌리기 기능은 없습니다.`;
+
+  if(!confirm(message))return;
+
+  const grades=grade==="all"?["1","2","3"]:[grade];
+
+  // 경기점수 초기화
+  if(type==="game"||type==="both"){
+    for(const g of grades){
+      data.score[g]={};
+      for(let c=1;c<=8;c++){
+        data.score[g][c]={};
+      }
+    }
+  }
+
+  // 응원점수 초기화
+  if(type==="cheer"||type==="both"){
+    for(const g of grades){
+      data.cheer[g]={};
+      for(let c=1;c<=8;c++){
+        data.cheer[g][c]=emptyCheerClass();
+      }
+    }
+  }
+
+  saveLocal();
+
+  const ok=await saveSiteStateToCloud();
+  if(!ok){
+    alert("Supabase 저장 중 오류가 발생했습니다. 서버 상태를 다시 불러옵니다.");
+    await loadSiteStateFromCloud();
+    return;
+  }
+
+  if(typeof cheerAdminGrid!=="undefined")renderCheerAdmin();
+
+  alert(`${gradeLabel}의 ${typeLabel}가 초기화되었습니다.`);
+}
+
 function exportData(){
  const b=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
  const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="seohyeon-sportsday-2026-data.json";a.click();URL.revokeObjectURL(a.href)
-}
-
-function resetData(){
- alert("실시간 운영판에서는 실수로 전체 데이터를 지우지 않도록 초기화 기능을 비활성화했습니다.");
 }
 
 async function setupAuthState(){
