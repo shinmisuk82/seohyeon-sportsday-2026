@@ -1,0 +1,1281 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07162d">
+<title>2026. 서현중학교 스포츠한마당</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#061226;--panel:#0c213f;--panel2:#102a4d;--line:rgba(255,255,255,.10);--text:#f6f9ff;--muted:#9cafc8;--cyan:#46d8ff;--blue:#327cff;--green:#52e0a4;--yellow:#ffd56a;--red:#ff6b80;--radius:20px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 15% -10%,rgba(70,216,255,.17),transparent 29%),radial-gradient(circle at 90% 5%,rgba(50,124,255,.15),transparent 25%),linear-gradient(180deg,#07162d,#061226);color:var(--text);font-family:Pretendard,"Noto Sans KR",system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
+button,input,select,textarea{font:inherit}.wrap{width:min(1180px,calc(100% - 28px));margin:auto}
+.hero{padding:36px 0 22px}.eyebrow{display:inline-block;color:var(--cyan);font-size:11px;font-weight:900;letter-spacing:.14em;border:1px solid rgba(70,216,255,.25);background:rgba(70,216,255,.06);border-radius:999px;padding:7px 10px}
+h1{font-size:clamp(31px,6vw,58px);line-height:1.04;letter-spacing:-.055em;margin:16px 0 12px}h1 small{display:block;font-size:.33em;color:#a7b8cf;letter-spacing:.02em;margin-bottom:7px}
+.meta{display:flex;gap:8px;flex-wrap:wrap}.meta span{font-size:13px;padding:8px 10px;border:1px solid var(--line);background:rgba(255,255,255,.05);border-radius:11px;color:#cad6e7}
+.navwrap{position:sticky;top:0;z-index:30;background:rgba(5,17,36,.84);backdrop-filter:blur(16px);border-block:1px solid var(--line)}nav{display:flex;gap:7px;overflow:auto;padding:9px 0;scrollbar-width:none}nav::-webkit-scrollbar{display:none}nav button{white-space:nowrap;border:1px solid transparent;background:transparent;color:#b9c9dd;border-radius:11px;padding:9px 11px;font-weight:800;font-size:12px;cursor:pointer}nav button.active,nav button:hover{background:rgba(70,216,255,.1);border-color:rgba(70,216,255,.22);color:white}
+main{padding:18px 0 70px}section{display:none}section.active{display:block}.grid{display:grid;gap:15px}.g2{grid-template-columns:repeat(2,minmax(0,1fr))}.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{background:linear-gradient(180deg,rgba(16,42,77,.94),rgba(9,28,54,.96));border:1px solid var(--line);border-radius:var(--radius);padding:17px;box-shadow:0 15px 38px rgba(0,0,0,.24)}.card h2,.card h3{margin:0 0 9px;letter-spacing:-.035em}.muted{color:var(--muted)}
+.live{position:relative;overflow:hidden;border-color:rgba(70,216,255,.27)}.live.is-live:after{content:"LIVE";position:absolute;right:15px;top:14px;background:var(--cyan);color:#051327;padding:6px 8px;border-radius:999px;font-size:10px;font-weight:950;letter-spacing:.11em;box-shadow:0 0 22px rgba(70,216,255,.42)}
+.currentTime{color:var(--cyan);font-weight:900;font-size:13px}.currentEvent{font-size:23px;font-weight:950;letter-spacing:-.04em;margin:5px 0}.status{display:inline-flex;gap:6px;align-items:center;font-size:11px;font-weight:900;color:#91efc6;background:rgba(82,224,164,.09);border:1px solid rgba(82,224,164,.2);padding:6px 9px;border-radius:999px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green)}
+.titleRow{display:flex;justify-content:space-between;gap:12px;align-items:end;margin:4px 0 13px}.titleRow h2{margin:0;font-size:23px}.titleRow p{margin:4px 0 0;color:var(--muted);font-size:12px}
+.leaderGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}.leader{padding:14px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035)}.leader .rank{font-size:11px;color:var(--cyan);font-weight:900}.leader .class{font-size:24px;font-weight:950;margin:4px 0}.leader .score{color:#d7e2ef;font-size:13px}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.quick button{border:1px solid var(--line);background:rgba(255,255,255,.035);color:white;border-radius:15px;padding:15px;text-align:left;cursor:pointer}.quick b{display:block;margin-top:6px}.quick small{color:var(--muted)}
+table{width:100%;border-collapse:collapse}th,td{padding:12px 9px;border-bottom:1px solid var(--line);text-align:left;font-size:13px;vertical-align:top}th{color:#a7bad2;font-size:11px}.scroll{overflow:auto}.tag{display:inline-block;padding:5px 8px;border-radius:999px;font-size:10px;font-weight:850;background:rgba(255,255,255,.07);color:#d1ddea}.tag.cyan{background:rgba(70,216,255,.1);color:#8ae8ff}.tag.yellow{background:rgba(255,213,106,.1);color:#ffe08a}
+details{border:1px solid var(--line);border-radius:15px;padding:0 14px;background:rgba(255,255,255,.03)}details+details{margin-top:9px}summary{font-weight:900;cursor:pointer;padding:14px 0}.detail{padding:0 0 14px;color:#c5d2e3;font-size:13px;line-height:1.7}.detail ul{margin:5px 0;padding-left:20px}
+.gradeTabs{display:flex;gap:7px;margin-bottom:12px}.gradeTabs button,.btn{border:1px solid var(--line);background:rgba(255,255,255,.055);color:white;border-radius:11px;padding:9px 11px;font-weight:850;cursor:pointer}.gradeTabs button.active,.btn.primary{background:linear-gradient(135deg,var(--blue),#39a8ff);border-color:transparent}
+.scoreCards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.scoreCard{border:1px solid var(--line);border-radius:14px;padding:12px;background:rgba(255,255,255,.03)}.scoreCard .pos{color:var(--cyan);font-size:11px;font-weight:900}.scoreCard b{display:block;font-size:19px;margin:4px 0}.scoreCard small{color:var(--muted)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.filters input,.filters select,.admin input,.admin select,.admin textarea{background:#07182f;color:white;border:1px solid var(--line);border-radius:11px;padding:10px;outline:none}.filters input{flex:1;min-width:190px}
+.playerGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.player{border:1px solid var(--line);border-radius:14px;padding:12px;background:rgba(255,255,255,.03)}.player b{display:block}.player small{color:var(--muted)}
+.notice{padding:13px 0;border-bottom:1px solid var(--line)}.notice:last-child{border:0}.notice time{display:block;margin-top:5px;font-size:10px;color:#879bb5}
+.adminGrid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.admin{display:grid;gap:9px}.warn{border-left:3px solid var(--yellow);padding-left:12px;color:#f1deaa;font-size:12px;line-height:1.6}
+.kicker{font-size:12px;font-weight:900;color:var(--cyan);margin-bottom:6px}.bigNumber{font-size:39px;font-weight:950;letter-spacing:-.05em}.footer{text-align:center;color:#71859f;font-size:11px;padding:18px 0 35px}
+
+.flagGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.flagCard{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:rgba(255,255,255,.03)}
+.flagImage{aspect-ratio:4/3;background:linear-gradient(135deg,rgba(70,216,255,.06),rgba(50,124,255,.08));display:flex;align-items:center;justify-content:center;border-bottom:1px solid var(--line);overflow:hidden}
+.flagImage img{width:100%;height:100%;object-fit:cover;display:block}
+.flagPlaceholder{text-align:center;color:#8fa4bf;padding:20px;font-size:12px}
+.flagPlaceholder .icon{font-size:34px;display:block;margin-bottom:8px;opacity:.8}
+.flagInfo{padding:12px}
+.flagInfo b{display:block;font-size:16px}
+.flagInfo small{color:var(--muted)}
+.flagCaption{margin-top:7px;font-size:12px;color:#c8d5e5;line-height:1.5}
+.flagAdminPreview{aspect-ratio:4/3;border:1px dashed rgba(255,255,255,.18);border-radius:14px;display:flex;align-items:center;justify-content:center;overflow:hidden;background:rgba(255,255,255,.025)}
+.flagAdminPreview img{width:100%;height:100%;object-fit:cover}
+@media(max-width:850px){.flagGrid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:650px){.flagGrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){.flagGrid{grid-template-columns:1fr}}
+
+
+.songLayout{display:grid;grid-template-columns:.9fr 1.1fr;gap:14px}
+.songForm{display:grid;gap:10px}
+.songForm input,.songForm textarea{background:#07182f;color:#fff;border:1px solid var(--line);border-radius:11px;padding:11px;outline:none;width:100%}
+.songForm textarea{resize:vertical;min-height:120px}
+.songList{display:grid;gap:10px}
+.songCard{border:1px solid var(--line);border-radius:15px;padding:13px;background:rgba(255,255,255,.03)}
+.songTop{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.songTitle{font-size:16px;font-weight:950;letter-spacing:-.02em}
+.songArtist{color:var(--cyan);font-size:12px;font-weight:850;margin-top:3px}
+.songApplicant{font-size:11px;color:#9fb1c8;margin-top:7px}
+.songStory{margin-top:10px;color:#d3deea;font-size:13px;line-height:1.65;white-space:pre-wrap}
+.songTime{font-size:10px;color:#7f93ae;white-space:nowrap}
+.songCount{display:inline-flex;align-items:center;gap:6px;color:#cfe4ff;background:rgba(50,124,255,.1);border:1px solid rgba(50,124,255,.2);padding:6px 9px;border-radius:999px;font-size:11px;font-weight:850}
+.songEmpty{padding:22px 4px;text-align:center;color:var(--muted);font-size:13px}
+@media(max-width:820px){.songLayout{grid-template-columns:1fr}}
+
+
+.cloudStatus{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:850;padding:7px 10px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#b8c9dd}
+.cloudStatus.ok{color:#8ff0c6;border-color:rgba(82,224,164,.25);background:rgba(82,224,164,.08)}
+.cloudStatus.warn{color:#ffe08a;border-color:rgba(255,213,106,.25);background:rgba(255,213,106,.08)}
+.cloudStatus.bad{color:#ff9aab;border-color:rgba(255,107,128,.25);background:rgba(255,107,128,.08)}
+.adminSession{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:12px;padding:10px 12px;border:1px solid var(--line);border-radius:13px;background:rgba(82,224,164,.05)}
+.adminSession small{color:var(--muted)}
+
+
+.scoreModeTabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.scoreModeTabs button{border:1px solid var(--line);background:rgba(255,255,255,.04);color:#c3d1e2;border-radius:12px;padding:10px 13px;font-weight:900;cursor:pointer}
+.scoreModeTabs button.active{background:linear-gradient(135deg,var(--blue),#39a8ff);border-color:transparent;color:#fff}
+.cheerSummary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.cheerRankCard{border:1px solid var(--line);border-radius:14px;padding:12px;background:rgba(255,255,255,.03)}
+.cheerRankCard .rank{font-size:11px;color:var(--cyan);font-weight:900}
+.cheerRankCard b{display:block;font-size:19px;margin:4px 0}
+.cheerRankCard small{color:var(--muted)}
+.cheerBreakdown{display:flex;gap:6px;flex-wrap:wrap}
+.cheerChip{display:inline-block;padding:4px 7px;border-radius:999px;background:rgba(255,255,255,.055);border:1px solid var(--line);font-size:10px;color:#c9d6e6}
+.cheerAdminHead{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.cheerAdminGrid{display:grid;gap:8px}
+.cheerAdminRow{display:grid;grid-template-columns:minmax(92px,1fr) auto auto auto;align-items:center;gap:8px;border:1px solid var(--line);border-radius:13px;padding:9px 10px;background:rgba(255,255,255,.03)}
+.cheerAdminRow .label{font-weight:900;min-width:0}
+.cheerAdminRow .value{min-width:52px;text-align:center;font-size:18px;font-weight:950}
+.cheerBtn{border:1px solid var(--line);background:rgba(255,255,255,.06);color:#fff;border-radius:10px;min-width:44px;min-height:40px;font-weight:950;cursor:pointer}
+.cheerBtn.minus{color:#ff9aab;border-color:rgba(255,107,128,.22);background:rgba(255,107,128,.07)}
+.cheerBtn.plus{color:#8ff0c6;border-color:rgba(82,224,164,.22);background:rgba(82,224,164,.07)}
+.cheerAdminTotal{display:flex;justify-content:space-between;align-items:center;margin-top:10px;padding:11px 12px;border-radius:13px;background:rgba(70,216,255,.06);border:1px solid rgba(70,216,255,.18)}
+.cheerAdminTotal b:last-child{font-size:22px;color:var(--cyan)}
+@media(max-width:850px){.cheerSummary{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){
+ .cheerSummary{grid-template-columns:1fr}
+ .cheerAdminHead{grid-template-columns:1fr}
+ .cheerAdminRow{grid-template-columns:minmax(82px,1fr) auto auto auto;gap:6px;padding:8px}
+ .cheerAdminRow .value{min-width:42px;font-size:16px}
+ .cheerBtn{min-width:42px}
+}
+
+
+.ddayCard{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 85% 20%,rgba(70,216,255,.16),transparent 28%),
+    linear-gradient(135deg,rgba(50,124,255,.15),rgba(255,255,255,.035));
+  border-color:rgba(70,216,255,.25)
+}
+.ddayCard:after{
+  content:"";
+  position:absolute;inset:auto -30px -45px auto;
+  width:150px;height:150px;border-radius:50%;
+  border:1px solid rgba(70,216,255,.12)
+}
+.ddayLabel{font-size:11px;font-weight:950;letter-spacing:.12em;color:var(--cyan)}
+.ddayValue{font-size:clamp(42px,8vw,76px);font-weight:950;letter-spacing:-.06em;line-height:1;margin:7px 0 8px}
+.ddayDate{font-size:13px;color:#c8d7e9;font-weight:800}
+.ddaySub{font-size:12px;color:var(--muted);margin-top:7px}
+
+@media(max-width:850px){.g2,.g3,.adminGrid{grid-template-columns:1fr}.leaderGrid{grid-template-columns:repeat(3,1fr)}.quick{grid-template-columns:repeat(2,1fr)}.scoreCards{grid-template-columns:repeat(2,1fr)}.playerGrid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.wrap{width:calc(100% - 20px)}.hero{padding-top:27px}.leaderGrid{grid-template-columns:1fr}.playerGrid{grid-template-columns:1fr}.card{padding:14px}.quick{grid-template-columns:1fr}th,td{font-size:11px;padding:10px 7px}}
+</style>
+</head>
+<body>
+<header class="hero"><div class="wrap">
+<span class="eyebrow">2026 SEOHYEON MIDDLE SCHOOL · SPORTS FESTIVAL</span>
+<h1><small>2026년, 서현의 가장 뜨거운 하루</small>2026. 서현중학교 스포츠한마당</h1>
+<div class="meta"><span>📅 2026. 9. 18.(금) 08:30~16:10</span><span>📍 본교 운동장 · 강당</span><span>🏫 학년별 학급 대항</span><span>☔ 우천 시 9. 23.(수) 연기</span><span id="cloudStatus" class="cloudStatus warn">☁️ 실시간 연결 확인 중</span></div>
+</div></header>
+
+<div class="navwrap"><nav class="wrap" id="nav">
+<button class="active" data-tab="home">🏠 홈</button>
+<button data-tab="schedule">📅 시간표</button>
+<button data-tab="scores">🏆 실시간 점수</button>
+<button data-tab="rules">📋 경기요강</button>
+<button data-tab="bracket">🧩 대진·기록</button>
+<button data-tab="players">👥 출전선수</button>
+<button data-tab="flags">🚩 학급 깃발</button>
+<button data-tab="songs">🎵 노래 신청</button>
+<button data-tab="staff">🦺 운영·심판</button>
+<button data-tab="notice">📢 본부게시판</button>
+<button data-tab="adminTab">⚙️ 관리자</button>
+</nav></div>
+
+<main class="wrap">
+<section id="home" class="active">
+<div class="card ddayCard" style="margin-bottom:15px">
+  <div class="ddayLabel">COUNTDOWN TO SPORTS DAY</div>
+  <div class="ddayValue" id="ddayValue">D-</div>
+  <div class="ddayDate">📅 2026. 9. 18.(금)</div>
+  <div class="ddaySub" id="ddaySub">스포츠한마당까지 남은 날짜를 계산 중입니다.</div>
+</div>
+
+<div class="grid g2">
+  <div class="card live" id="currentProgramCard">
+    <div class="kicker">⚡ CURRENT PROGRAM</div>
+    <div class="currentTime" id="curTime">08:30~08:50</div>
+    <div class="currentEvent" id="curEvent">경기장 정렬</div>
+    <div class="muted" id="curPlace">운동장 · 1~3학년</div>
+    <div style="margin-top:14px"><span class="status"><span class="dot"></span>운영본부 실시간 반영</span></div>
+  </div>
+  <div class="card">
+    <div class="kicker">EVENT INFO</div>
+    <h2>2026. 서현 체육 한마당</h2>
+    <p class="muted" style="line-height:1.7">교내 체육 축제를 통해 학생 건강 체력을 증진하고 스포츠맨십, 협동심, 책임감, 공동체 의식을 기르는 것을 목적으로 합니다.</p>
+    <div class="warn">모든 경기는 서현중학교 규칙을 따르며, 부정선수 발견 시 실격 패 처리됩니다.</div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:15px">
+  <div class="titleRow"><div><h2>🏆 학년별 현재 선두</h2><p>관리자 입력 점수를 기준으로 자동 계산</p></div><span class="status"><span class="dot"></span>LIVE</span></div>
+  <div class="leaderGrid" id="homeLeaders"></div>
+</div>
+
+<div class="quick" style="margin-top:15px">
+<button onclick="openTab('schedule')">⏰<b>오늘 시간표</b><small>08:30부터 경기 순서 확인</small></button>
+<button onclick="openTab('scores')">🏆<b>학년별 종합점수</b><small>1~8반 실시간 순위</small></button>
+<button onclick="openTab('rules')">📘<b>경기 규칙</b><small>10개 종목 공식 요강</small></button>
+<button onclick="openTab('players')">👥<b>내 출전 종목</b><small>명단 업로드 후 검색</small></button>
+</div>
+</section>
+
+<section id="schedule">
+<div class="titleRow"><div><h2>📅 체육 한마당 일정표</h2><p>계획서 기준 당일 일정</p></div></div>
+<div class="card scroll"><table><thead><tr><th>시간</th><th>종목/행사</th><th>대상</th><th>장소</th><th>비고</th></tr></thead><tbody id="scheduleBody"></tbody></table></div>
+<div class="card" style="margin-top:12px"><h3>사전 경기</h3><p class="muted">1학년 빅발리볼 · 2학년 빅발리볼 · 3학년 배구는 체육시간을 활용해 강당에서 진행하며, 체육 한마당 이전에 결승까지 완료합니다.</p></div>
+</section>
+
+<section id="scores">
+<div class="titleRow"><div><h2>🏆 학년별 실시간 종합점수</h2><p>경기점수와 응원점수를 실시간으로 확인합니다.</p></div><span class="status"><span class="dot"></span>LIVE</span></div>
+
+<div class="scoreModeTabs" id="scoreModeTabs">
+  <button class="active" data-mode="game">🏅 경기 종합점수</button>
+  <button data-mode="cheer">📣 응원점수</button>
+</div>
+
+<div id="gameScorePanel">
+  <div class="gradeTabs" id="scoreGradeTabs">
+    <button class="active" data-grade="1">1학년</button>
+    <button data-grade="2">2학년</button>
+    <button data-grade="3">3학년</button>
+  </div>
+  <div class="scoreCards" id="rankCards"></div>
+  <div class="card scroll" style="margin-top:12px">
+    <table>
+      <thead><tr><th>반</th><th>총점</th><th>세부 종목 점수</th></tr></thead>
+      <tbody id="scoreDetail"></tbody>
+    </table>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <h3>배점 기준</h3>
+    <div class="scroll">
+      <table>
+        <thead><tr><th>종목</th><th>1위</th><th>2위</th><th>3위</th><th>4위</th><th>5~8위</th></tr></thead>
+        <tbody id="pointsBody"></tbody>
+      </table>
+    </div>
+    <p class="muted" style="font-size:11px">모든 종목의 5~8위는 종목별 동일 배점으로 처리합니다.</p>
+  </div>
+</div>
+
+<div id="cheerScorePanel" style="display:none">
+  <div class="gradeTabs" id="cheerGradeTabs">
+    <button class="active" data-grade="1">1학년</button>
+    <button data-grade="2">2학년</button>
+    <button data-grade="3">3학년</button>
+  </div>
+
+  <div class="cheerSummary" id="cheerRankCards"></div>
+
+  <div class="card scroll" style="margin-top:12px">
+    <table>
+      <thead>
+        <tr>
+          <th>반</th>
+          <th>총점</th>
+          <th>깃발제작</th>
+          <th>응원</th>
+          <th>정리정돈</th>
+          <th>협동</th>
+          <th>질서</th>
+          <th>참여도</th>
+        </tr>
+      </thead>
+      <tbody id="cheerScoreBody"></tbody>
+    </table>
+  </div>
+
+  <div class="card" style="margin-top:12px">
+    <h3>📣 응원점수 운영</h3>
+    <p class="muted" style="line-height:1.7;margin-bottom:0">
+      운영본부에서 수시로 평가한 내용을 관리자 화면의 <b>-5 / +5</b> 버튼으로 반영합니다.
+      저장 즉시 모든 접속자의 응원점수 화면에 실시간으로 표시됩니다.
+      경기 종합점수와 응원점수는 별도로 집계합니다.
+    </p>
+  </div>
+</div>
+</section>
+
+<section id="rules">
+<div class="titleRow"><div><h2>📋 종목별 경기방법 및 규정</h2><p>계획서 수록 10개 종목</p></div></div>
+<div id="rulesList"></div>
+<div class="card" style="margin-top:12px">
+<h3>공통 참가·안전 원칙</h3>
+<ul class="muted" style="line-height:1.8">
+<li>남·여 참가 인원이 맞지 않는 경우 인원이 적은 학급 기준으로 맞춤.</li>
+<li>8자줄넘기, 축구, 릴레이 고리던지기, 이어달리기, 빅발리볼, 배구 중 최소 1개 종목 이상 참여.</li>
+<li>한 명이 모든 종목에 참가할 수 없음.</li>
+<li>경기 전 충분한 준비운동, 규칙 사전 안내, 상대 비방·욕설·심판 불복종 금지.</li>
+<li>참가신청서 확인 후 경기 진행. 부정선수 적발 시 실격 패.</li>
+<li>응원상 주변정리 배점은 ±5점으로 적용.</li>
+</ul>
+</div>
+</section>
+
+<section id="bracket">
+<div class="titleRow"><div><h2>🧩 대진표 · 경기기록</h2><p>현재 계획서의 대진표 칸은 비어 있어 추첨 후 입력하도록 구성</p></div></div>
+<div class="grid g3" id="bracketCards"></div>
+<div class="card" style="margin-top:12px">
+<h3>기록형 종목</h3>
+<p class="muted">8자 줄넘기는 1·2차 기록 합계와 등위, 릴레이 고리던지기는 기록과 등위를 학년별 1~8반에 입력할 수 있도록 관리자 화면에서 준비했습니다.</p>
+</div>
+</section>
+
+<section id="players">
+<div class="titleRow"><div><h2>👥 출전 선수 명단</h2><p>현재 계획서에는 빈 참가신청서 양식만 있어 실제 학생명은 포함하지 않음</p></div></div>
+<div class="card">
+<div class="filters">
+<input id="playerSearch" placeholder="이름 · 반 · 종목 검색">
+<select id="playerGrade"><option value="">전체 학년</option><option>1</option><option>2</option><option>3</option></select>
+<select id="playerSport"><option value="">전체 종목</option></select>
+</div>
+<div id="playerGrid" class="playerGrid"></div>
+<div id="playerEmpty" class="muted" style="font-size:13px;padding:10px 0">아직 실제 출전 선수 명단이 입력되지 않았습니다.</div>
+</div>
+<div class="card" style="margin-top:12px">
+<h3>명단 입력 형식</h3>
+<p class="muted">나중에 명단을 주시면 <b>학년 / 반 / 번호 / 성별 / 이름 / 종목 / 후보여부</b> 기준으로 바로 검색되게 반영할 수 있습니다.</p>
+</div>
+</section>
+
+
+<section id="flags">
+<div class="titleRow">
+  <div>
+    <h2>🚩 학급 깃발 갤러리</h2>
+    <p>학년·학급별 완성 깃발을 한눈에 볼 수 있습니다.</p>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:12px">
+  <div class="filters">
+    <select id="flagGradeFilter">
+      <option value="">전체 학년</option>
+      <option value="1">1학년</option>
+      <option value="2">2학년</option>
+      <option value="3">3학년</option>
+    </select>
+    <select id="flagClassFilter">
+      <option value="">전체 반</option>
+      <option value="1">1반</option>
+      <option value="2">2반</option>
+      <option value="3">3반</option>
+      <option value="4">4반</option>
+      <option value="5">5반</option>
+      <option value="6">6반</option>
+      <option value="7">7반</option>
+      <option value="8">8반</option>
+    </select>
+  </div>
+  <p class="muted" style="font-size:12px;margin:4px 0 0">
+    응원상 배점기준의 ‘깃발제작’ 항목과 연계되는 갤러리입니다. 깃발제작 배점은 50점이며, 실제 점수 입력은 별도 운영 기준에 따라 반영할 수 있습니다.
+  </p>
+</div>
+
+<div class="flagGrid" id="flagGrid"></div>
+</section>
+
+
+<section id="songs">
+<div class="titleRow">
+  <div>
+    <h2>🎵 노래 신청</h2>
+    <p>체육 한마당에서 듣고 싶은 노래와 사연을 남겨주세요.</p>
+  </div>
+  <span class="songCount" id="songCount">신청 0곡</span>
+</div>
+
+<div class="songLayout">
+  <div class="card">
+    <h3>🎧 신청곡 등록</h3>
+    <div class="songForm">
+      <input id="songTitleInput" maxlength="80" placeholder="노래 제목">
+      <input id="songArtistInput" maxlength="80" placeholder="가수 이름">
+      <input id="songApplicantInput" maxlength="40" placeholder="신청자 (예: 20315 홍길동)">
+      <textarea id="songStoryInput" maxlength="500" placeholder="사연을 입력하세요. (최대 500자)"></textarea>
+      <button class="btn primary" onclick="submitSong()">노래 신청하기</button>
+    </div>
+    <p class="muted" style="font-size:11px;line-height:1.6;margin:12px 0 0">
+      신청 내용은 사이트의 신청목록에 표시됩니다. 신청자의 전체 학번과 이름은 공개하지 않고 예: 20315 홍길동 → 2학년 3반 홍○동처럼 표시됩니다. 행사 운영에 적절하지 않은 내용은 관리자에 의해 삭제될 수 있습니다.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="titleRow" style="margin-top:0">
+      <div><h3 style="margin:0">📻 신청 목록</h3><p>최신 신청순</p></div>
+    </div>
+    <div id="songList" class="songList"></div>
+  </div>
+</div>
+</section>
+
+<section id="staff">
+<div class="titleRow"><div><h2>🦺 운영본부 · 심판</h2><p>교사·학생 역할 및 경기별 심판</p></div></div>
+<div class="card scroll"><table><thead><tr><th>직책</th><th>교사</th><th>학생/비고</th></tr></thead><tbody id="staffBody"></tbody></table></div>
+<div class="card scroll" style="margin-top:12px"><h3>경기별 심판</h3><table><thead><tr><th>종목</th><th>시간</th><th>주심·부심</th><th>비고</th></tr></thead><tbody id="judgeBody"></tbody></table></div>
+</section>
+
+<section id="notice">
+<div class="titleRow"><div><h2>📢 본부게시판</h2><p>경기 지연 · 호출 · 분실물 · 안전 공지</p></div></div>
+<div class="card" id="noticeList"></div>
+</section>
+
+<section id="adminTab">
+<div class="titleRow"><div><h2>⚙️ 관리자</h2><p>Supabase 실시간 운영판 · 관리자 인증 적용</p></div></div>
+<div id="loginBox" class="card" style="text-align:center">
+<h3>🔒 관리자 로그인</h3>
+<p class="muted">Supabase Authentication에 등록한 관리자 계정으로 로그인합니다.</p>
+<div class="admin" style="max-width:360px;margin:0 auto">
+<input id="adminEmail" type="email" autocomplete="username" placeholder="관리자 이메일">
+<input id="adminPassword" type="password" autocomplete="current-password" placeholder="비밀번호">
+<button class="btn primary" onclick="loginAdmin()">로그인</button>
+</div>
+</div>
+<div id="adminPanel" style="display:none">
+<div class="adminSession"><div><b>✅ 관리자 연결됨</b><br><small id="adminUserLabel"></small></div><button class="btn" onclick="logoutAdmin()">로그아웃</button></div>
+<div class="adminGrid">
+<div class="card">
+<h3>🏆 종목 순위 입력 → 자동 배점</h3>
+<div class="admin">
+<select id="aGrade"><option value="1">1학년</option><option value="2">2학년</option><option value="3">3학년</option></select>
+<select id="aSport"></select>
+<select id="aClass"></select>
+<select id="aRank"><option value="">순위 선택</option></select>
+<button class="btn primary" onclick="applyRank()">순위·점수 반영</button>
+</div>
+<p class="muted" style="font-size:11px">5~8위는 모두 해당 종목의 5위 배점을 공동 적용합니다.</p>
+</div>
+
+<div class="card">
+<h3>📣 응원점수 실시간 입력</h3>
+<div class="cheerAdminHead">
+  <select id="cheerAdminGrade">
+    <option value="1">1학년</option>
+    <option value="2">2학년</option>
+    <option value="3">3학년</option>
+  </select>
+  <select id="cheerAdminClass">
+    <option value="1">1반</option><option value="2">2반</option><option value="3">3반</option><option value="4">4반</option>
+    <option value="5">5반</option><option value="6">6반</option><option value="7">7반</option><option value="8">8반</option>
+  </select>
+</div>
+<div class="cheerAdminGrid" id="cheerAdminGrid"></div>
+<div class="cheerAdminTotal"><b>현재 응원점수 합계</b><b id="cheerAdminTotal">0점</b></div>
+<p class="muted" style="font-size:11px;line-height:1.6">
+  깃발제작 · 응원 · 정리정돈 · 협동 · 질서 · 참여도를 각각 5점 단위로 조정합니다.
+  버튼을 누르는 즉시 Supabase에 저장되어 학생 화면에도 실시간 반영됩니다.
+</p>
+</div>
+<div class="card">
+<h3>⚡ 현재 진행 경기 변경</h3>
+<div class="admin"><select id="currentSchedule"></select><button class="btn primary" onclick="setCurrent()">현재 일정으로 설정</button></div>
+</div>
+<div class="card">
+<h3>📢 본부 공지 등록</h3>
+<div class="admin"><select id="nType"><option>일반</option><option>긴급</option><option>경기</option><option>분실물</option></select><textarea id="nText" rows="3" placeholder="공지 내용"></textarea><button class="btn primary" onclick="addNotice()">공지 등록</button></div>
+</div>
+
+<div class="card">
+<h3>🚩 학급 깃발 이미지 등록</h3>
+<div class="admin">
+<select id="flagGrade"><option value="1">1학년</option><option value="2">2학년</option><option value="3">3학년</option></select>
+<select id="flagClass">
+<option value="1">1반</option><option value="2">2반</option><option value="3">3반</option><option value="4">4반</option>
+<option value="5">5반</option><option value="6">6반</option><option value="7">7반</option><option value="8">8반</option>
+</select>
+<input id="flagFile" type="file" accept="image/*">
+<input id="flagCaptionInput" placeholder="깃발 설명 또는 학급 문구(선택)">
+<div id="flagAdminPreview" class="flagAdminPreview"><span class="muted">이미지 미리보기</span></div>
+<div style="display:flex;gap:7px;flex-wrap:wrap">
+<button class="btn primary" onclick="saveFlag()">깃발 저장</button>
+<button class="btn" onclick="deleteFlag()">현재 학급 깃발 삭제</button>
+</div>
+</div>
+<p class="muted" style="font-size:11px">깃발 이미지는 Supabase Storage에 저장되며 모든 접속자에게 동일하게 표시됩니다.</p>
+</div>
+
+
+<div class="card">
+<h3>🎵 노래 신청 관리</h3>
+<div class="admin">
+<select id="songAdminSelect"><option value="">신청곡 선택</option></select>
+<div style="display:flex;gap:7px;flex-wrap:wrap">
+  <button class="btn" onclick="deleteSelectedSong()">선택 신청 삭제</button>
+  <button class="btn" onclick="clearSongs()">신청목록 전체 삭제</button>
+</div>
+</div>
+<p class="muted" style="font-size:11px">관리자 화면에서는 신청자가 입력한 원래 학번·이름을 확인할 수 있습니다. 공개 신청목록에는 개인정보 보호를 위해 학년·반 + 마스킹된 이름만 표시됩니다.</p>
+</div>
+
+
+<div class="card">
+<h3>♻️ 점수 초기화</h3>
+<div class="admin">
+  <select id="resetGrade">
+    <option value="1">1학년</option>
+    <option value="2">2학년</option>
+    <option value="3">3학년</option>
+    <option value="all">전체 학년</option>
+  </select>
+
+  <select id="resetScoreType">
+    <option value="game">경기점수만</option>
+    <option value="cheer">응원점수만</option>
+    <option value="both">경기점수 + 응원점수</option>
+  </select>
+
+  <button class="btn danger" type="button" onclick="resetSelectedScores()">선택한 점수 초기화</button>
+</div>
+<p class="muted" style="font-size:11px;line-height:1.6">
+  선택한 학년과 점수 종류만 0점 상태로 되돌립니다.
+  현재 일정·본부 공지·노래 신청·학급 깃발·선수명단은 삭제되지 않습니다.
+</p>
+</div>
+
+<div class="card">
+<h3>💾 데이터</h3>
+<div style="display:flex;gap:7px;flex-wrap:wrap"><button class="btn" onclick="exportData()">JSON 내보내기</button></div>
+<p class="muted" style="font-size:11px">경기점수·응원점수·현재 일정·공지·깃발 등 실시간 데이터는 Supabase에 저장됩니다. localStorage는 화면 캐시 및 아직 미연결된 선수명단 용도로만 사용합니다.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 운영계획서 반영 프로토타입 v2</footer>
+
+<script>
+const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", ""], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", ""], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", "대회 개요 종료시각(16:00)과 계획서 일정표가 상이함"]];
+const RULES = {"협동 파도타기": ["결선경기. 성별 구분 없이 인원이 가장 적은 반과 동일하게 맞춤(2명 줄잡이 포함).", "뛰는 인원은 2열 종대, 줄잡이는 시작지점에서 준비.", "줄잡이 2명이 이동할 때 나머지 학생은 줄을 뛰어넘는다.", "갈 때 줄을 아래로, 돌아올 때 위로 들고 달려오며 총 2회 실시.", "줄잡이 두 명 모두 고깔을 돌아야 하며 미실시 시 실격.", "결승선 통과 후 학급 깃발을 들어 경기 종료 표시."], "8자 줄넘기": ["줄넘이 10명(여자 4명 이상) + 줄돌이 2명.", "1분 동안 8자 모양으로 한 명씩 줄을 넘는다.", "1인이 연속하여 넘어도 한 번만 인정.", "2회 실시해 합산 기록으로 인정하며 시작 전 연습 1회 운영."], "축구": ["학년별 남학생 토너먼트, 출전 7명 + 교체선수 2명.", "전후반 없이 각 15분.", "무승부 시 승부차기 5명."], "피구": ["학년별 여학생 토너먼트. 학급 여학생 전원 참여하되 인원이 적은 반과 동일하게 맞춤.", "5분 3세트, 패스 3회까지 허용. 2선승 시 종료.", "외야/외야, 내야/내야 패스 금지.", "외야 1명은 경기 3분 후 내야로 들어옴.", "내야 선수의 두 발이 경기장 밖으로 나가면 아웃."], "릴레이 고리던지기": ["성별 구분 없이 24명. 2인 1조 × 12개조, 경기시간 3분.", "2인이 고리 두 개를 겹쳐 잡고 출발하며 1명은 배턴을 든다.", "기준선 도착 후 막대에 고리를 던져 넣는다.", "배턴을 받은 뒤 다음 조가 출발선으로 진출 가능.", "경기종료음 이후 던진 고리는 인정하지 않음.", "가장 많은 고리를 넣은 팀이 승리."], "줄다리기": ["전학년 전학급 토너먼트. 성별 구분 없이 인원이 적은 반과 동일하게 맞춤.", "3판 2선승제, 경기시간 20초.", "최초 여학생만 줄을 잡고 남학생은 상대 뒤편에 대기.", "신호 후 남학생이 자신의 학급 줄 뒤쪽으로 이동해 함께 당긴다."], "이어달리기": ["예선 통과 학년별 4팀 결선.", "남학생 3명 + 여학생 3명, 순서 여-남-여-남-여-남.", "출발지점은 운동장 뒤편.", "반바퀴 × 5명 + 마지막 주자 한 바퀴.", "골인지점은 교문 앞 급수대 쪽."], "빅발리볼": ["1·2학년 사전경기, 혼성 10명(여자 3명 이상).", "배드민턴 코트 2개 크기로 운영.", "세트별 15점, 바운드 허용 안 함.", "서브순서에 맞춰 진행.", "1·2세트 2선승 시 3세트 진행하지 않음."], "배구": ["3학년 사전경기, 혼성 9명(여자 2명 이상).", "경기 전 각 팀 연습 1회.", "세트별 15점.", "경기장 내 원 바운드까지 허용.", "1·2세트 2선승 시 3세트 진행하지 않음."], "입장식": ["3학년 학급 전체 참여 원칙.", "학급별 음원은 2분 30초 이내 편집.", "미인정 미참여 시 1명당 1점 감점(체육담당교사 4인이 인정 여부 결정).", "타인 비방, 불쾌감 또는 선정적 내용 금지."]};
+const POINTS = {"축구": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 50, "6": 50, "7": 50, "8": 50}, "피구": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 50, "6": 50, "7": 50, "8": 50}, "학년별 구기": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 50, "6": 50, "7": 50, "8": 50}, "줄다리기": {"1": 150, "2": 130, "3": 100, "4": 80, "5": 80, "6": 80, "7": 80, "8": 80}, "8자 줄넘기": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 40, "6": 40, "7": 40, "8": 40}, "협동 파도타기": {"1": 150, "2": 130, "3": 110, "4": 100, "5": 80, "6": 80, "7": 80, "8": 80}, "릴레이 고리던지기": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 40, "6": 40, "7": 40, "8": 40}, "이어달리기": {"1": 100, "2": 90, "3": 80, "4": 60, "5": 50, "6": 50, "7": 50, "8": 50}, "입장식": {"1": 150, "2": 130, "3": 100, "4": 80, "5": 80, "6": 80, "7": 80, "8": 80}};
+const STAFF = [["체육 한마당 회장(교장)", "박대우", ""], ["체육 한마당 부회장(교감)", "최은자", ""], ["체육 한마당 총괄", "신미숙, 임남묵", "김민성, 김원미"], ["경기진행 총괄 및 심판위원장", "신미숙", "전교 체육부장"], ["보건담당", "윤규순, 나진화", "구급약품 준비"], ["질서(안전)유지", "염응모, 김선욱", "각반 체육부장 · 전 교사 참여"], ["방송준비 및 사진촬영", "임보람", "방송부"], ["점수집계 / 점수현황판", "이미애, 문화은, 이미영, 김경숙", "본부석"], ["응원점수 집계", "오정령, 안호일", ""], ["우승 배너 및 상품 시상", "김원미", ""], ["교내 환경정리", "임수정", "전교생 · 전 교직원"], ["용품 및 경기장 사전준비", "임남묵, 김민성", "스포츠 지원단"]];
+const JUDGES = [["협동 파도타기", "09:40~10:00", "주심: 2학년 각 담임학급 +1 / 부심: 1학년 각 학급 담임 +1", "심판은 학급당 2명씩"], ["8자 줄넘기", "10:00~10:20", "주심: 1학년 각 학급 담임 +1 / 부심: 3학년 각 학급 담임 +1", "심판은 학급당 2명씩"], ["1학년 축구 결승 · 2학년 피구 결승", "10:20~10:50", "축구 주심: 김민성, 임남묵 / 부심: 축구동아리 학생 6명", ""], ["1학년 피구 결승 · 2학년 축구 결승", "10:50~11:20", "피구 주심: 김원미 / 부심: 피구동아리 학생 4명", ""], ["3학년 축구 · 피구 결승", "11:20~12:00", "계획서 경기별 심판표 참조", ""], ["릴레이 고리던지기", "13:20~13:50", "주심: 3학년 각 학급 담임 +1 / 부심: 2학년 각 학급 담임 +1", ""], ["줄다리기 준결승·결승", "13:50~14:30", "주심: 김민성 / 부심: 임남묵, 김선욱, 김원미, 염응모", "선수정렬·인원확인 포함"], ["이어달리기", "14:30~14:50", "주심: 신미숙 / 배턴터치존: 임남묵 / 출발: 김민성 / 골인: 김원미, 오진선, 음웅석", ""], ["빅발리볼 · 배구", "사전경기", "신미숙, 임남묵, 김민성, 김원미 / 스포츠 지원단", ""]];
+const SPORTS_BY_GRADE = {"1": ["빅발리볼", "협동 파도타기", "8자 줄넘기", "축구", "피구", "릴레이 고리던지기", "줄다리기", "이어달리기"], "2": ["빅발리볼", "협동 파도타기", "8자 줄넘기", "축구", "피구", "릴레이 고리던지기", "줄다리기", "이어달리기"], "3": ["배구", "협동 파도타기", "8자 줄넘기", "축구", "피구", "릴레이 고리던지기", "줄다리기", "이어달리기", "입장식"]};
+
+const DEFAULT = {
+ current:0,
+ score:{},
+ notices:[{type:"안내",text:"운영계획서를 반영한 2차 프로토타입입니다. 실제 경기 결과와 선수 명단은 추후 입력합니다.",time:"초기 안내"}],
+ players:[],
+ flags:{},
+ songs:[],
+ cheer:{}
+};
+const CHEER_ITEMS=[
+  {key:"flag",label:"깃발제작"},
+  {key:"cheering",label:"응원"},
+  {key:"cleanup",label:"정리정돈"},
+  {key:"cooperation",label:"협동"},
+  {key:"order",label:"질서"},
+  {key:"participation",label:"참여도"}
+];
+
+function emptyCheerClass(){
+  return {flag:0,cheering:0,cleanup:0,cooperation:0,order:0,participation:0,updatedAt:null};
+}
+
+for(const g of ["1","2","3"]){
+  DEFAULT.score[g]={};
+  DEFAULT.cheer[g]={};
+  for(let c=1;c<=8;c++){
+    DEFAULT.score[g][c]={};
+    DEFAULT.cheer[g][c]=emptyCheerClass();
+  }
+}
+
+const SUPABASE_URL = "https://cgvvennpgmnycogyibhh.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_SbcuoCxvH7_lVR7BbX0FsQ_zvwbFpsY";
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+
+let data=load();
+let cloudReady=false;
+let cloudChannels=[];
+
+function clone(x){return JSON.parse(JSON.stringify(x))}
+function load(){
+  try{
+    const cached=JSON.parse(localStorage.getItem("sehyeonSports2026v2"));
+    if(!cached)return clone(DEFAULT);
+    return {
+      ...clone(DEFAULT),
+      ...cached,
+      score: cached.score || clone(DEFAULT.score),
+      notices: cached.notices || clone(DEFAULT.notices),
+      players: cached.players || [],
+      flags: cached.flags || {},
+      songs: cached.songs || [],
+      cheer: cached.cheer || clone(DEFAULT.cheer)
+    };
+  }catch(e){return clone(DEFAULT)}
+}
+function saveLocal(){
+  localStorage.setItem("sehyeonSports2026v2",JSON.stringify(data));
+  renderAll();
+}
+function setCloudStatus(kind,text){
+  if(typeof cloudStatus==="undefined")return;
+  cloudStatus.className=`cloudStatus ${kind}`;
+  cloudStatus.textContent=text;
+}
+function cloudError(label,error){
+  console.error(label,error);
+  setCloudStatus("bad","☁️ DB 설정 확인 필요");
+}
+
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
+function openTab(id){document.querySelectorAll("main section").forEach(s=>s.classList.toggle("active",s.id===id));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===id));window.scrollTo({top:document.querySelector(".navwrap").offsetTop,behavior:"smooth"})}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>openTab(b.dataset.tab));
+
+
+function renderDDay(){
+  if(typeof ddayValue==="undefined"||typeof ddaySub==="undefined")return;
+
+  // 행사일은 한국 기준 2026-09-18. 날짜 비교는 자정 기준으로 처리합니다.
+  const now=new Date();
+  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const eventDate=new Date(2026,8,18);
+  const msPerDay=24*60*60*1000;
+  const diff=Math.round((eventDate-today)/msPerDay);
+
+  if(diff>0){
+    ddayValue.textContent=`D-${diff}`;
+    ddaySub.textContent=`2026. 서현중학교 스포츠한마당까지 ${diff}일 남았습니다.`;
+  }else if(diff===0){
+    ddayValue.textContent="D-DAY";
+    ddaySub.textContent="오늘은 2026. 서현중학교 스포츠한마당입니다!";
+  }else{
+    ddayValue.textContent=`D+${Math.abs(diff)}`;
+    ddaySub.textContent="2026. 서현중학교 스포츠한마당이 종료되었습니다.";
+  }
+}
+
+function getKoreaNowParts(){
+  const parts=new Intl.DateTimeFormat("en-CA",{
+    timeZone:"Asia/Seoul",
+    year:"numeric",month:"2-digit",day:"2-digit",
+    hour:"2-digit",minute:"2-digit",hourCycle:"h23"
+  }).formatToParts(new Date());
+  const out={};
+  for(const p of parts){if(p.type!=="literal")out[p.type]=p.value}
+  return {
+    year:Number(out.year),month:Number(out.month),day:Number(out.day),
+    hour:Number(out.hour),minute:Number(out.minute)
+  };
+}
+
+function parseScheduleRange(text){
+  const m=String(text||"").match(/(\d{1,2}):(\d{2})\s*[~～-]\s*(\d{1,2}):(\d{2})/);
+  if(!m)return null;
+  return {
+    start:Number(m[1])*60+Number(m[2]),
+    end:Number(m[3])*60+Number(m[4])
+  };
+}
+
+function isSelectedProgramLive(scheduleRow){
+  const kst=getKoreaNowParts();
+  if(kst.year!==2026||kst.month!==9||kst.day!==18)return false;
+  const range=parseScheduleRange(scheduleRow?.[0]);
+  if(!range)return false;
+  const nowMin=kst.hour*60+kst.minute;
+  return nowMin>=range.start && nowMin<range.end;
+}
+
+function renderCurrentProgramLive(){
+  if(typeof currentProgramCard==="undefined")return;
+  const r=SCHEDULE[data.current]||SCHEDULE[0];
+  currentProgramCard.classList.toggle("is-live",isSelectedProgramLive(r));
+}
+
+function renderSchedule(){
+ scheduleBody.innerHTML=SCHEDULE.map((r,i)=>`<tr ${i===data.current?'style="background:rgba(70,216,255,.07)"':''}><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td>${esc(r[3])}</td><td class="muted">${esc(r[4])}</td></tr>`).join("");
+ const r=SCHEDULE[data.current]||SCHEDULE[0];curTime.textContent=r[0];curEvent.textContent=r[1];curPlace.textContent=`${r[3]} · ${r[2]}`;
+ currentSchedule.innerHTML=SCHEDULE.map((r,i)=>`<option value="${i}" ${i===data.current?"selected":""}>${esc(r[0])} · ${esc(r[1])}</option>`).join("");
+ renderCurrentProgramLive();
+}
+function sportKey(g,s){return (s==="빅발리볼"||s==="배구")?"학년별 구기":s}
+function getEntry(g,c,s){return data.score[g]?.[c]?.[s]||null}
+function totalFor(g,c){
+ let t=0; for(const s of SPORTS_BY_GRADE[g]){const e=getEntry(g,c,s);if(e&&typeof e.points==="number")t+=e.points} return t
+}
+function ranking(g){
+ return Array.from({length:8},(_,i)=>({c:i+1,total:totalFor(g,i+1)})).sort((a,b)=>b.total-a.total||a.c-b.c)
+}
+function hasGradeScoreInput(g){
+  for(let c=1;c<=8;c++){
+    const classScores=data.score?.[g]?.[c];
+    if(classScores && Object.keys(classScores).length>0)return true;
+  }
+  return false;
+}
+function renderHomeLeaders(){
+ homeLeaders.innerHTML=["1","2","3"].map(g=>{
+   if(!hasGradeScoreInput(g)){
+     return `<div class="leader"><div class="rank">${g}학년 현재 1위</div><div class="class">?반</div><div class="score">점수 입력 전</div></div>`;
+   }
+   const r=ranking(g)[0];
+   return `<div class="leader"><div class="rank">${g}학년 현재 1위</div><div class="class">${r.c}반</div><div class="score">${r.total}점</div></div>`;
+ }).join("");
+}
+let scoreGrade="1";
+document.querySelectorAll("#scoreGradeTabs button").forEach(b=>b.onclick=()=>{scoreGrade=b.dataset.grade;document.querySelectorAll("#scoreGradeTabs button").forEach(x=>x.classList.toggle("active",x===b));renderScores()});
+function renderScores(){
+ const ranks=ranking(scoreGrade);
+ rankCards.innerHTML=ranks.map((r,i)=>`<div class="scoreCard"><div class="pos">${i+1}위</div><b>${scoreGrade}학년 ${r.c}반</b><small>${r.total}점</small></div>`).join("");
+ scoreDetail.innerHTML=Array.from({length:8},(_,i)=>i+1).map(c=>{
+   const parts=SPORTS_BY_GRADE[scoreGrade].map(s=>{const e=getEntry(scoreGrade,c,s);return `${s}: ${e?(typeof e.points==="number"?e.points+"점":e.rank+"위 · 미배점"):"-"}`}).join(" · ");
+   return `<tr><td><b>${c}반</b></td><td>${totalFor(scoreGrade,c)}점</td><td class="muted">${esc(parts)}</td></tr>`
+ }).join("");
+}
+
+let scoreMode="game";
+let cheerGrade="1";
+
+document.querySelectorAll("#scoreModeTabs button").forEach(b=>b.onclick=()=>{
+  scoreMode=b.dataset.mode;
+  document.querySelectorAll("#scoreModeTabs button").forEach(x=>x.classList.toggle("active",x===b));
+  gameScorePanel.style.display=scoreMode==="game"?"block":"none";
+  cheerScorePanel.style.display=scoreMode==="cheer"?"block":"none";
+  if(scoreMode==="cheer")renderCheerScores();
+});
+
+document.querySelectorAll("#cheerGradeTabs button").forEach(b=>b.onclick=()=>{
+  cheerGrade=b.dataset.grade;
+  document.querySelectorAll("#cheerGradeTabs button").forEach(x=>x.classList.toggle("active",x===b));
+  renderCheerScores();
+});
+
+function normalizeCheerClass(v){
+  const base=emptyCheerClass();
+  const obj=(v&&typeof v==="object")?v:{};
+  for(const item of CHEER_ITEMS){
+    const n=Number(obj[item.key]);
+    base[item.key]=Number.isFinite(n)?n:0;
+  }
+  base.updatedAt=obj.updatedAt||null;
+  return base;
+}
+
+function cheerClass(g,c){
+  data.cheer=data.cheer||clone(DEFAULT.cheer);
+  data.cheer[g]=data.cheer[g]||{};
+  data.cheer[g][c]=normalizeCheerClass(data.cheer[g][c]);
+  return data.cheer[g][c];
+}
+
+function cheerTotal(g,c){
+  const row=cheerClass(g,c);
+  return CHEER_ITEMS.reduce((sum,item)=>sum+(Number(row[item.key])||0),0);
+}
+
+function cheerRanking(g){
+  return Array.from({length:8},(_,i)=>({c:i+1,total:cheerTotal(g,String(i+1))}))
+    .sort((a,b)=>b.total-a.total||a.c-b.c);
+}
+
+function renderCheerScores(){
+  if(typeof cheerRankCards==="undefined"||typeof cheerScoreBody==="undefined")return;
+  const ranks=cheerRanking(cheerGrade);
+  cheerRankCards.innerHTML=ranks.map((r,i)=>`
+    <div class="cheerRankCard">
+      <div class="rank">${i+1}위</div>
+      <b>${cheerGrade}학년 ${r.c}반</b>
+      <small>${r.total}점</small>
+    </div>`).join("");
+
+  cheerScoreBody.innerHTML=Array.from({length:8},(_,i)=>String(i+1)).map(c=>{
+    const row=cheerClass(cheerGrade,c);
+    return `<tr>
+      <td><b>${c}반</b></td>
+      <td><b>${cheerTotal(cheerGrade,c)}점</b></td>
+      ${CHEER_ITEMS.map(item=>`<td>${Number(row[item.key])||0}</td>`).join("")}
+    </tr>`;
+  }).join("");
+}
+
+function renderPoints(){
+ const sports=["축구","피구","학년별 구기","줄다리기","8자 줄넘기","협동 파도타기","릴레이 고리던지기","이어달리기","입장식"];
+ pointsBody.innerHTML=sports.map(s=>{
+   const p=POINTS[s];
+   const fifth=(p[5]??null);
+   const label=(fifth===null)?"배점 입력 필요":`${fifth}점 (5~8위 동일)`;
+   return `<tr><td><b>${s}</b></td><td>${p[1]??"—"}</td><td>${p[2]??"—"}</td><td>${p[3]??"—"}</td><td>${p[4]??"—"}</td><td>${label}</td></tr>`
+ }).join("")
+}
+function renderRules(){
+ rulesList.innerHTML=Object.entries(RULES).map(([k,v],i)=>`<details ${i===0?"open":""}><summary>${esc(k)}</summary><div class="detail"><ul>${v.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></details>`).join("")
+}
+function renderBrackets(){
+ bracketCards.innerHTML=["1","2","3"].map(g=>`<div class="card"><h3>${g}학년 대진표</h3>${SPORTS_BY_GRADE[g].filter(s=>["축구","피구","빅발리볼","배구","이어달리기","줄다리기","입장식"].includes(s)).map(s=>`<p><span class="tag">${esc(s)}</span> <span class="muted">추첨/기록 입력 예정</span></p>`).join("")}</div>`).join("")
+}
+function renderPlayers(){
+ const q=playerSearch.value.trim().toLowerCase(),g=playerGrade.value,s=playerSport.value;
+ const list=data.players.filter(p=>{const t=`${p.name} ${p.grade}-${p.classNo} ${p.sport}`.toLowerCase();return(!q||t.includes(q))&&(!g||p.grade===g)&&(!s||p.sport===s)});
+ playerGrid.innerHTML=list.map(p=>`<div class="player"><b>${esc(p.name)} · ${p.grade}학년 ${p.classNo}반</b><small>${esc(p.sport)}${p.reserve?" · 후보":""}</small></div>`).join("");
+ playerEmpty.style.display=list.length?"none":"block";
+ const sports=[...new Set(Object.values(SPORTS_BY_GRADE).flat())];playerSport.innerHTML='<option value="">전체 종목</option>'+sports.map(x=>`<option>${esc(x)}</option>`).join("")
+}
+[playerSearch,playerGrade,playerSport].forEach(x=>x.addEventListener("input",renderPlayers));
+
+
+
+function maskKoreanName(name){
+  const chars=Array.from(String(name||"").trim());
+  if(chars.length<=1)return chars.length?`${chars[0]}○`:"신청자";
+  if(chars.length===2)return `${chars[0]}○`;
+  return `${chars[0]}${"○".repeat(chars.length-2)}${chars[chars.length-1]}`;
+}
+
+function publicApplicantLabel(applicant){
+  const raw=String(applicant||"").trim();
+
+  // 기본 형식: 20315 홍길동
+  // 2 = 학년, 03 = 반, 15 = 번호
+  const m=raw.match(/^([1-3])(\d{2})(\d{2})\s+(.+)$/);
+  if(m){
+    const grade=Number(m[1]);
+    const classNo=Number(m[2]);
+    const name=m[4].trim();
+    return `${grade}학년 ${classNo}반 ${maskKoreanName(name)}`;
+  }
+
+  // 공백 없이 입력한 경우도 한글 이름이면 지원: 20315홍길동
+  const compact=raw.match(/^([1-3])(\d{2})(\d{2})([가-힣]{2,})$/);
+  if(compact){
+    const grade=Number(compact[1]);
+    const classNo=Number(compact[2]);
+    const name=compact[4].trim();
+    return `${grade}학년 ${classNo}반 ${maskKoreanName(name)}`;
+  }
+
+  // 예상 형식이 아니면 학번/숫자는 공개하지 않고 이름으로 보이는 부분만 마스킹
+  const namePart=raw.split(/\s+/).filter(Boolean).pop()||"신청자";
+  return maskKoreanName(namePart);
+}
+
+function renderSongs(){
+ const songs=(data.songs||[]).slice();
+ songCount.textContent=`신청 ${songs.length}곡`;
+ if(!songs.length){
+   songList.innerHTML='<div class="songEmpty">아직 신청된 노래가 없습니다.<br>첫 번째 신청곡을 남겨보세요.</div>';
+ }else{
+   songList.innerHTML=songs.map(s=>`
+     <div class="songCard">
+       <div class="songTop">
+         <div>
+           <div class="songTitle">🎵 ${esc(s.title)}</div>
+           <div class="songArtist">${esc(s.artist)}</div>
+         </div>
+         <div class="songTime">${esc(s.time)}</div>
+       </div>
+       <div class="songApplicant">신청자 · ${esc(publicApplicantLabel(s.applicant))}</div>
+       ${s.story?`<div class="songStory">${esc(s.story)}</div>`:""}
+     </div>`).join("");
+ }
+ if(typeof songAdminSelect!=="undefined"){
+   songAdminSelect.innerHTML='<option value="">신청곡 선택</option>'+(data.songs||[]).map(s=>`<option value="${s.id}">${esc(s.title)} · ${esc(s.artist)} · ${esc(s.applicant)}</option>`).join("");
+ }
+}
+
+async function loadSongsFromCloud(){
+ const {data:rows,error}=await sb.from("song_requests")
+   .select("id,title,artist,applicant,story,created_at")
+   .order("created_at",{ascending:false})
+   .limit(300);
+ if(error){cloudError("노래 신청 목록 불러오기",error);return false}
+ data.songs=(rows||[]).map(r=>({
+   id:r.id,title:r.title,artist:r.artist,applicant:r.applicant,story:r.story||"",
+   time:new Date(r.created_at).toLocaleString("ko-KR")
+ }));
+ saveLocal();
+ return true;
+}
+
+async function submitSong(){
+ const title=songTitleInput.value.trim();
+ const artist=songArtistInput.value.trim();
+ const applicant=songApplicantInput.value.trim();
+ const story=songStoryInput.value.trim();
+ if(!title)return alert("노래 제목을 입력하세요.");
+ if(!artist)return alert("가수 이름을 입력하세요.");
+ if(!applicant)return alert("신청자 학번과 이름을 입력하세요.");
+ if(!cloudReady)return alert("실시간 DB 연결을 먼저 확인해 주세요. Supabase SQL 설정이 아직 적용되지 않았을 수 있습니다.");
+
+ const {error}=await sb.from("song_requests").insert({title,artist,applicant,story});
+ if(error){
+   console.error(error);
+   alert("노래 신청에 실패했습니다. 관리자에게 DB 설정 상태를 문의해 주세요.");
+   return;
+ }
+ songTitleInput.value="";
+ songArtistInput.value="";
+ songApplicantInput.value="";
+ songStoryInput.value="";
+ await loadSongsFromCloud();
+}
+
+async function deleteSelectedSong(){
+ const id=songAdminSelect.value;
+ if(!id)return alert("삭제할 신청곡을 선택하세요.");
+ if(!confirm("선택한 신청곡을 삭제할까요?"))return;
+ const {error}=await sb.from("song_requests").delete().eq("id",id);
+ if(error){alert("삭제 권한이 없거나 오류가 발생했습니다.");console.error(error);return}
+ await loadSongsFromCloud();
+}
+
+async function clearSongs(){
+ if(!(data.songs||[]).length)return alert("삭제할 신청곡이 없습니다.");
+ if(!confirm("노래 신청목록을 모두 삭제할까요?"))return;
+ const {error}=await sb.from("song_requests").delete().gte("created_at","2000-01-01T00:00:00Z");
+ if(error){alert("전체 삭제에 실패했습니다.");console.error(error);return}
+ await loadSongsFromCloud();
+}
+
+function flagKey(g,c){return `${g}-${c}`}
+
+function renderFlags(){
+ const g=flagGradeFilter?.value||"", c=flagClassFilter?.value||"";
+ const cards=[];
+ for(let grade=1;grade<=3;grade++){
+   if(g && String(grade)!==g) continue;
+   for(let cls=1;cls<=8;cls++){
+     if(c && String(cls)!==c) continue;
+     const key=flagKey(grade,cls), f=data.flags?.[key];
+     cards.push(`<div class="flagCard">
+       <div class="flagImage">
+         ${f?.image
+           ? `<img src="${f.image}" alt="${grade}학년 ${cls}반 깃발">`
+           : `<div class="flagPlaceholder"><span class="icon">🚩</span>${grade}학년 ${cls}반<br>깃발 이미지 준비 중</div>`}
+       </div>
+       <div class="flagInfo">
+         <b>${grade}학년 ${cls}반</b>
+         <small>깃발제작 · 50점</small>
+         ${f?.caption?`<div class="flagCaption">${esc(f.caption)}</div>`:""}
+       </div>
+     </div>`);
+   }
+ }
+ flagGrid.innerHTML=cards.join("");
+}
+
+if(typeof flagGradeFilter!=="undefined"){
+  flagGradeFilter.addEventListener("input",renderFlags);
+  flagClassFilter.addEventListener("input",renderFlags);
+}
+
+function refreshFlagAdminPreview(){
+ if(typeof flagGrade==="undefined") return;
+ const f=data.flags?.[flagKey(flagGrade.value,flagClass.value)];
+ flagAdminPreview.innerHTML=f?.image?`<img src="${f.image}" alt="깃발 미리보기">`:'<span class="muted">이미지 미리보기</span>';
+ flagCaptionInput.value=f?.caption||"";
+}
+
+if(typeof flagFile!=="undefined"){
+ flagFile.addEventListener("change",()=>{
+   const file=flagFile.files?.[0];
+   if(!file){refreshFlagAdminPreview();return}
+   const reader=new FileReader();
+   reader.onload=()=>{flagAdminPreview.innerHTML=`<img src="${reader.result}" alt="깃발 미리보기">`};
+   reader.readAsDataURL(file);
+ });
+ flagGrade.addEventListener("change",refreshFlagAdminPreview);
+ flagClass.addEventListener("change",refreshFlagAdminPreview);
+}
+
+async function loadFlagsFromCloud(){
+ const {data:rows,error}=await sb.from("class_flags")
+   .select("grade,class_no,caption,image_path,updated_at")
+   .order("grade").order("class_no");
+ if(error){cloudError("깃발 목록 불러오기",error);return false}
+ data.flags={};
+ for(const r of rows||[]){
+   const {data:urlData}=sb.storage.from("class-flags").getPublicUrl(r.image_path);
+   data.flags[flagKey(r.grade,r.class_no)]={
+     image:urlData.publicUrl,
+     path:r.image_path,
+     caption:r.caption||"",
+     updatedAt:r.updated_at
+   };
+ }
+ saveLocal();
+ return true;
+}
+
+async function saveFlag(){
+ const g=flagGrade.value,c=flagClass.value,key=flagKey(g,c),file=flagFile.files?.[0];
+ const caption=flagCaptionInput.value.trim();
+ const prev=data.flags?.[key];
+
+ if(!file && !prev?.path)return alert("업로드할 깃발 이미지를 선택하세요.");
+
+ let imagePath=prev?.path||null;
+ if(file){
+   if(file.size>10*1024*1024)return alert("이미지는 10MB 이하로 올려주세요.");
+   const ext=(file.name.split(".").pop()||"jpg").toLowerCase().replace(/[^a-z0-9]/g,"")||"jpg";
+   imagePath=`${g}/${c}-${Date.now()}.${ext}`;
+   const {error:uploadError}=await sb.storage.from("class-flags").upload(imagePath,file,{
+     cacheControl:"3600",upsert:false,contentType:file.type||undefined
+   });
+   if(uploadError){alert("깃발 이미지 업로드에 실패했습니다.");console.error(uploadError);return}
+ }
+
+ const {error}=await sb.from("class_flags").upsert({
+   grade:Number(g),class_no:Number(c),caption,image_path:imagePath,updated_at:new Date().toISOString()
+ },{onConflict:"grade,class_no"});
+
+ if(error){
+   if(file && imagePath) await sb.storage.from("class-flags").remove([imagePath]);
+   alert("깃발 정보 저장에 실패했습니다.");console.error(error);return;
+ }
+
+ if(file && prev?.path && prev.path!==imagePath){
+   await sb.storage.from("class-flags").remove([prev.path]);
+ }
+ flagFile.value="";
+ await loadFlagsFromCloud();
+ refreshFlagAdminPreview();
+}
+
+async function deleteFlag(){
+ const g=flagGrade.value,c=flagClass.value,key=flagKey(g,c);
+ const prev=data.flags?.[key];
+ if(!prev)return alert("등록된 깃발이 없습니다.");
+ if(!confirm(`${g}학년 ${c}반 깃발 이미지를 삭제할까요?`))return;
+
+ const {error}=await sb.from("class_flags").delete().eq("grade",Number(g)).eq("class_no",Number(c));
+ if(error){alert("깃발 정보 삭제에 실패했습니다.");console.error(error);return}
+ if(prev.path)await sb.storage.from("class-flags").remove([prev.path]);
+ await loadFlagsFromCloud();
+ refreshFlagAdminPreview();
+}
+
+function renderStaff(){staffBody.innerHTML=STAFF.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td><td class="muted">${esc(r[2])}</td></tr>`).join("");judgeBody.innerHTML=JUDGES.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td class="muted">${esc(r[3])}</td></tr>`).join("")}
+function renderNotices(){noticeList.innerHTML=(data.notices||[]).map(n=>`<div class="notice"><span class="tag ${n.type==="긴급"?"yellow":"cyan"}">${esc(n.type)}</span> <b>${esc(n.text)}</b><time>${esc(n.time)}</time></div>`).join("")}
+
+async function loadNoticesFromCloud(){
+ const {data:rows,error}=await sb.from("notices").select("id,type,text,created_at").order("created_at",{ascending:false}).limit(100);
+ if(error){cloudError("공지 불러오기",error);return false}
+ data.notices=(rows||[]).map(r=>({id:r.id,type:r.type,text:r.text,time:new Date(r.created_at).toLocaleString("ko-KR")}));
+ saveLocal();
+ return true;
+}
+
+async function loginAdmin(){
+ const email=adminEmail.value.trim();
+ const password=adminPassword.value;
+ if(!email||!password)return alert("관리자 이메일과 비밀번호를 입력하세요.");
+ const {data:authData,error}=await sb.auth.signInWithPassword({email,password});
+ if(error){alert("관리자 로그인에 실패했습니다.");console.error(error);return}
+ showAdminSession(authData.session);
+}
+
+async function logoutAdmin(){
+ await sb.auth.signOut();
+ loginBox.style.display="block";
+ adminPanel.style.display="none";
+ adminPassword.value="";
+}
+
+function showAdminSession(session){
+ if(!session)return;
+ loginBox.style.display="none";
+ adminPanel.style.display="block";
+ adminUserLabel.textContent=session.user?.email||"관리자";
+ initAdmin();
+}
+
+function initAdmin(){
+ refreshFlagAdminPreview();
+ if(typeof cheerAdminGrade!=="undefined"){
+   cheerAdminGrade.onchange=renderCheerAdmin;
+   cheerAdminClass.onchange=renderCheerAdmin;
+   renderCheerAdmin();
+ }
+ aClass.innerHTML=Array.from({length:8},(_,i)=>`<option value="${i+1}">${i+1}반</option>`).join("");
+ aRank.innerHTML='<option value="">순위 선택</option>'+Array.from({length:8},(_,i)=>`<option value="${i+1}">${i+1}위</option>`).join("");
+ fillSports();aGrade.onchange=fillSports;
+}
+
+function fillSports(){aSport.innerHTML=SPORTS_BY_GRADE[aGrade.value].map(s=>`<option>${esc(s)}</option>`).join("")}
+
+
+function renderCheerAdmin(){
+  if(typeof cheerAdminGrid==="undefined")return;
+  const g=cheerAdminGrade.value;
+  const c=cheerAdminClass.value;
+  const row=cheerClass(g,c);
+  cheerAdminGrid.innerHTML=CHEER_ITEMS.map(item=>`
+    <div class="cheerAdminRow">
+      <div class="label">${item.label}</div>
+      <button class="cheerBtn minus" type="button" data-cheer-key="${item.key}" data-delta="-5" aria-label="${item.label} 5점 감점">-5</button>
+      <div class="value">${Number(row[item.key])||0}</div>
+      <button class="cheerBtn plus" type="button" data-cheer-key="${item.key}" data-delta="5" aria-label="${item.label} 5점 가점">+5</button>
+    </div>`).join("");
+  cheerAdminTotal.textContent=`${cheerTotal(g,c)}점`;
+
+  cheerAdminGrid.querySelectorAll("[data-cheer-key]").forEach(btn=>{
+    btn.addEventListener("click",()=>adjustCheerScore(btn.dataset.cheerKey,Number(btn.dataset.delta)));
+  });
+}
+
+async function adjustCheerScore(key,delta){
+  const item=CHEER_ITEMS.find(x=>x.key===key);
+  if(!item)return;
+  const g=cheerAdminGrade.value;
+  const c=cheerAdminClass.value;
+  const row=cheerClass(g,c);
+  row[key]=(Number(row[key])||0)+delta;
+  row.updatedAt=new Date().toISOString();
+  data.cheer[g][c]=row;
+  saveLocal();
+  renderCheerAdmin();
+
+  const ok=await saveSiteStateToCloud();
+  if(!ok){
+    await loadSiteStateFromCloud();
+    renderCheerAdmin();
+  }
+}
+
+async function saveSiteStateToCloud(){
+ const scorePayload=clone(data.score);
+ scorePayload._cheer=clone(data.cheer||DEFAULT.cheer);
+ const {error}=await sb.from("site_state").update({
+   current_schedule:data.current,
+   scores:scorePayload,
+   updated_at:new Date().toISOString()
+ }).eq("id","main");
+ if(error){alert("실시간 상태 저장에 실패했습니다.");console.error(error);return false}
+ return true;
+}
+
+async function loadSiteStateFromCloud(){
+ const {data:row,error}=await sb.from("site_state").select("current_schedule,scores").eq("id","main").single();
+ if(error){cloudError("점수/현재일정 불러오기",error);return false}
+ data.current=Number.isInteger(row.current_schedule)?row.current_schedule:0;
+ const scores=row.scores||{};
+ const cloudCheer=(scores._cheer&&typeof scores._cheer==="object")?scores._cheer:null;
+ delete scores._cheer;
+ for(const g of ["1","2","3"]){
+   if(!scores[g])scores[g]={};
+   for(let c=1;c<=8;c++){if(!scores[g][c])scores[g][c]={};}
+ }
+ data.score=scores;
+ data.cheer=cloudCheer||data.cheer||clone(DEFAULT.cheer);
+ for(const g of ["1","2","3"]){
+   if(!data.cheer[g])data.cheer[g]={};
+   for(let c=1;c<=8;c++){
+     data.cheer[g][c]=normalizeCheerClass(data.cheer[g][c]);
+   }
+ }
+ saveLocal();
+ return true;
+}
+
+async function applyRank(){
+ const g=aGrade.value,c=aClass.value,s=aSport.value,rank=Number(aRank.value);if(!rank)return alert("순위를 선택하세요.");
+ const key=sportKey(g,s);
+ const lookupRank = rank>=5 ? 5 : rank;
+ const p=POINTS[key]?.[lookupRank];
+ data.score[g][c][s]={rank,points:typeof p==="number"?p:null};
+ saveLocal();
+ if(!await saveSiteStateToCloud())await loadSiteStateFromCloud();
+}
+
+async function setCurrent(){
+ data.current=Number(currentSchedule.value);
+ saveLocal();
+ if(!await saveSiteStateToCloud())await loadSiteStateFromCloud();
+}
+
+async function addNotice(){
+ const t=nText.value.trim();if(!t)return alert("공지 내용을 입력하세요.");
+ const {error}=await sb.from("notices").insert({type:nType.value,text:t});
+ if(error){alert("공지 등록에 실패했습니다.");console.error(error);return}
+ nText.value="";
+ await loadNoticesFromCloud();
+}
+
+
+async function resetSelectedScores(){
+  const grade=resetGrade.value;
+  const type=resetScoreType.value;
+
+  const gradeLabel=grade==="all"?"전체 학년":`${grade}학년`;
+  const typeLabel={
+    game:"경기점수",
+    cheer:"응원점수",
+    both:"경기점수와 응원점수"
+  }[type];
+
+  const message=
+    `${gradeLabel}의 ${typeLabel}를 모두 초기화할까요?\n\n`+
+    `이 작업은 점수를 0점 상태로 되돌리며 되돌리기 기능은 없습니다.`;
+
+  if(!confirm(message))return;
+
+  const grades=grade==="all"?["1","2","3"]:[grade];
+
+  // 경기점수 초기화
+  if(type==="game"||type==="both"){
+    for(const g of grades){
+      data.score[g]={};
+      for(let c=1;c<=8;c++){
+        data.score[g][c]={};
+      }
+    }
+  }
+
+  // 응원점수 초기화
+  if(type==="cheer"||type==="both"){
+    for(const g of grades){
+      data.cheer[g]={};
+      for(let c=1;c<=8;c++){
+        data.cheer[g][c]=emptyCheerClass();
+      }
+    }
+  }
+
+  saveLocal();
+
+  const ok=await saveSiteStateToCloud();
+  if(!ok){
+    alert("Supabase 저장 중 오류가 발생했습니다. 서버 상태를 다시 불러옵니다.");
+    await loadSiteStateFromCloud();
+    return;
+  }
+
+  if(typeof cheerAdminGrid!=="undefined")renderCheerAdmin();
+
+  alert(`${gradeLabel}의 ${typeLabel}가 초기화되었습니다.`);
+}
+
+function exportData(){
+ const b=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+ const a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="seohyeon-sportsday-2026-data.json";a.click();URL.revokeObjectURL(a.href)
+}
+
+async function setupAuthState(){
+ const {data:{session}}=await sb.auth.getSession();
+ if(session)showAdminSession(session);
+ sb.auth.onAuthStateChange((_event,session)=>{
+   if(session)showAdminSession(session);
+   else{loginBox.style.display="block";adminPanel.style.display="none";}
+ });
+}
+
+async function initCloud(){
+ setCloudStatus("warn","☁️ 실시간 연결 확인 중");
+ try{
+   const results=await Promise.all([
+     loadSongsFromCloud(),
+     loadNoticesFromCloud(),
+     loadSiteStateFromCloud(),
+     loadFlagsFromCloud()
+   ]);
+   cloudReady=results.every(Boolean);
+   if(cloudReady){
+     setCloudStatus("ok","☁️ 실시간 연결됨");
+     subscribeRealtime();
+   }else{
+     setCloudStatus("bad","☁️ SQL 설정 필요");
+   }
+   await setupAuthState();
+ }catch(e){
+   cloudReady=false;
+   cloudError("Supabase 초기화",e);
+ }
+}
+
+function subscribeRealtime(){
+ for(const ch of cloudChannels)sb.removeChannel(ch);
+ cloudChannels=[];
+
+ const songsCh=sb.channel("song_requests_live")
+   .on("postgres_changes",{event:"*",schema:"public",table:"song_requests"},()=>loadSongsFromCloud())
+   .subscribe();
+ const noticesCh=sb.channel("notices_live")
+   .on("postgres_changes",{event:"*",schema:"public",table:"notices"},()=>loadNoticesFromCloud())
+   .subscribe();
+ const stateCh=sb.channel("site_state_live")
+   .on("postgres_changes",{event:"UPDATE",schema:"public",table:"site_state",filter:"id=eq.main"},()=>loadSiteStateFromCloud())
+   .subscribe();
+ const flagsCh=sb.channel("class_flags_live")
+   .on("postgres_changes",{event:"*",schema:"public",table:"class_flags"},()=>loadFlagsFromCloud())
+   .subscribe();
+
+ cloudChannels=[songsCh,noticesCh,stateCh,flagsCh];
+}
+
+function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderPlayers();renderFlags();renderSongs();renderStaff();renderNotices();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
+renderAll();
+initCloud();
+setInterval(renderCurrentProgramLive,30000);
+</script>
+</body></html>
