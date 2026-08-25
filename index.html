@@ -941,6 +941,86 @@ summary {
   .entranceVoteRanks{grid-template-columns:1fr}
 }
 
+
+/* ===== v2.29 home teacher vote shortcuts ===== */
+.homeVoteHead{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:12px;margin-bottom:11px
+}
+.homeVoteHead h2{margin:0;color:#17324f}
+.homeVoteHead p{margin:4px 0 0;color:#6a829a;font-size:12px}
+.teacherOnlyBadge{
+  display:inline-flex;align-items:center;justify-content:center;
+  flex:0 0 auto;padding:7px 10px;border-radius:999px;
+  background:#eef7ff;color:#2d78be;font-size:10px;font-weight:950;
+  border:1px solid rgba(67,151,224,.13)
+}
+.teacherOnlyNotice{
+  display:flex;gap:10px;align-items:center;
+  padding:11px 13px;margin-bottom:11px;border-radius:15px;
+  background:linear-gradient(135deg,#fff9df,#fffdf5);
+  border:1px solid rgba(255,201,76,.25)
+}
+.teacherOnlyIcon{font-size:22px;flex:0 0 auto}
+.teacherOnlyNotice b{
+  display:block;color:#755600;font-size:13px;margin-bottom:2px
+}
+.teacherOnlyNotice span{
+  display:block;color:#8b7440;font-size:11px;line-height:1.45
+}
+.homeVoteButtons{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px
+}
+.homeVoteBtn{
+  display:grid;grid-template-columns:auto 1fr auto;
+  align-items:center;gap:11px;min-width:0;
+  border:1px solid rgba(64,105,148,.11);
+  background:#f8fbff;color:#17324f;
+  border-radius:17px;padding:14px;text-align:left;cursor:pointer
+}
+.homeVoteBtn.flag{
+  background:linear-gradient(135deg,#f3fbf7,#fbfffd);
+  border-color:rgba(57,171,118,.15)
+}
+.homeVoteBtn.entrance{
+  background:linear-gradient(135deg,#fff6fb,#fffafd);
+  border-color:rgba(255,113,153,.16)
+}
+.homeVoteBtnIcon{
+  display:flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:13px;background:#fff;
+  font-size:21px;box-shadow:0 5px 12px rgba(67,113,158,.05)
+}
+.homeVoteBtn b{display:block;font-size:14px;margin-bottom:3px}
+.homeVoteBtn small{display:block;color:#6a829a;font-size:11px;line-height:1.35}
+.homeVoteArrow{font-size:19px;font-weight:950;color:#6d8ba7}
+.homeVoteBtn:hover{transform:translateY(-1px)}
+@media(max-width:620px){
+  .homeVoteButtons{grid-template-columns:1fr}
+  .homeVoteHead{align-items:flex-start}
+}
+
+
+/* ===== v2.30 verified teacher vote + self delete ===== */
+.voteManageButtons{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:8px;
+  margin-top:10px;
+}
+.voteManageButtons .btn{margin-top:0!important}
+.voteDeleteBtn{
+  color:#b94f67!important;
+  background:#fff5f7!important;
+  border:1px solid rgba(210,81,112,.17)!important;
+}
+.voteDeleteBtn:hover{
+  background:#ffedf1!important;
+}
+@media(max-width:520px){
+  .voteManageButtons{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -1023,6 +1103,38 @@ summary {
         <span>공연용 최종 음원 제출</span>
       </div>
     </div>
+  </div>
+</div>
+
+<div class="card homeVoteCard" style="margin-top:15px">
+  <div class="homeVoteHead">
+    <div>
+      <h2>🗳️ 선생님 투표 바로가기</h2>
+      <p>학급 깃발과 3학년 입장식 투표에 참여해 주세요.</p>
+    </div>
+    <span class="teacherOnlyBadge">교사 전용</span>
+  </div>
+
+  <div class="teacherOnlyNotice">
+    <span class="teacherOnlyIcon">🏫</span>
+    <div>
+      <b>서현중학교 교사만 투표에 참여 가능합니다.</b>
+      <span>등록된 교사 이름과 학교 내선번호가 모두 일치해야 투표할 수 있습니다.</span>
+    </div>
+  </div>
+
+  <div class="homeVoteButtons">
+    <button type="button" class="homeVoteBtn flag" onclick="openFlagVoteFromHome()">
+      <span class="homeVoteBtnIcon">🚩</span>
+      <span><b>학급 깃발 투표</b><small>전 학년 학급 깃발 평가</small></span>
+      <span class="homeVoteArrow">→</span>
+    </button>
+
+    <button type="button" class="homeVoteBtn entrance" onclick="openEntranceVoteFromHome()">
+      <span class="homeVoteBtnIcon">🎉</span>
+      <span><b>3학년 입장식 투표</b><small>1~4위 학급 선택</small></span>
+      <span class="homeVoteArrow">→</span>
+    </button>
   </div>
 </div>
 
@@ -1255,10 +1367,15 @@ summary {
         <label class="flagVoteRank"><b>4위 <small>20점</small></b><select id="flagVote4"></select></label>
         <label class="flagVoteRank"><b>5위 <small>10점</small></b><select id="flagVote5"></select></label>
       </div>
-      <button class="btn primary" type="button" onclick="submitFlagVote()">투표 제출 / 수정</button>
+      <div class="voteManageButtons">
+        <button class="btn primary" type="button" onclick="submitFlagVote()">투표 제출 / 수정</button>
+        <button class="btn voteDeleteBtn" type="button" onclick="deleteFlagVote()">내 투표 삭제</button>
+      </div>
     </div>
     <p class="muted" style="font-size:11px;line-height:1.65;margin:12px 0 0">
-      다섯 학급을 서로 다르게 선택해야 합니다. 같은 이름과 내선번호로 다시 제출하면 이전 투표가 새 선택으로 수정됩니다.
+      <b>서현중학교 교사만 투표에 참여 가능합니다.</b><br>
+      등록된 <b>교사 이름과 내선번호가 모두 정확히 일치해야</b> 투표 제출·수정·삭제가 가능합니다.
+      다섯 학급을 서로 다르게 선택해야 하며, 같은 정보로 다시 제출하면 기존 투표가 수정됩니다.
       이름과 내선번호는 공개 점수 화면에 표시되지 않습니다.
     </p>
   </div>
@@ -1470,7 +1587,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.28</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.30</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -1578,6 +1695,26 @@ function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&l
 function openTab(id){document.querySelectorAll("main section").forEach(s=>s.classList.toggle("active",s.id===id));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("active",b.dataset.tab===id));window.scrollTo({top:document.querySelector(".navwrap").offsetTop,behavior:"smooth"})}
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>openTab(b.dataset.tab));
 
+
+
+function openFlagVoteFromHome(){
+  openTab("flags");
+  setTimeout(()=>{
+    const target=document.querySelector("#flags .flagVoteLayout");
+    if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
+  },120);
+}
+
+function openEntranceVoteFromHome(){
+  bracketGrade="3";
+  bracketSport="입장식";
+  renderBrackets();
+  openTab("bracket");
+  setTimeout(()=>{
+    const target=document.getElementById("bracketView");
+    if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
+  },120);
+}
 
 function renderDDay(){
   if(typeof ddayValue==="undefined"||typeof ddaySub==="undefined")return;
@@ -1889,9 +2026,14 @@ function renderEntranceVotePanel(){
               <label class="entranceVoteRank"><b>🥉 3위 <small>30점</small></b><select id="entranceVote3"></select></label>
               <label class="entranceVoteRank"><b>4위 <small>30점</small></b><select id="entranceVote4"></select></label>
             </div>
-            <button class="btn primary" type="button" onclick="submitEntranceVote()">투표 제출 / 수정</button>
+            <div class="voteManageButtons">
+              <button class="btn primary" type="button" onclick="submitEntranceVote()">투표 제출 / 수정</button>
+              <button class="btn voteDeleteBtn" type="button" onclick="deleteEntranceVote()">내 투표 삭제</button>
+            </div>
           </div>
           <div class="entranceVoteNote">
+            <b>서현중학교 교사만 투표에 참여 가능합니다.</b><br>
+            등록된 <b>교사 이름과 내선번호가 모두 정확히 일치해야</b> 투표 제출·수정·삭제가 가능합니다.
             1~4위는 서로 다른 학급을 선택해야 합니다.
             이름과 내선번호는 공개 결과 화면에 표시되지 않습니다.
           </div>
@@ -2011,12 +2153,46 @@ async function submitEntranceVote(){
 
   if(error){
     console.error(error);
-    alert("입장식 투표 저장에 실패했습니다. 이름·내선번호·순위 선택을 다시 확인해 주세요.");
+    alert("입장식 투표 저장에 실패했습니다. 등록된 교사 이름·내선번호가 모두 일치하는지와 순위 선택을 확인해 주세요.");
     return;
   }
 
   await loadEntranceVoteStateFromCloud();
   alert("입장식 투표가 저장되었습니다. 감사합니다.");
+}
+
+async function deleteEntranceVote(){
+  const name=(document.getElementById("entranceVoterName")?.value||"").trim();
+  const extension=(document.getElementById("entranceVoterExtension")?.value||"").trim();
+
+  if(name.length<2)return alert("선생님 이름을 입력해 주세요.");
+  if(!/^\d{3}$/.test(extension))return alert("학교 내선번호 3자리를 입력해 주세요.");
+
+  if(!confirm(`${name} 선생님의 기존 입장식 투표를 삭제할까요?\n삭제 후 같은 정보로 다시 투표할 수 있습니다.`))return;
+
+  const {data:result,error}=await sb.rpc("delete_entrance_vote",{
+    p_voter_name:name,
+    p_extension:extension
+  });
+
+  if(error){
+    console.error(error);
+    alert("투표 삭제에 실패했습니다. 등록된 교사 이름과 내선번호가 모두 일치하는지 확인해 주세요.");
+    return;
+  }
+
+  if(!result?.deleted){
+    alert("해당 이름과 내선번호로 저장된 입장식 투표가 없습니다.");
+    return;
+  }
+
+  [1,2,3,4].forEach(i=>{
+    const el=document.getElementById(`entranceVote${i}`);
+    if(el)el.value="";
+  });
+
+  await loadEntranceVoteStateFromCloud();
+  alert("기존 입장식 투표를 삭제했습니다. 다시 투표할 수 있습니다.");
 }
 
 let bracketGrade="1";
@@ -2676,12 +2852,46 @@ async function submitFlagVote(){
 
   if(error){
     console.error(error);
-    alert("투표 저장에 실패했습니다. 이름·내선번호·순위 선택을 다시 확인해 주세요.");
+    alert("투표 저장에 실패했습니다. 등록된 교사 이름·내선번호가 모두 일치하는지와 순위 선택을 확인해 주세요.");
     return;
   }
 
   await loadFlagVoteStateFromCloud();
   alert("깃발 투표가 저장되었습니다. 감사합니다.");
+}
+
+async function deleteFlagVote(){
+  const name=(document.getElementById("flagVoterName")?.value||"").trim();
+  const extension=(document.getElementById("flagVoterExtension")?.value||"").trim();
+
+  if(name.length<2)return alert("선생님 이름을 입력해 주세요.");
+  if(!/^\d{3}$/.test(extension))return alert("학교 내선번호 3자리를 입력해 주세요.");
+
+  if(!confirm(`${name} 선생님의 기존 깃발 투표를 삭제할까요?\n삭제 후 같은 정보로 다시 투표할 수 있습니다.`))return;
+
+  const {data:result,error}=await sb.rpc("delete_flag_vote",{
+    p_voter_name:name,
+    p_extension:extension
+  });
+
+  if(error){
+    console.error(error);
+    alert("투표 삭제에 실패했습니다. 등록된 교사 이름과 내선번호가 모두 일치하는지 확인해 주세요.");
+    return;
+  }
+
+  if(!result?.deleted){
+    alert("해당 이름과 내선번호로 저장된 깃발 투표가 없습니다.");
+    return;
+  }
+
+  [1,2,3,4,5].forEach(i=>{
+    const el=document.getElementById(`flagVote${i}`);
+    if(el)el.value="";
+  });
+
+  await loadFlagVoteStateFromCloud();
+  alert("기존 깃발 투표를 삭제했습니다. 다시 투표할 수 있습니다.");
 }
 
 function refreshFlagAdminPreview(){
