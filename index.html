@@ -572,6 +572,119 @@ summary {
   }
 }
 
+
+/* v2.20 mobile hero title fit */
+@media(max-width:620px){
+  .hero .wrap{
+    padding-left:14px !important;
+    padding-right:14px !important;
+  }
+  .hero h1{
+    font-size:clamp(17px,4.8vw,23px) !important;
+    letter-spacing:-.065em !important;
+    white-space:nowrap !important;
+    line-height:1.08 !important;
+  }
+  .hero h1 small{
+    white-space:normal !important;
+    font-size:.48em !important;
+    letter-spacing:0 !important;
+    margin-bottom:8px !important;
+  }
+}
+@media(max-width:360px){
+  .hero h1{
+    font-size:16px !important;
+    letter-spacing:-.07em !important;
+  }
+}
+
+
+/* ===== v2.21 realtime brackets ===== */
+.bracketSportTabs{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px}
+.bracketSportTabs button{
+  border:1px solid rgba(64,105,148,.12)!important;
+  background:#f5f9ff!important;
+  color:#496985!important;
+  border-radius:999px!important;
+  padding:8px 12px!important;
+  font-weight:900;
+  cursor:pointer;
+}
+.bracketSportTabs button.active{
+  background:linear-gradient(135deg,#43a1ff,#72b9ff)!important;
+  color:#fff!important;border-color:transparent!important;
+  box-shadow:0 9px 18px rgba(67,161,255,.20)
+}
+.bracketChampion{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:14px 16px;margin-bottom:13px;border-radius:18px;
+  background:linear-gradient(135deg,#fff9df,#fffdf5);
+  border:1px solid rgba(255,201,76,.28);
+}
+.bracketChampion b{font-size:18px;color:#7f5a00}
+.bracketBoard{overflow:auto;padding-bottom:4px}
+.bracketRounds{display:grid;grid-template-columns:repeat(3,minmax(225px,1fr));gap:13px;min-width:760px}
+.bracketRound{display:grid;gap:10px;align-content:start}
+.bracketRoundTitle{font-size:12px;font-weight:950;color:#47729d;padding:0 4px 3px}
+.matchCard{
+  border:1px solid rgba(64,105,148,.12);
+  background:#fbfdff;border-radius:18px;padding:12px;
+  box-shadow:0 8px 18px rgba(67,113,158,.04);
+}
+.matchHead{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:8px}
+.matchHead b{font-size:12px;color:#55718d}
+.matchState{font-size:10px;font-weight:900;color:#7890a7}
+.matchState.done{color:#208b65}
+.teamLine{
+  display:flex;justify-content:space-between;align-items:center;gap:8px;
+  min-height:38px;padding:8px 10px;border-radius:12px;background:#f4f8fc;
+  color:#46637f;font-weight:850;
+}
+.teamLine+.teamLine{margin-top:6px}
+.teamLine.winner{
+  color:#126d50;background:#eafaf4;border:1px solid rgba(47,199,150,.18)
+}
+.teamLine.pending{color:#96a8ba;font-weight:700}
+.teamClass{font-size:14px}.winnerMark{font-size:10px;font-weight:950;color:#208b65}
+.relayIntro{
+  padding:10px 12px;border-radius:14px;margin-bottom:12px;
+  background:#eef7ff;color:#3e678e;font-size:12px;font-weight:800
+}
+.relayGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.relayCard{border:1px solid rgba(64,105,148,.12);border-radius:18px;padding:13px;background:#fbfdff}
+.relayCard h4{margin:0 0 9px;color:#315779}
+.relayTeam{
+  display:flex;justify-content:space-between;gap:8px;align-items:center;
+  padding:8px 9px;border-radius:11px;background:#f4f8fc;margin-top:6px;
+  color:#46637f;font-weight:850
+}
+.relayTeam.qualify{background:#eafaf4;color:#126d50;border:1px solid rgba(47,199,150,.16)}
+.relayTeam.champion{background:#fff8df;color:#806000;border:1px solid rgba(255,201,76,.25)}
+.relayRank{font-size:10px;font-weight:950}
+.bracketAdminHead{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.adminMatch{
+  padding:10px;border:1px solid rgba(64,105,148,.11);border-radius:15px;background:#f9fcff;
+  margin-top:8px
+}
+.adminMatchTitle{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-bottom:7px}
+.adminMatchTitle b{color:#315779}.adminMatchTitle small{color:#7890a7}
+.adminMatchControls{display:grid;grid-template-columns:1fr auto;gap:7px}
+.adminMatchControls select{min-width:0}
+.relayAdminBlock{padding:11px;border:1px solid rgba(64,105,148,.11);border-radius:15px;background:#f9fcff;margin-top:8px}
+.relayAdminBlock h4{margin:0 0 8px;color:#315779}
+.relayAdminSelects{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px}
+.relayFinalSelects{display:grid;grid-template-columns:repeat(2,1fr);gap:7px;margin-bottom:7px}
+.bracketEmpty{padding:28px 12px;text-align:center;color:#7890a7}
+@media(max-width:760px){
+  .relayGrid{grid-template-columns:1fr}
+  .bracketAdminHead{grid-template-columns:1fr}
+}
+@media(max-width:520px){
+  .relayAdminSelects,.relayFinalSelects{grid-template-columns:1fr}
+  .adminMatchControls{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -721,11 +834,34 @@ summary {
 </section>
 
 <section id="bracket">
-<div class="titleRow"><div><h2>🧩 대진표 · 경기기록</h2><p>현재 계획서의 대진표 칸은 비어 있어 추첨 후 입력하도록 구성</p></div></div>
-<div class="grid g3" id="bracketCards"></div>
+<div class="titleRow">
+  <div>
+    <h2>🧩 대진표 · 경기결과</h2>
+    <p>1·2학년 추첨 대진표와 경기 결과를 실시간으로 확인합니다.</p>
+  </div>
+  <span class="status"><span class="dot"></span>LIVE</span>
+</div>
+
+<div class="card">
+  <div class="gradeTabs" id="bracketGradeTabs">
+    <button class="active" data-grade="1" onclick="setBracketGrade('1')">1학년</button>
+    <button data-grade="2" onclick="setBracketGrade('2')">2학년</button>
+  </div>
+  <div class="bracketSportTabs" id="bracketSportTabs"></div>
+  <div id="bracketView"></div>
+</div>
+
+<div class="card" style="margin-top:12px">
+  <h3>🏃 이어달리기 진행 방식</h3>
+  <p class="muted" style="line-height:1.7;margin-bottom:0">
+    이어달리기는 일반 토너먼트와 다르게 예선 한 조에 4개 학급이 함께 경기합니다.
+    각 예선 조의 1·2위, 총 4개 학급이 결승에 진출하며 결승에서 최종 1~4위를 결정합니다.
+  </p>
+</div>
+
 <div class="card" style="margin-top:12px">
 <h3>기록형 종목</h3>
-<p class="muted">8자 줄넘기는 1·2차 기록 합계와 등위, 릴레이 고리던지기는 기록과 등위를 학년별 1~8반에 입력할 수 있도록 관리자 화면에서 준비했습니다.</p>
+<p class="muted">8자 줄넘기와 릴레이 고리던지기는 기존 실시간 종합점수 입력 방식으로 운영합니다.</p>
 </div>
 </section>
 
@@ -895,6 +1031,31 @@ summary {
 <p class="muted" style="font-size:11px">5~8위는 모두 해당 종목의 5위 배점을 공동 적용합니다.</p>
 </div>
 
+<div class="card bracketAdminCard">
+<h3>🧩 대진 결과 실시간 입력</h3>
+<div class="admin">
+  <div class="bracketAdminHead">
+    <select id="bracketAdminGrade">
+      <option value="1">1학년</option>
+      <option value="2">2학년</option>
+    </select>
+    <select id="bracketAdminSport">
+      <option value="축구">축구</option>
+      <option value="피구">피구</option>
+      <option value="빅발리볼">빅발리볼</option>
+      <option value="줄다리기">줄다리기</option>
+      <option value="이어달리기">이어달리기</option>
+    </select>
+  </div>
+  <div id="bracketAdminBody"></div>
+  <button class="btn danger" type="button" onclick="resetSelectedBracket()">선택 종목 경기결과 초기화</button>
+</div>
+<p class="muted" style="font-size:11px;line-height:1.65">
+  축구·피구·빅발리볼·줄다리기는 경기별 승리팀을 입력하면 다음 라운드 대진에 자동 반영됩니다.
+  이어달리기는 예선 각 조의 1·2위를 입력하면 결승 진출 4개 학급이 자동 구성됩니다.
+</p>
+</div>
+
 <div class="card">
 <h3>📣 응원점수 실시간 입력</h3>
 <div class="cheerAdminHead">
@@ -990,7 +1151,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 운영계획서 반영 프로토타입 v2</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.21</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -998,6 +1159,8 @@ const RULES = {"협동 파도타기": ["결선경기. 성별 구분 없이 인�
 const POINTS = {"축구": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 50, "6": 50, "7": 50, "8": 50}, "피구": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 50, "6": 50, "7": 50, "8": 50}, "학년별 구기": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 50, "6": 50, "7": 50, "8": 50}, "줄다리기": {"1": 150, "2": 130, "3": 100, "4": 80, "5": 80, "6": 80, "7": 80, "8": 80}, "8자 줄넘기": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 40, "6": 40, "7": 40, "8": 40}, "협동 파도타기": {"1": 150, "2": 130, "3": 110, "4": 100, "5": 80, "6": 80, "7": 80, "8": 80}, "릴레이 고리던지기": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 40, "6": 40, "7": 40, "8": 40}, "이어달리기": {"1": 100, "2": 90, "3": 80, "4": 60, "5": 50, "6": 50, "7": 50, "8": 50}, "입장식": {"1": 150, "2": 130, "3": 100, "4": 80, "5": 80, "6": 80, "7": 80, "8": 80}};
 const STAFF = [["체육 한마당 회장(교장)", "박대우", ""], ["체육 한마당 부회장(교감)", "최은자", ""], ["체육 한마당 총괄", "신미숙, 임남묵", "김민성, 김원미"], ["경기진행 총괄 및 심판위원장", "신미숙", "전교 체육부장"], ["보건담당", "윤규순, 나진화", "구급약품 준비"], ["질서(안전)유지", "염응모, 김선욱", "각반 체육부장 · 전 교사 참여"], ["방송준비 및 사진촬영", "임보람", "방송부"], ["점수집계 / 점수현황판", "이미애, 문화은, 이미영, 김경숙", "본부석"], ["응원점수 집계", "오정령, 안호일", ""], ["우승 배너 및 상품 시상", "김원미", ""], ["교내 환경정리", "임수정", "전교생 · 전 교직원"], ["용품 및 경기장 사전준비", "임남묵, 김민성", "스포츠 지원단"]];
 const JUDGES = [["협동 파도타기", "09:40~10:00", "주심: 2학년 각 담임학급 +1 / 부심: 1학년 각 학급 담임 +1", "심판은 학급당 2명씩"], ["8자 줄넘기", "10:00~10:20", "주심: 1학년 각 학급 담임 +1 / 부심: 3학년 각 학급 담임 +1", "심판은 학급당 2명씩"], ["1학년 축구 결승 · 2학년 피구 결승", "10:20~10:50", "축구 주심: 김민성, 임남묵 / 부심: 축구동아리 학생 6명", ""], ["1학년 피구 결승 · 2학년 축구 결승", "10:50~11:20", "피구 주심: 김원미 / 부심: 피구동아리 학생 4명", ""], ["3학년 축구 · 피구 결승", "11:20~12:00", "계획서 경기별 심판표 참조", ""], ["릴레이 고리던지기", "13:20~13:50", "주심: 3학년 각 학급 담임 +1 / 부심: 2학년 각 학급 담임 +1", ""], ["줄다리기 준결승·결승", "13:50~14:30", "주심: 김민성 / 부심: 임남묵, 김선욱, 김원미, 염응모", "선수정렬·인원확인 포함"], ["이어달리기", "14:30~14:50", "주심: 신미숙 / 배턴터치존: 임남묵 / 출발: 김민성 / 골인: 김원미, 오진선, 음웅석", ""], ["빅발리볼 · 배구", "사전경기", "신미숙, 임남묵, 김민성, 김원미 / 스포츠 지원단", ""]];
+const BRACKET_DRAW = {"1":{"축구":[5,6,4,1,3,8,2,7],"피구":[6,5,1,3,7,4,2,8],"빅발리볼":[1,3,4,6,7,5,8,2],"줄다리기":[5,6,4,3,2,7,1,8],"이어달리기":[7,1,4,5,3,8,2,6]},"2":{"축구":[7,3,8,6,2,1,4,5],"피구":[7,4,5,1,8,2,3,6],"빅발리볼":[5,1,2,4,3,7,8,6],"줄다리기":[8,1,7,4,2,5,6,3],"이어달리기":[3,2,5,8,6,1,4,7]}};
+const BRACKET_SPORTS=["축구","피구","빅발리볼","줄다리기","이어달리기"];
 const SPORTS_BY_GRADE = {"1": ["빅발리볼", "협동 파도타기", "8자 줄넘기", "축구", "피구", "릴레이 고리던지기", "줄다리기", "이어달리기"], "2": ["빅발리볼", "협동 파도타기", "8자 줄넘기", "축구", "피구", "릴레이 고리던지기", "줄다리기", "이어달리기"], "3": ["배구", "협동 파도타기", "8자 줄넘기", "축구", "피구", "릴레이 고리던지기", "줄다리기", "이어달리기", "입장식"]};
 
 const DEFAULT = {
@@ -1008,6 +1171,7 @@ const DEFAULT = {
  flags:{},
  flagVoteScores:{},
  flagBallotCount:0,
+ bracketResults:{},
  songs:[],
  cheer:{}
 };
@@ -1055,6 +1219,7 @@ function load(){
       flags: cached.flags || {},
       flagVoteScores: cached.flagVoteScores || {},
       flagBallotCount: Number(cached.flagBallotCount)||0,
+      bracketResults: cached.bracketResults || {},
       songs: cached.songs || [],
       cheer: cached.cheer || clone(DEFAULT.cheer)
     };
@@ -1281,9 +1446,356 @@ function renderPoints(){
 function renderRules(){
  rulesList.innerHTML=Object.entries(RULES).map(([k,v],i)=>`<details ${i===0?"open":""}><summary>${esc(k)}</summary><div class="detail"><ul>${v.map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div></details>`).join("")
 }
-function renderBrackets(){
- bracketCards.innerHTML=["1","2","3"].map(g=>`<div class="card"><h3>${g}학년 대진표</h3>${SPORTS_BY_GRADE[g].filter(s=>["축구","피구","빅발리볼","배구","이어달리기","줄다리기","입장식"].includes(s)).map(s=>`<p><span class="tag">${esc(s)}</span> <span class="muted">추첨/기록 입력 예정</span></p>`).join("")}</div>`).join("")
+
+let bracketGrade="1";
+let bracketSport="축구";
+
+function getBracketSportResult(g,s){
+  return data.bracketResults?.[g]?.[s]||{};
 }
+
+function classLabel(c){
+  return c?`${c}반`:"미정";
+}
+
+function validWinner(value,participants){
+  const n=Number(value);
+  return participants.length===2&&participants.includes(n)?n:null;
+}
+
+function regularBracketState(g,s){
+  const order=BRACKET_DRAW[g]?.[s]||[];
+  const r=getBracketSportResult(g,s);
+  const qf=[
+    [order[0],order[1]],[order[2],order[3]],[order[4],order[5]],[order[6],order[7]]
+  ];
+  const qw=qf.map((p,i)=>validWinner(r[`qf${i+1}`],p));
+  const sf=[[qw[0],qw[1]],[qw[2],qw[3]]];
+  const sw=sf.map((p,i)=>validWinner(r[`sf${i+1}`],p.filter(Boolean)));
+  const final=[sw[0],sw[1]];
+  const fw=validWinner(r.final,final.filter(Boolean));
+  return {qf,qw,sf,sw,final,fw};
+}
+
+function matchCardHtml(label,participants,winner){
+  const ready=participants.length===2&&participants.every(Boolean);
+  return `<div class="matchCard">
+    <div class="matchHead">
+      <b>${esc(label)}</b>
+      <span class="matchState ${winner?"done":""}">${winner?"경기 완료":ready?"경기 예정":"진출팀 대기"}</span>
+    </div>
+    ${participants.map(c=>c
+      ?`<div class="teamLine ${winner===c?"winner":""}">
+          <span class="teamClass">${c}반</span>
+          ${winner===c?'<span class="winnerMark">승리 · 진출</span>':""}
+        </div>`
+      :`<div class="teamLine pending"><span>결과 대기</span></div>`
+    ).join("")}
+  </div>`;
+}
+
+function renderRegularBracket(g,s){
+  const st=regularBracketState(g,s);
+  const champion=st.fw;
+  return `
+    ${champion?`<div class="bracketChampion"><span>🏆 ${g}학년 ${esc(s)} 우승</span><b>${champion}반</b></div>`:""}
+    <div class="bracketBoard">
+      <div class="bracketRounds">
+        <div class="bracketRound">
+          <div class="bracketRoundTitle">8강</div>
+          ${st.qf.map((p,i)=>matchCardHtml(`8강 ${i+1}경기`,p,st.qw[i])).join("")}
+        </div>
+        <div class="bracketRound">
+          <div class="bracketRoundTitle">4강</div>
+          ${st.sf.map((p,i)=>matchCardHtml(`4강 ${i+1}경기`,p,st.sw[i])).join("")}
+        </div>
+        <div class="bracketRound">
+          <div class="bracketRoundTitle">결승</div>
+          ${matchCardHtml("결승",st.final,st.fw)}
+        </div>
+      </div>
+    </div>`;
+}
+
+function relayState(g){
+  const order=BRACKET_DRAW[g]?.["이어달리기"]||[];
+  const r=getBracketSportResult(g,"이어달리기");
+  const heat1=order.slice(0,4), heat2=order.slice(4,8);
+
+  const normHeat=(arr,allowed)=>{
+    if(!Array.isArray(arr)||arr.length<2)return [];
+    const a=arr.map(Number);
+    if(a[0]===a[1]||!allowed.includes(a[0])||!allowed.includes(a[1]))return [];
+    return a.slice(0,2);
+  };
+  const h1=normHeat(r.heat1,heat1), h2=normHeat(r.heat2,heat2);
+  const finalists=(h1.length===2&&h2.length===2)?[...h1,...h2]:[];
+
+  let final=[];
+  if(Array.isArray(r.final)&&r.final.length===4&&finalists.length===4){
+    const f=r.final.map(Number);
+    if(new Set(f).size===4&&f.every(x=>finalists.includes(x)))final=f;
+  }
+  return {heat1,heat2,h1,h2,finalists,final};
+}
+
+function relayHeatCard(title,teams,result){
+  return `<div class="relayCard">
+    <h4>${esc(title)}</h4>
+    ${teams.map(c=>{
+      const idx=result.indexOf(c);
+      const qualified=idx===0||idx===1;
+      return `<div class="relayTeam ${qualified?"qualify":""}">
+        <span>${c}반</span>
+        <span class="relayRank">${
+          result.length
+            ? idx===0?"1위 · 결승진출":idx===1?"2위 · 결승진출":"예선 종료"
+            :"경기 예정"
+        }</span>
+      </div>`;
+    }).join("")}
+  </div>`;
+}
+
+function renderRelayBracket(g){
+  const st=relayState(g);
+  return `
+    ${st.final.length===4?`<div class="bracketChampion"><span>🏆 ${g}학년 이어달리기 우승</span><b>${st.final[0]}반</b></div>`:""}
+    <div class="relayIntro">예선 1조 4팀 · 예선 2조 4팀 → 각 조 1·2위가 결승 진출</div>
+    <div class="relayGrid">
+      ${relayHeatCard("예선 1조",st.heat1,st.h1)}
+      ${relayHeatCard("예선 2조",st.heat2,st.h2)}
+      <div class="relayCard">
+        <h4>결승</h4>
+        ${st.finalists.length===4
+          ? st.finalists.map(c=>{
+              const idx=st.final.indexOf(c);
+              const cls=idx===0?"champion":"";
+              return `<div class="relayTeam ${cls}">
+                <span>${c}반</span>
+                <span class="relayRank">${st.final.length===4?`${idx+1}위`:"결승 진출"}</span>
+              </div>`;
+            }).join("")
+          :'<div class="bracketEmpty">두 예선의 1·2위가 결정되면<br>결승 대진이 자동으로 표시됩니다.</div>'
+        }
+      </div>
+    </div>`;
+}
+
+function setBracketGrade(g){
+  if(!BRACKET_DRAW[g])return;
+  bracketGrade=g;
+  renderBrackets();
+}
+
+function setBracketSport(s){
+  if(!BRACKET_SPORTS.includes(s))return;
+  bracketSport=s;
+  renderBrackets();
+}
+
+function renderBrackets(){
+  if(typeof bracketGradeTabs==="undefined"||typeof bracketSportTabs==="undefined"||typeof bracketView==="undefined")return;
+
+  [...bracketGradeTabs.querySelectorAll("button")].forEach(b=>{
+    b.classList.toggle("active",b.dataset.grade===bracketGrade);
+  });
+
+  bracketSportTabs.innerHTML=BRACKET_SPORTS.map(s=>
+    `<button class="${s===bracketSport?"active":""}" onclick="setBracketSport('${s}')">${esc(s)}</button>`
+  ).join("");
+
+  bracketView.innerHTML=bracketSport==="이어달리기"
+    ?renderRelayBracket(bracketGrade)
+    :renderRegularBracket(bracketGrade,bracketSport);
+}
+
+async function loadBracketStateFromCloud(){
+  const {data:row,error}=await sb.from("bracket_state")
+    .select("results,updated_at")
+    .eq("id","main")
+    .single();
+
+  if(error){
+    cloudError("대진 결과 불러오기",error);
+    return false;
+  }
+
+  data.bracketResults=(row?.results&&typeof row.results==="object")?row.results:{};
+  localStorage.setItem("sehyeonSports2026v2",JSON.stringify(data));
+  renderBrackets();
+  renderBracketAdmin();
+  return true;
+}
+
+async function saveBracketResultsToCloud(){
+  const {error}=await sb.from("bracket_state")
+    .update({results:data.bracketResults,updated_at:new Date().toISOString()})
+    .eq("id","main");
+
+  if(error){
+    console.error(error);
+    alert("대진 결과 저장에 실패했습니다. 관리자 로그인과 Supabase 설정을 확인해 주세요.");
+    await loadBracketStateFromCloud();
+    return false;
+  }
+  return true;
+}
+
+function ensureBracketResultPath(g,s){
+  if(!data.bracketResults||typeof data.bracketResults!=="object")data.bracketResults={};
+  if(!data.bracketResults[g])data.bracketResults[g]={};
+  if(!data.bracketResults[g][s])data.bracketResults[g][s]={};
+  return data.bracketResults[g][s];
+}
+
+function regularAdminMatchHtml(g,s,id,label,participants,current){
+  const ready=participants.length===2&&participants.every(Boolean);
+  return `<div class="adminMatch">
+    <div class="adminMatchTitle"><b>${esc(label)}</b><small>${ready?participants.map(x=>`${x}반`).join(" vs "):"진출팀 대기"}</small></div>
+    <div class="adminMatchControls">
+      <select id="adminWinner_${id}" ${ready?"":"disabled"}>
+        <option value="">승리팀 선택</option>
+        ${ready?participants.map(c=>`<option value="${c}" ${Number(current)===c?"selected":""}>${c}반 승리</option>`).join(""):""}
+      </select>
+      <button class="btn primary" type="button" ${ready?"":"disabled"} onclick="saveRegularBracketResult('${id}')">반영</button>
+    </div>
+  </div>`;
+}
+
+function renderRegularBracketAdmin(g,s){
+  const st=regularBracketState(g,s);
+  const r=getBracketSportResult(g,s);
+  const items=[];
+  st.qf.forEach((p,i)=>items.push(regularAdminMatchHtml(g,s,`qf${i+1}`,`8강 ${i+1}경기`,p,r[`qf${i+1}`])));
+  st.sf.forEach((p,i)=>items.push(regularAdminMatchHtml(g,s,`sf${i+1}`,`4강 ${i+1}경기`,p,r[`sf${i+1}`])));
+  items.push(regularAdminMatchHtml(g,s,"final","결승",st.final,r.final));
+  return items.join("");
+}
+
+function relayOptions(teams,value,label){
+  return `<option value="">${label}</option>`+
+    teams.map(c=>`<option value="${c}" ${Number(value)===c?"selected":""}>${c}반</option>`).join("");
+}
+
+function renderRelayBracketAdmin(g){
+  const st=relayState(g);
+  const r=getBracketSportResult(g,"이어달리기");
+  const finalists=st.finalists;
+  return `
+    <div class="relayAdminBlock">
+      <h4>예선 1조 · ${st.heat1.map(c=>`${c}반`).join(" · ")}</h4>
+      <div class="relayAdminSelects">
+        <select id="relay_heat1_1">${relayOptions(st.heat1,r.heat1?.[0],"1위 선택")}</select>
+        <select id="relay_heat1_2">${relayOptions(st.heat1,r.heat1?.[1],"2위 선택")}</select>
+      </div>
+      <button class="btn primary" type="button" onclick="saveRelayHeat('heat1')">예선 1조 결과 반영</button>
+    </div>
+    <div class="relayAdminBlock">
+      <h4>예선 2조 · ${st.heat2.map(c=>`${c}반`).join(" · ")}</h4>
+      <div class="relayAdminSelects">
+        <select id="relay_heat2_1">${relayOptions(st.heat2,r.heat2?.[0],"1위 선택")}</select>
+        <select id="relay_heat2_2">${relayOptions(st.heat2,r.heat2?.[1],"2위 선택")}</select>
+      </div>
+      <button class="btn primary" type="button" onclick="saveRelayHeat('heat2')">예선 2조 결과 반영</button>
+    </div>
+    <div class="relayAdminBlock">
+      <h4>결승 · ${finalists.length===4?finalists.map(c=>`${c}반`).join(" · "):"예선 결과 대기"}</h4>
+      ${finalists.length===4?`
+        <div class="relayFinalSelects">
+          <select id="relay_final_1">${relayOptions(finalists,r.final?.[0],"결승 1위")}</select>
+          <select id="relay_final_2">${relayOptions(finalists,r.final?.[1],"결승 2위")}</select>
+          <select id="relay_final_3">${relayOptions(finalists,r.final?.[2],"결승 3위")}</select>
+          <select id="relay_final_4">${relayOptions(finalists,r.final?.[3],"결승 4위")}</select>
+        </div>
+        <button class="btn primary" type="button" onclick="saveRelayFinal()">결승 결과 반영</button>
+      `:'<p class="muted" style="font-size:11px;margin:0">두 예선의 1·2위를 먼저 입력하세요.</p>'}
+    </div>`;
+}
+
+function renderBracketAdmin(){
+  if(typeof bracketAdminBody==="undefined"||typeof bracketAdminGrade==="undefined"||typeof bracketAdminSport==="undefined")return;
+  const g=bracketAdminGrade.value||"1";
+  const s=bracketAdminSport.value||"축구";
+  bracketAdminBody.innerHTML=s==="이어달리기"?renderRelayBracketAdmin(g):renderRegularBracketAdmin(g,s);
+}
+
+async function saveRegularBracketResult(matchId){
+  const g=bracketAdminGrade.value, s=bracketAdminSport.value;
+  if(s==="이어달리기")return;
+  const st=regularBracketState(g,s);
+  const map={
+    qf1:st.qf[0],qf2:st.qf[1],qf3:st.qf[2],qf4:st.qf[3],
+    sf1:st.sf[0],sf2:st.sf[1],final:st.final
+  };
+  const participants=(map[matchId]||[]).filter(Boolean);
+  const sel=document.getElementById(`adminWinner_${matchId}`);
+  const winner=Number(sel?.value);
+  if(participants.length!==2||!participants.includes(winner))return alert("승리팀을 선택해 주세요.");
+
+  const r=ensureBracketResultPath(g,s);
+  const old=Number(r[matchId])||null;
+  r[matchId]=winner;
+
+  if(old!==winner){
+    if(["qf1","qf2"].includes(matchId)){delete r.sf1;delete r.final}
+    if(["qf3","qf4"].includes(matchId)){delete r.sf2;delete r.final}
+    if(["sf1","sf2"].includes(matchId)){delete r.final}
+  }
+
+  saveLocal();
+  if(await saveBracketResultsToCloud()){
+    await loadBracketStateFromCloud();
+  }
+}
+
+async function saveRelayHeat(heatKey){
+  const g=bracketAdminGrade.value;
+  const st=relayState(g);
+  const teams=heatKey==="heat1"?st.heat1:st.heat2;
+  const first=Number(document.getElementById(`relay_${heatKey}_1`)?.value);
+  const second=Number(document.getElementById(`relay_${heatKey}_2`)?.value);
+  if(!teams.includes(first)||!teams.includes(second))return alert("1위와 2위를 모두 선택해 주세요.");
+  if(first===second)return alert("1위와 2위는 서로 다른 학급이어야 합니다.");
+
+  const r=ensureBracketResultPath(g,"이어달리기");
+  const old=Array.isArray(r[heatKey])?r[heatKey].map(Number):[];
+  r[heatKey]=[first,second];
+  if(old[0]!==first||old[1]!==second)delete r.final;
+
+  saveLocal();
+  if(await saveBracketResultsToCloud()){
+    await loadBracketStateFromCloud();
+  }
+}
+
+async function saveRelayFinal(){
+  const g=bracketAdminGrade.value;
+  const st=relayState(g);
+  if(st.finalists.length!==4)return alert("예선 1·2위 결과를 먼저 입력해 주세요.");
+
+  const ranks=[1,2,3,4].map(i=>Number(document.getElementById(`relay_final_${i}`)?.value));
+  if(ranks.some(x=>!st.finalists.includes(x)))return alert("결승 1~4위를 모두 선택해 주세요.");
+  if(new Set(ranks).size!==4)return alert("결승 순위는 서로 다른 학급이어야 합니다.");
+
+  const r=ensureBracketResultPath(g,"이어달리기");
+  r.final=ranks;
+  saveLocal();
+  if(await saveBracketResultsToCloud()){
+    await loadBracketStateFromCloud();
+  }
+}
+
+async function resetSelectedBracket(){
+  const g=bracketAdminGrade.value, s=bracketAdminSport.value;
+  if(!confirm(`${g}학년 ${s} 경기결과를 모두 초기화할까요?\n추첨 대진 자체는 유지됩니다.`))return;
+  if(data.bracketResults?.[g])delete data.bracketResults[g][s];
+  saveLocal();
+  if(await saveBracketResultsToCloud()){
+    await loadBracketStateFromCloud();
+  }
+}
+
 function renderPlayers(){
  const q=playerSearch.value.trim().toLowerCase(),g=playerGrade.value,s=playerSport.value;
  const list=data.players.filter(p=>{const t=`${p.name} ${p.grade}-${p.classNo} ${p.sport}`.toLowerCase();return(!q||t.includes(q))&&(!g||p.grade===g)&&(!s||p.sport===s)});
@@ -1856,6 +2368,14 @@ async function setupAuthState(){
  });
 }
 
+
+function initBracketAdminControls(){
+  if(typeof bracketAdminGrade==="undefined"||typeof bracketAdminSport==="undefined")return;
+  bracketAdminGrade.addEventListener("change",renderBracketAdmin);
+  bracketAdminSport.addEventListener("change",renderBracketAdmin);
+  renderBracketAdmin();
+}
+
 async function initCloud(){
  setCloudStatus("warn","☁️ 실시간 연결 확인 중");
  try{
@@ -1864,7 +2384,8 @@ async function initCloud(){
      loadNoticesFromCloud(),
      loadSiteStateFromCloud(),
      loadFlagsFromCloud(),
-     loadFlagVoteStateFromCloud()
+     loadFlagVoteStateFromCloud(),
+     loadBracketStateFromCloud()
    ]);
    cloudReady=results.every(Boolean);
    if(cloudReady){
@@ -1899,12 +2420,16 @@ function subscribeRealtime(){
  const flagVoteCh=sb.channel("flag_vote_state_live")
    .on("postgres_changes",{event:"UPDATE",schema:"public",table:"flag_vote_state",filter:"id=eq.main"},()=>loadFlagVoteStateFromCloud())
    .subscribe();
+ const bracketCh=sb.channel("bracket_state_live")
+   .on("postgres_changes",{event:"UPDATE",schema:"public",table:"bracket_state",filter:"id=eq.main"},()=>loadBracketStateFromCloud())
+   .subscribe();
 
- cloudChannels=[songsCh,noticesCh,stateCh,flagsCh,flagVoteCh];
+ cloudChannels=[songsCh,noticesCh,stateCh,flagsCh,flagVoteCh,bracketCh];
 }
 
-function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
+function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();renderBracketAdmin();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
 initFlagVoteForm();
+initBracketAdminControls();
 renderAll();
 initCloud();
 setInterval(renderCurrentProgramLive,30000);
