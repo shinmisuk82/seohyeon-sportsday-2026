@@ -1254,6 +1254,79 @@ summary {
   .judgeFinderFormVerified{grid-template-columns:1fr}
 }
 
+
+/* ===== v2.34 home student/teacher finders ===== */
+.homeFinderHead{
+  margin-bottom:11px;
+}
+.homeFinderHead h2{
+  margin:0;
+  color:#17324f;
+}
+.homeFinderHead p{
+  margin:4px 0 0;
+  color:#6a829a;
+  font-size:12px;
+}
+.homeFinderButtons{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:10px;
+}
+.homeFinderBtn{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr) auto;
+  align-items:center;
+  gap:11px;
+  min-width:0;
+  border:1px solid rgba(64,105,148,.11);
+  border-radius:17px;
+  padding:14px;
+  text-align:left;
+  cursor:pointer;
+  color:#17324f;
+}
+.homeFinderBtn.student{
+  background:linear-gradient(135deg,#f1f9ff,#fbfdff);
+  border-color:rgba(57,143,214,.16);
+}
+.homeFinderBtn.teacher{
+  background:linear-gradient(135deg,#fff9ec,#fffdf8);
+  border-color:rgba(224,170,57,.17);
+}
+.homeFinderIcon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:42px;
+  height:42px;
+  border-radius:13px;
+  background:#fff;
+  font-size:21px;
+  box-shadow:0 5px 12px rgba(67,113,158,.05);
+}
+.homeFinderText{min-width:0}
+.homeFinderText b{
+  display:block;
+  font-size:14px;
+  margin-bottom:3px;
+}
+.homeFinderText small{
+  display:block;
+  color:#6a829a;
+  font-size:11px;
+  line-height:1.4;
+}
+.homeFinderArrow{
+  font-size:19px;
+  font-weight:950;
+  color:#6d8ba7;
+}
+.homeFinderBtn:hover{transform:translateY(-1px)}
+@media(max-width:620px){
+  .homeFinderButtons{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -1344,11 +1417,33 @@ summary {
   <div class="leaderGrid" id="homeLeaders"></div>
 </div>
 
-<div class="quick" style="margin-top:15px">
-<button onclick="openTab('schedule')">⏰<b>오늘 시간표</b><small>08:30부터 경기 순서 확인</small></button>
-<button onclick="openTab('scores')">🏆<b>학년별 종합점수</b><small>1~8반 실시간 순위</small></button>
-<button onclick="openTab('rules')">📘<b>경기 규칙</b><small>10개 종목 공식 요강</small></button>
-<button onclick="openTab('players')">👥<b>내 출전 종목</b><small>명단 업로드 후 검색</small></button>
+<div class="card homeFinderCard" style="margin-top:15px">
+  <div class="homeFinderHead">
+    <div>
+      <h2>🔎 내 정보 바로 찾기</h2>
+      <p>학생은 참가 종목을, 선생님은 담당 심판 종목을 빠르게 확인할 수 있습니다.</p>
+    </div>
+  </div>
+
+  <div class="homeFinderButtons">
+    <button type="button" class="homeFinderBtn student" onclick="openPlayerFinderFromHome()">
+      <span class="homeFinderIcon">👟</span>
+      <span class="homeFinderText">
+        <b>내 참가 종목 찾기</b>
+        <small>학생 이름으로 참가 종목 확인</small>
+      </span>
+      <span class="homeFinderArrow">→</span>
+    </button>
+
+    <button type="button" class="homeFinderBtn teacher" onclick="openJudgeFinderFromHome()">
+      <span class="homeFinderIcon">🦺</span>
+      <span class="homeFinderText">
+        <b>내 심판 종목 찾기</b>
+        <small>교사 이름 + 내선번호로 담당 심판 확인</small>
+      </span>
+      <span class="homeFinderArrow">→</span>
+    </button>
+  </div>
 </div>
 
 <div class="card homeVoteCard" style="margin-top:15px">
@@ -1535,10 +1630,10 @@ summary {
 </section>
 
 <section id="players">
-<div class="titleRow"><div><h2>👥 출전 선수 명단</h2><p>현재 계획서에는 빈 참가신청서 양식만 있어 실제 학생명은 포함하지 않음</p></div></div>
+<div class="titleRow"><div><h2>👟 내 참가 종목 찾기</h2><p>학생 이름·반·종목으로 참가 정보를 확인합니다.</p></div></div>
 <div class="card">
 <div class="filters">
-<input id="playerSearch" placeholder="이름 · 반 · 종목 검색">
+<input id="playerSearch" placeholder="학생 이름 · 반 · 종목 검색">
 <select id="playerGrade"><option value="">전체 학년</option><option>1</option><option>2</option><option>3</option></select>
 <select id="playerSport"><option value="">전체 종목</option></select>
 </div>
@@ -1840,7 +1935,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.33</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.34</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -1949,6 +2044,28 @@ function openTab(id){document.querySelectorAll("main section").forEach(s=>s.clas
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>openTab(b.dataset.tab));
 
 
+
+
+function openPlayerFinderFromHome(){
+  openTab("players");
+  setTimeout(()=>{
+    const target=document.getElementById("playerSearch");
+    if(target){
+      target.scrollIntoView({behavior:"smooth",block:"center"});
+      setTimeout(()=>target.focus({preventScroll:true}),180);
+    }
+  },120);
+}
+
+function openJudgeFinderFromHome(){
+  openTab("staff");
+  setTimeout(()=>{
+    const target=document.querySelector("#staff .judgeFinderCard");
+    if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
+    const input=document.getElementById("judgeNameSearch");
+    if(input)setTimeout(()=>input.focus({preventScroll:true}),180);
+  },120);
+}
 
 function openFlagVoteFromHome(){
   openTab("flags");
