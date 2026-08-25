@@ -48,6 +48,24 @@ details{border:1px solid var(--line);border-radius:15px;padding:0 14px;backgroun
 @media(max-width:420px){.flagGrid{grid-template-columns:1fr}}
 
 
+.flagVoteLayout{display:grid;grid-template-columns:.85fr 1.15fr;gap:14px;margin-bottom:12px}
+.flagVoteForm{display:grid;gap:10px}
+.flagVoteIdentity{display:grid;grid-template-columns:1fr 140px;gap:9px}
+.flagVoteForm input,.flagVoteForm select{width:100%;background:#07182f;color:#fff;border:1px solid var(--line);border-radius:11px;padding:11px;outline:none}
+.flagVoteRanks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.flagVoteRank{display:grid;grid-template-columns:72px 1fr;align-items:center;gap:8px}
+.flagVoteRank b{font-size:12px;color:#d8e5f3}
+.flagVoteRank small{color:var(--cyan);font-weight:900}
+.flagVoteSummary{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.flagVotePill{display:inline-flex;align-items:center;gap:6px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.03);font-size:11px;color:#bdd0e5}
+.flagVotePill strong{color:white;font-size:13px}
+.flagScoreBadge{display:inline-flex;align-items:center;gap:4px;margin-top:7px;padding:5px 8px;border-radius:999px;background:rgba(70,216,255,.09);border:1px solid rgba(70,216,255,.22);color:#9feaff;font-size:11px;font-weight:900}
+.flagRankBadge{display:inline-flex;align-items:center;justify-content:center;min-width:26px;height:26px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid var(--line);font-weight:950}
+.flagVoteTable td,.flagVoteTable th{text-align:center}
+.flagVoteTable td:nth-child(2),.flagVoteTable th:nth-child(2){text-align:left}
+@media(max-width:850px){.flagVoteLayout{grid-template-columns:1fr}}
+@media(max-width:560px){.flagVoteIdentity{grid-template-columns:1fr}.flagVoteRanks{grid-template-columns:1fr}}
+
 .songLayout{display:grid;grid-template-columns:.9fr 1.1fr;gap:14px}
 .songForm{display:grid;gap:10px}
 .songForm input,.songForm textarea{background:#07182f;color:#fff;border:1px solid var(--line);border-radius:11px;padding:11px;outline:none;width:100%}
@@ -156,19 +174,13 @@ details{border:1px solid var(--line);border-radius:15px;padding:0 14px;backgroun
   <div class="ddaySub" id="ddaySub">스포츠한마당까지 남은 날짜를 계산 중입니다.</div>
 </div>
 
-<div class="grid g2">
+<div>
   <div class="card live" id="currentProgramCard">
     <div class="kicker">⚡ CURRENT PROGRAM</div>
     <div class="currentTime" id="curTime">08:30~08:50</div>
     <div class="currentEvent" id="curEvent">경기장 정렬</div>
     <div class="muted" id="curPlace">운동장 · 1~3학년</div>
     <div id="currentProgramStatusWrap" style="margin-top:14px"><span class="status"><span class="dot"></span>운영본부 실시간 반영</span></div>
-  </div>
-  <div class="card">
-    <div class="kicker">EVENT INFO</div>
-    <h2>2026. 서현 체육 한마당</h2>
-    <p class="muted" style="line-height:1.7">교내 체육 축제를 통해 학생 건강 체력을 증진하고 스포츠맨십, 협동심, 책임감, 공동체 의식을 기르는 것을 목적으로 합니다.</p>
-    <div class="warn">모든 경기는 서현중학교 규칙을 따르며, 부정선수 발견 시 실격 패 처리됩니다.</div>
   </div>
 </div>
 
@@ -334,8 +346,49 @@ details{border:1px solid var(--line);border-radius:15px;padding:0 14px;backgroun
     </select>
   </div>
   <p class="muted" style="font-size:12px;margin:4px 0 0">
-    응원상 배점기준의 ‘깃발제작’ 항목과 연계되는 갤러리입니다. 깃발제작 배점은 50점이며, 실제 점수 입력은 별도 운영 기준에 따라 반영할 수 있습니다.
+    선생님 투표는 1위 50점 · 2위 40점 · 3위 30점 · 4위 20점 · 5위 10점으로 누적됩니다.
   </p>
+</div>
+
+<div class="flagVoteLayout">
+  <div class="card">
+    <h3>🗳️ 선생님 깃발 투표</h3>
+    <div class="flagVoteForm">
+      <div class="flagVoteIdentity">
+        <input id="flagVoterName" maxlength="20" autocomplete="off" placeholder="선생님 이름">
+        <input id="flagVoterExtension" maxlength="3" inputmode="numeric" autocomplete="off" placeholder="내선번호 3자리">
+      </div>
+      <div class="flagVoteRanks">
+        <label class="flagVoteRank"><b>🥇 1위 <small>50점</small></b><select id="flagVote1"></select></label>
+        <label class="flagVoteRank"><b>🥈 2위 <small>40점</small></b><select id="flagVote2"></select></label>
+        <label class="flagVoteRank"><b>🥉 3위 <small>30점</small></b><select id="flagVote3"></select></label>
+        <label class="flagVoteRank"><b>4위 <small>20점</small></b><select id="flagVote4"></select></label>
+        <label class="flagVoteRank"><b>5위 <small>10점</small></b><select id="flagVote5"></select></label>
+      </div>
+      <button class="btn primary" type="button" onclick="submitFlagVote()">투표 제출 / 수정</button>
+    </div>
+    <p class="muted" style="font-size:11px;line-height:1.65;margin:12px 0 0">
+      다섯 학급을 서로 다르게 선택해야 합니다. 같은 이름과 내선번호로 다시 제출하면 이전 투표가 새 선택으로 수정됩니다.
+      이름과 내선번호는 공개 점수 화면에 표시되지 않습니다.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="titleRow" style="margin-top:0">
+      <div><h3 style="margin:0">🏁 실시간 깃발 투표 점수</h3><p>선생님 투표 누적점수</p></div>
+      <span class="status"><span class="dot"></span>LIVE</span>
+    </div>
+    <div class="flagVoteSummary">
+      <span class="flagVotePill">참여 교사 <strong id="flagBallotCount">0명</strong></span>
+      <span class="flagVotePill">1위 50 · 2위 40 · 3위 30 · 4위 20 · 5위 10</span>
+    </div>
+    <div class="scroll">
+      <table class="flagVoteTable">
+        <thead><tr><th>순위</th><th>학급</th><th>총점</th><th>1위표</th><th>2위표</th><th>3위표</th><th>4위표</th><th>5위표</th></tr></thead>
+        <tbody id="flagVoteScoreBody"></tbody>
+      </table>
+    </div>
+  </div>
 </div>
 
 <div class="flagGrid" id="flagGrid"></div>
@@ -510,7 +563,7 @@ details{border:1px solid var(--line);border-radius:15px;padding:0 14px;backgroun
 <footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 운영계획서 반영 프로토타입 v2</footer>
 
 <script>
-const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", ""], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", ""], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", "대회 개요 종료시각(16:00)과 계획서 일정표가 상이함"]];
+const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
 const RULES = {"협동 파도타기": ["결선경기. 성별 구분 없이 인원이 가장 적은 반과 동일하게 맞춤(2명 줄잡이 포함).", "뛰는 인원은 2열 종대, 줄잡이는 시작지점에서 준비.", "줄잡이 2명이 이동할 때 나머지 학생은 줄을 뛰어넘는다.", "갈 때 줄을 아래로, 돌아올 때 위로 들고 달려오며 총 2회 실시.", "줄잡이 두 명 모두 고깔을 돌아야 하며 미실시 시 실격.", "결승선 통과 후 학급 깃발을 들어 경기 종료 표시."], "8자 줄넘기": ["줄넘이 10명(여자 4명 이상) + 줄돌이 2명.", "1분 동안 8자 모양으로 한 명씩 줄을 넘는다.", "1인이 연속하여 넘어도 한 번만 인정.", "2회 실시해 합산 기록으로 인정하며 시작 전 연습 1회 운영."], "축구": ["학년별 남학생 토너먼트, 출전 7명 + 교체선수 2명.", "전후반 없이 각 15분.", "무승부 시 승부차기 5명."], "피구": ["학년별 여학생 토너먼트. 학급 여학생 전원 참여하되 인원이 적은 반과 동일하게 맞춤.", "5분 3세트, 패스 3회까지 허용. 2선승 시 종료.", "외야/외야, 내야/내야 패스 금지.", "외야 1명은 경기 3분 후 내야로 들어옴.", "내야 선수의 두 발이 경기장 밖으로 나가면 아웃."], "릴레이 고리던지기": ["성별 구분 없이 24명. 2인 1조 × 12개조, 경기시간 3분.", "2인이 고리 두 개를 겹쳐 잡고 출발하며 1명은 배턴을 든다.", "기준선 도착 후 막대에 고리를 던져 넣는다.", "배턴을 받은 뒤 다음 조가 출발선으로 진출 가능.", "경기종료음 이후 던진 고리는 인정하지 않음.", "가장 많은 고리를 넣은 팀이 승리."], "줄다리기": ["전학년 전학급 토너먼트. 성별 구분 없이 인원이 적은 반과 동일하게 맞춤.", "3판 2선승제, 경기시간 20초.", "최초 여학생만 줄을 잡고 남학생은 상대 뒤편에 대기.", "신호 후 남학생이 자신의 학급 줄 뒤쪽으로 이동해 함께 당긴다."], "이어달리기": ["예선 통과 학년별 4팀 결선.", "남학생 3명 + 여학생 3명, 순서 여-남-여-남-여-남.", "출발지점은 운동장 뒤편.", "반바퀴 × 5명 + 마지막 주자 한 바퀴.", "골인지점은 교문 앞 급수대 쪽."], "빅발리볼": ["1·2학년 사전경기, 혼성 10명(여자 3명 이상).", "배드민턴 코트 2개 크기로 운영.", "세트별 15점, 바운드 허용 안 함.", "서브순서에 맞춰 진행.", "1·2세트 2선승 시 3세트 진행하지 않음."], "배구": ["3학년 사전경기, 혼성 9명(여자 2명 이상).", "경기 전 각 팀 연습 1회.", "세트별 15점.", "경기장 내 원 바운드까지 허용.", "1·2세트 2선승 시 3세트 진행하지 않음."], "입장식": ["3학년 학급 전체 참여 원칙.", "학급별 음원은 2분 30초 이내 편집.", "미인정 미참여 시 1명당 1점 감점(체육담당교사 4인이 인정 여부 결정).", "타인 비방, 불쾌감 또는 선정적 내용 금지."]};
 const POINTS = {"축구": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 50, "6": 50, "7": 50, "8": 50}, "피구": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 50, "6": 50, "7": 50, "8": 50}, "학년별 구기": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 50, "6": 50, "7": 50, "8": 50}, "줄다리기": {"1": 150, "2": 130, "3": 100, "4": 80, "5": 80, "6": 80, "7": 80, "8": 80}, "8자 줄넘기": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 40, "6": 40, "7": 40, "8": 40}, "협동 파도타기": {"1": 150, "2": 130, "3": 110, "4": 100, "5": 80, "6": 80, "7": 80, "8": 80}, "릴레이 고리던지기": {"1": 100, "2": 80, "3": 60, "4": 50, "5": 40, "6": 40, "7": 40, "8": 40}, "이어달리기": {"1": 100, "2": 90, "3": 80, "4": 60, "5": 50, "6": 50, "7": 50, "8": 50}, "입장식": {"1": 150, "2": 130, "3": 100, "4": 80, "5": 80, "6": 80, "7": 80, "8": 80}};
 const STAFF = [["체육 한마당 회장(교장)", "박대우", ""], ["체육 한마당 부회장(교감)", "최은자", ""], ["체육 한마당 총괄", "신미숙, 임남묵", "김민성, 김원미"], ["경기진행 총괄 및 심판위원장", "신미숙", "전교 체육부장"], ["보건담당", "윤규순, 나진화", "구급약품 준비"], ["질서(안전)유지", "염응모, 김선욱", "각반 체육부장 · 전 교사 참여"], ["방송준비 및 사진촬영", "임보람", "방송부"], ["점수집계 / 점수현황판", "이미애, 문화은, 이미영, 김경숙", "본부석"], ["응원점수 집계", "오정령, 안호일", ""], ["우승 배너 및 상품 시상", "김원미", ""], ["교내 환경정리", "임수정", "전교생 · 전 교직원"], ["용품 및 경기장 사전준비", "임남묵, 김민성", "스포츠 지원단"]];
@@ -523,6 +576,8 @@ const DEFAULT = {
  notices:[{type:"안내",text:"운영계획서를 반영한 2차 프로토타입입니다. 실제 경기 결과와 선수 명단은 추후 입력합니다.",time:"초기 안내"}],
  players:[],
  flags:{},
+ flagVoteScores:{},
+ flagBallotCount:0,
  songs:[],
  cheer:{}
 };
@@ -568,6 +623,8 @@ function load(){
       notices: cached.notices || clone(DEFAULT.notices),
       players: cached.players || [],
       flags: cached.flags || {},
+      flagVoteScores: cached.flagVoteScores || {},
+      flagBallotCount: Number(cached.flagBallotCount)||0,
       songs: cached.songs || [],
       cheer: cached.cheer || clone(DEFAULT.cheer)
     };
@@ -938,7 +995,7 @@ function renderFlags(){
        </div>
        <div class="flagInfo">
          <b>${grade}학년 ${cls}반</b>
-         <small>깃발제작 · 50점</small>
+         <span class="flagScoreBadge">🗳️ 교사 투표 ${Number(data.flagVoteScores?.[key]?.score)||0}점</span>
          ${f?.caption?`<div class="flagCaption">${esc(f.caption)}</div>`:""}
        </div>
      </div>`);
@@ -950,6 +1007,122 @@ function renderFlags(){
 if(typeof flagGradeFilter!=="undefined"){
   flagGradeFilter.addEventListener("input",renderFlags);
   flagClassFilter.addEventListener("input",renderFlags);
+}
+
+
+let flagVoteFormReady=false;
+
+function initFlagVoteForm(){
+  if(flagVoteFormReady)return;
+  const selects=[1,2,3,4,5].map(i=>document.getElementById(`flagVote${i}`)).filter(Boolean);
+  if(selects.length!==5)return;
+
+  const options=[];
+  for(let g=1;g<=3;g++){
+    for(let c=1;c<=8;c++){
+      options.push(`<option value="${g}-${c}">${g}학년 ${c}반</option>`);
+    }
+  }
+  selects.forEach((sel,i)=>{
+    sel.innerHTML=`<option value="">${i+1}위 학급 선택</option>`+options.join("");
+  });
+
+  const ext=document.getElementById("flagVoterExtension");
+  if(ext){
+    ext.addEventListener("input",()=>{
+      ext.value=ext.value.replace(/\D/g,"").slice(0,3);
+    });
+  }
+  flagVoteFormReady=true;
+}
+
+function renderFlagVoteScores(){
+  const body=document.getElementById("flagVoteScoreBody");
+  const count=document.getElementById("flagBallotCount");
+  if(!body)return;
+  if(count)count.textContent=`${Number(data.flagBallotCount)||0}명`;
+
+  const rows=[];
+  for(let g=1;g<=3;g++){
+    for(let c=1;c<=8;c++){
+      const key=flagKey(g,c);
+      const s=data.flagVoteScores?.[key]||{};
+      rows.push({
+        key,g,c,
+        score:Number(s.score)||0,
+        first:Number(s.first)||0,
+        second:Number(s.second)||0,
+        third:Number(s.third)||0,
+        fourth:Number(s.fourth)||0,
+        fifth:Number(s.fifth)||0
+      });
+    }
+  }
+
+  rows.sort((a,b)=>b.score-a.score || b.first-a.first || b.second-a.second || a.g-b.g || a.c-b.c);
+
+  let previousScore=null, previousRank=0;
+  body.innerHTML=rows.map((r,i)=>{
+    const rank=(previousScore===r.score)?previousRank:i+1;
+    previousScore=r.score; previousRank=rank;
+    return `<tr>
+      <td><span class="flagRankBadge">${rank}</span></td>
+      <td><b>${r.g}학년 ${r.c}반</b></td>
+      <td><b>${r.score}점</b></td>
+      <td>${r.first}</td><td>${r.second}</td><td>${r.third}</td><td>${r.fourth}</td><td>${r.fifth}</td>
+    </tr>`;
+  }).join("");
+}
+
+async function loadFlagVoteStateFromCloud(){
+  const {data:row,error}=await sb.from("flag_vote_state")
+    .select("scores,ballot_count,updated_at")
+    .eq("id","main")
+    .single();
+
+  if(error){
+    cloudError("깃발 투표점수 불러오기",error);
+    return false;
+  }
+
+  data.flagVoteScores=(row?.scores&&typeof row.scores==="object")?row.scores:{};
+  data.flagBallotCount=Number(row?.ballot_count)||0;
+  localStorage.setItem("sehyeonSports2026v2",JSON.stringify(data));
+  renderFlagVoteScores();
+  renderFlags();
+  return true;
+}
+
+async function submitFlagVote(){
+  const name=(document.getElementById("flagVoterName")?.value||"").trim();
+  const extension=(document.getElementById("flagVoterExtension")?.value||"").trim();
+  const choices=[1,2,3,4,5].map(i=>document.getElementById(`flagVote${i}`)?.value||"");
+
+  if(name.length<2)return alert("선생님 이름을 입력해 주세요.");
+  if(!/^\d{3}$/.test(extension))return alert("학교 내선번호 3자리를 입력해 주세요.");
+  if(choices.some(v=>!v))return alert("1위부터 5위까지 모두 선택해 주세요.");
+  if(new Set(choices).size!==5)return alert("1위부터 5위까지 서로 다른 학급을 선택해 주세요.");
+
+  if(!confirm(`${name} 선생님, 선택한 1~5위 투표를 제출할까요?\n같은 이름과 내선번호로 다시 제출하면 기존 투표가 수정됩니다.`))return;
+
+  const {error}=await sb.rpc("submit_flag_vote",{
+    p_voter_name:name,
+    p_extension:extension,
+    p_first:choices[0],
+    p_second:choices[1],
+    p_third:choices[2],
+    p_fourth:choices[3],
+    p_fifth:choices[4]
+  });
+
+  if(error){
+    console.error(error);
+    alert("투표 저장에 실패했습니다. 이름·내선번호·순위 선택을 다시 확인해 주세요.");
+    return;
+  }
+
+  await loadFlagVoteStateFromCloud();
+  alert("깃발 투표가 저장되었습니다. 감사합니다.");
 }
 
 function refreshFlagAdminPreview(){
@@ -1260,7 +1433,8 @@ async function initCloud(){
      loadSongsFromCloud(),
      loadNoticesFromCloud(),
      loadSiteStateFromCloud(),
-     loadFlagsFromCloud()
+     loadFlagsFromCloud(),
+     loadFlagVoteStateFromCloud()
    ]);
    cloudReady=results.every(Boolean);
    if(cloudReady){
@@ -1292,11 +1466,15 @@ function subscribeRealtime(){
  const flagsCh=sb.channel("class_flags_live")
    .on("postgres_changes",{event:"*",schema:"public",table:"class_flags"},()=>loadFlagsFromCloud())
    .subscribe();
+ const flagVoteCh=sb.channel("flag_vote_state_live")
+   .on("postgres_changes",{event:"UPDATE",schema:"public",table:"flag_vote_state",filter:"id=eq.main"},()=>loadFlagVoteStateFromCloud())
+   .subscribe();
 
- cloudChannels=[songsCh,noticesCh,stateCh,flagsCh];
+ cloudChannels=[songsCh,noticesCh,stateCh,flagsCh,flagVoteCh];
 }
 
-function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderPlayers();renderFlags();renderSongs();renderStaff();renderNotices();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
+function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
+initFlagVoteForm();
 renderAll();
 initCloud();
 setInterval(renderCurrentProgramLive,30000);
