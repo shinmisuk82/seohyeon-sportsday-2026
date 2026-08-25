@@ -1457,6 +1457,92 @@ summary {
   .playerFinderForm{grid-template-columns:1fr}
 }
 
+
+/* ===== v2.38 judge training videos ===== */
+.judgeVideoCard{
+  background:linear-gradient(135deg,#f8fbff,#fffdf8);
+  border-color:rgba(64,105,148,.11)!important;
+}
+.judgeVideoHead h3{
+  margin:0;
+  color:#17324f;
+  font-size:19px;
+}
+.judgeVideoHead p{
+  margin:5px 0 0;
+  color:#6a829a;
+  font-size:12px;
+  line-height:1.55;
+}
+.judgeVideoGrid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-top:12px;
+}
+.judgeVideoItem{
+  min-width:0;
+  padding:12px;
+  border-radius:16px;
+  background:#fff;
+  border:1px solid rgba(64,105,148,.10);
+}
+.judgeVideoTitle{
+  display:flex;
+  gap:9px;
+  align-items:center;
+  margin-bottom:10px;
+}
+.judgeVideoTitle>span{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:38px;
+  height:38px;
+  flex:0 0 auto;
+  border-radius:12px;
+  background:#f2f8fc;
+  font-size:20px;
+}
+.judgeVideoTitle b{
+  display:block;
+  color:#17324f;
+  font-size:14px;
+  margin-bottom:2px;
+}
+.judgeVideoTitle small{
+  color:#8094a7;
+  font-size:10px;
+}
+.judgeVideoFrame{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  overflow:hidden;
+  border-radius:13px;
+  background:#0b1828;
+}
+.judgeVideoFrame iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  border:0;
+}
+.judgeVideoLink{
+  display:inline-flex;
+  align-items:center;
+  margin-top:9px;
+  color:#2d78be;
+  font-size:11px;
+  font-weight:900;
+  text-decoration:none;
+}
+.judgeVideoLink:hover{text-decoration:underline}
+@media(max-width:700px){
+  .judgeVideoGrid{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -1921,7 +2007,7 @@ summary {
     <span class="teacherOnlyBadge">교사용</span>
   </div>
   <div class="judgeFinderForm judgeFinderFormVerified">
-    <input id="judgeNameSearch" type="text" maxlength="20" autocomplete="off" placeholder="선생님 이름 입력 (예: 이정은)">
+    <input id="judgeNameSearch" type="text" maxlength="20" autocomplete="off" placeholder="선생님 이름 입력 (예: 신미숙)">
     <input id="judgeExtensionSearch" type="text" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="내선번호 3자리">
     <button class="btn primary" type="button" onclick="findJudgeAssignments()">내 심판 찾기</button>
   </div>
@@ -1931,7 +2017,57 @@ summary {
   </div>
 </div>
 
-<div class="card scroll" style="margin-top:12px"><table><thead><tr><th>직책</th><th>교사</th><th>학생/비고</th></tr></thead><tbody id="staffBody"></tbody></table></div>
+<div class="card judgeVideoCard" style="margin-top:12px">
+  <div class="judgeVideoHead">
+    <div>
+      <h3>🎥 심판 방법 영상</h3>
+      <p>경기 전 담당 종목의 심판 방법을 미리 확인해 주세요.</p>
+    </div>
+  </div>
+
+  <div class="judgeVideoGrid">
+    <div class="judgeVideoItem">
+      <div class="judgeVideoTitle">
+        <span>🪢</span>
+        <div>
+          <b>8자 줄넘기 심판 영상</b>
+          <small>심판 진행 방법 참고</small>
+        </div>
+      </div>
+      <div class="judgeVideoFrame">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/rO77RL7o1NY"
+          title="8자 줄넘기 심판 영상"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+      <a class="judgeVideoLink" href="https://youtu.be/rO77RL7o1NY" target="_blank" rel="noopener noreferrer">유튜브에서 크게 보기 →</a>
+    </div>
+
+    <div class="judgeVideoItem">
+      <div class="judgeVideoTitle">
+        <span>🌊</span>
+        <div>
+          <b>협동 파도타기 심판 영상</b>
+          <small>심판 진행 방법 참고</small>
+        </div>
+      </div>
+      <div class="judgeVideoFrame">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/IX-jlbROX7g"
+          title="협동 파도타기 심판 영상"
+          loading="lazy"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+      <a class="judgeVideoLink" href="https://youtu.be/IX-jlbROX7g" target="_blank" rel="noopener noreferrer">유튜브에서 크게 보기 →</a>
+    </div>
+  </div>
+</div>
+
 <div class="card scroll" style="margin-top:12px"><h3>경기별 심판</h3><table><thead><tr><th>종목</th><th>시간</th><th>주심·부심</th><th>비고</th></tr></thead><tbody id="judgeBody"></tbody></table></div>
 </section>
 
@@ -2081,7 +2217,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.36</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.38</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
