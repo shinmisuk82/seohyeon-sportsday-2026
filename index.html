@@ -1097,6 +1097,163 @@ summary {
   }
 }
 
+
+/* ===== v2.32 teacher judge finder ===== */
+.judgeFinderCard{
+  background:linear-gradient(135deg,#f5faff,#fffafd);
+  border-color:rgba(67,151,224,.13)!important;
+}
+.judgeFinderHead{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+.judgeFinderHead h3{
+  margin:0;
+  color:#17324f;
+  font-size:20px;
+}
+.judgeFinderHead p{
+  margin:5px 0 0;
+  color:#6a829a;
+  font-size:12px;
+  line-height:1.55;
+}
+.judgeFinderForm{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:8px;
+  max-width:650px;
+}
+.judgeFinderForm input{
+  min-width:0;
+  min-height:44px;
+  font-size:16px;
+}
+.judgeFinderForm .btn{
+  min-height:44px;
+  white-space:nowrap;
+}
+.judgeFinderPrivacy{
+  margin:8px 0 0;
+  color:#8196aa;
+  font-size:10px;
+}
+.judgeSearchResult{
+  margin-top:12px;
+}
+.judgeSearchEmpty{
+  padding:13px 14px;
+  border-radius:14px;
+  background:#fff;
+  border:1px dashed rgba(64,105,148,.16);
+  color:#7890a6;
+  font-size:12px;
+  line-height:1.6;
+}
+.judgeSearchHeader{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+  padding:10px 12px;
+  border-radius:14px;
+  background:#eef7ff;
+  border:1px solid rgba(67,151,224,.12);
+}
+.judgeSearchHeader b{
+  color:#17324f;
+  font-size:14px;
+}
+.judgeSearchHeader span{
+  color:#2d78be;
+  font-size:11px;
+  font-weight:900;
+}
+.judgeAssignmentList{
+  display:grid;
+  gap:8px;
+}
+.judgeAssignmentItem{
+  display:grid;
+  grid-template-columns:105px minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+  min-width:0;
+  padding:12px 13px;
+  border-radius:15px;
+  background:#fff;
+  border:1px solid rgba(64,105,148,.10);
+}
+.judgeAssignmentTime{
+  color:#2d78be;
+  font-size:11px;
+  font-weight:950;
+  white-space:nowrap;
+}
+.judgeAssignmentMain{
+  min-width:0;
+}
+.judgeAssignmentMain b{
+  display:block;
+  color:#17324f;
+  font-size:14px;
+  margin-bottom:4px;
+}
+.judgeAssignmentMeta{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+}
+.judgeAssignmentChip{
+  display:inline-flex;
+  align-items:center;
+  min-height:24px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:#f3f8fc;
+  color:#557590;
+  font-size:10px;
+  font-weight:850;
+}
+.judgeAssignmentClass{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:48px;
+  min-height:34px;
+  padding:5px 9px;
+  border-radius:12px;
+  background:#fff6fb;
+  color:#bd4f75;
+  font-size:12px;
+  font-weight:950;
+  border:1px solid rgba(255,113,153,.14);
+  white-space:nowrap;
+}
+@media(max-width:620px){
+  .judgeFinderForm{grid-template-columns:1fr}
+  .judgeAssignmentItem{
+    grid-template-columns:1fr auto;
+  }
+  .judgeAssignmentTime{
+    grid-column:1 / -1;
+  }
+}
+
+
+/* ===== v2.33 judge finder name + extension ===== */
+.judgeFinderFormVerified{
+  grid-template-columns:minmax(0,1.25fr) minmax(130px,.65fr) auto;
+  max-width:760px;
+}
+@media(max-width:620px){
+  .judgeFinderFormVerified{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -1513,7 +1670,27 @@ summary {
 
 <section id="staff">
 <div class="titleRow"><div><h2>🦺 운영본부 · 심판</h2><p>교사·학생 역할 및 경기별 심판</p></div></div>
-<div class="card scroll"><table><thead><tr><th>직책</th><th>교사</th><th>학생/비고</th></tr></thead><tbody id="staffBody"></tbody></table></div>
+
+<div class="card judgeFinderCard">
+  <div class="judgeFinderHead">
+    <div>
+      <h3>🔎 내 심판 종목 찾기</h3>
+      <p>선생님 이름과 내선번호를 입력하면 담당 종목과 시간·역할·학급을 바로 확인할 수 있습니다.</p>
+    </div>
+    <span class="teacherOnlyBadge">교사용</span>
+  </div>
+  <div class="judgeFinderForm judgeFinderFormVerified">
+    <input id="judgeNameSearch" type="text" maxlength="20" autocomplete="off" placeholder="선생님 이름 입력 (예: 이정은)">
+    <input id="judgeExtensionSearch" type="text" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="내선번호 3자리">
+    <button class="btn primary" type="button" onclick="findJudgeAssignments()">내 심판 찾기</button>
+  </div>
+  <p class="judgeFinderPrivacy">등록된 교사 이름과 내선번호가 모두 일치해야 검색됩니다. 입력한 정보는 저장되지 않습니다.</p>
+  <div id="judgeSearchResult" class="judgeSearchResult">
+    <div class="judgeSearchEmpty">이름과 내선번호를 입력하면 배정된 심판 종목이 여기에 표시됩니다.</div>
+  </div>
+</div>
+
+<div class="card scroll" style="margin-top:12px"><table><thead><tr><th>직책</th><th>교사</th><th>학생/비고</th></tr></thead><tbody id="staffBody"></tbody></table></div>
 <div class="card scroll" style="margin-top:12px"><h3>경기별 심판</h3><table><thead><tr><th>종목</th><th>시간</th><th>주심·부심</th><th>비고</th></tr></thead><tbody id="judgeBody"></tbody></table></div>
 </section>
 
@@ -1663,7 +1840,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.31</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.33</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -3068,6 +3245,101 @@ async function deleteFlag(){
  refreshFlagAdminPreview();
 }
 
+
+
+const JUDGE_ASSIGNMENTS_BY_HASH={"124b011db0fd9ffec84827675cec3045537ff1d8eb909f6a88411e79e2f43e70":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"2반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"2반"}],"ff6cb0444e3e24102798969120a19b33c88e920d643958f79837dd3a7dd0511e":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"3반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"3반"}],"f89002439f33faacda49da1b8c7171a671e646a9aa3b89784d150436d4cd86b5":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"4반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"4반"}],"f0fe519e51adc613adb2754a92b2cf8b2c4b8c6e3d0beb053d8e8207d3fc18e7":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"5반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"5반"}],"645140991346205670db233de8b6f9e3ad8a8af8d9ad1c206840c2e47bab28c0":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"6반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"6반"}],"2a123045e0932e34ff40537447fe26f185bcb68b438b9631cb14a4cd99324f03":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"7반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"7반"}],"23c78484d015ff3cbce845da43d0a0e0f7c1c5b38368208d51cf207d2d733cfe":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"8반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"8반"}],"2675b9133bec31ec049afd30bf458e8544f9b502d3cb63eacce1b549f83100ce":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"1반"},{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"1반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"1반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"1반"}],"28b79bedae771f7820551014019abd19eed20ac9fb762b88ef5d3c38a1326afe":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"2반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"2반"}],"b890a64bdacb093f61adc6dc89c49450eea78c0304a274ea29c90c7e26b07012":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"3반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"3반"}],"844801fb90d803f9c852502db4b954d9b4ae7098a16a55c4be3db3e7e2d2e57f":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"4반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"4반"}],"ac4198f25a4028ed52a785e24acaf88c9742da7acdb20df6390dba5c81430374":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"5반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"5반"}],"643dd38ca7a2dbcd5aa0a4641b7defc777e4841db301d8c0e9048c64cdc3c3b2":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"6반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"6반"}],"abd81b41cfffd76ee5c8ab0ae1fa0d3cf81d364bc94dbc67b9f0d91d3d57fcf0":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"7반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"7반"}],"07c1f2eab021dba93f3daa3d16a6ca8aa13dc244c337171f51b69a98b2b5c29b":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"8반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"8반"}],"9634e498a3fd38fd426a1d204c76914ba7689c5571be5090af6b1fd41efa6846":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"2반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"2반"}],"6675c66552a163eb8f356b2e5661394882629f5a9e57b7951cc16b3c1f2fb6d5":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"3반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"3반"}],"3af2ab098545bf98ec044858d620e38ed01aa6f0b308607a6b4a3c4b3c0a027f":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"4반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"4반"}],"0d10415c523ade2cd6bec0b9b079664dff6134fb70eda008b65c8334441d3eb1":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"5반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"5반"}],"428b0a1ccdd9d34a7123bd4228cea40467b7a5206323fb9401b0f449d980740b":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"6반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"6반"}],"911fcd5617a5c238380862f101c4f735aec14b8f09c3b87f71bb3dec04355408":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"7반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"7반"}],"5ebae56f2327b4c6c07e96d99c03191788e6a2b0d624ddf67917f13d021d1142":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"8반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"8반"}],"82897e6bd6063308f64e327fc34f04946ec5ed2faa064bcf005a81583ea442e4":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"1반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"1반"}],"8e48037d47f9d2a8c053fc4845eed20fab61d40396e74dc5229567590d8bd5d6":[{"event":"1학년 축구 결승 · 2학년 피구 결승","time":"10:20~10:50","role":"축구 주심 · 대기심"},{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"주심"},{"event":"이어달리기","time":"14:30~14:50","role":"출발점","note":"운동장 뒤쪽"},{"event":"1·2학년 빅발리볼 · 3학년 배구","time":"사전경기","role":"심판 · 진행"}],"9568fc112561a934fd9258c8aa9bbac3dd794d8f55e98f319b7b08c0f43fb80c":[{"event":"1학년 축구 결승 · 2학년 피구 결승","time":"10:20~10:50","role":"축구 주심 · 대기심"},{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"부심","note":"선수정렬 · 인원확인"},{"event":"이어달리기","time":"14:30~14:50","role":"조회대 앞 · 배턴터치존"},{"event":"1·2학년 빅발리볼 · 3학년 배구","time":"사전경기","role":"심판 · 진행"}],"8e5389cc94afa473dac4ab2ff52e9b947533322b28e0c6eb6a74aaf599019708":[{"event":"1학년 피구 결승 · 2학년 축구 결승","time":"10:50~11:20","role":"피구 주심"},{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"부심","note":"다음 경기 학급 정렬"},{"event":"이어달리기","time":"14:30~14:50","role":"골인지점"},{"event":"1·2학년 빅발리볼 · 3학년 배구","time":"사전경기","role":"심판 · 진행"}],"ce5f44cdac3ec445b8a9b15e518e65aadacfaf45ed95f533ed5423ed79e75fc0":[{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"부심","note":"선수정렬 · 인원확인"}],"0aeb29ede1032decb5855391a6f35a4b19071dd4dd97b2b19944f41909f11bcf":[{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"부심","note":"다음 경기 학급 정렬"}],"8eaa70b9eedc3eebef917511ad4817369ae869330b9a62d5b00c9f020a6b42a2":[{"event":"이어달리기","time":"14:30~14:50","role":"주심"},{"event":"1·2학년 빅발리볼 · 3학년 배구","time":"사전경기","role":"심판 · 진행"}],"432a58cc6e5a7b507e3227409e5e8204573c0e12e38a6b88778936d4a9c1e960":[{"event":"이어달리기","time":"14:30~14:50","role":"골인지점"}],"1e68dc53e6ee23febce868d3a8148e49e19753359da5f80a7df4ab26d5d00a4c":[{"event":"이어달리기","time":"14:30~14:50","role":"골인지점"}]};
+
+function normalizeJudgeName(value){
+  return String(value||"").trim().replace(/\s+/g,"");
+}
+
+async function sha256Hex(value){
+  if(!window.crypto||!window.crypto.subtle){
+    throw new Error("이 브라우저에서는 이름 검색 기능을 사용할 수 없습니다.");
+  }
+  const data=new TextEncoder().encode(value);
+  const digest=await window.crypto.subtle.digest("SHA-256",data);
+  return Array.from(new Uint8Array(digest))
+    .map(b=>b.toString(16).padStart(2,"0"))
+    .join("");
+}
+
+async function findJudgeAssignments(){
+  const nameInput=document.getElementById("judgeNameSearch");
+  const extInput=document.getElementById("judgeExtensionSearch");
+  const result=document.getElementById("judgeSearchResult");
+  if(!nameInput||!extInput||!result)return;
+
+  const displayName=String(nameInput.value||"").trim();
+  const normalized=normalizeJudgeName(displayName);
+  const extension=String(extInput.value||"").trim();
+
+  if(normalized.length<2){
+    result.innerHTML='<div class="judgeSearchEmpty">선생님 이름을 두 글자 이상 입력해 주세요.</div>';
+    return;
+  }
+  if(!/^\d{3}$/.test(extension)){
+    result.innerHTML='<div class="judgeSearchEmpty">학교 내선번호 숫자 3자리를 입력해 주세요.</div>';
+    return;
+  }
+
+  result.innerHTML='<div class="judgeSearchEmpty">심판 배정을 확인하고 있습니다…</div>';
+
+  try{
+    const key=await sha256Hex(`${normalized}:${extension}`);
+    const rows=JUDGE_ASSIGNMENTS_BY_HASH[key]||[];
+
+    if(!rows.length){
+      result.innerHTML='<div class="judgeSearchEmpty">등록된 <b>교사 이름과 내선번호가 일치하지 않거나</b>, 해당 선생님의 심판 배정이 없습니다.</div>';
+      return;
+    }
+
+    result.innerHTML=`
+      <div class="judgeSearchHeader">
+        <b>🙋 ${esc(displayName)} 선생님</b>
+        <span>심판 배정 ${rows.length}건</span>
+      </div>
+      <div class="judgeAssignmentList">
+        ${rows.map(r=>`
+          <div class="judgeAssignmentItem">
+            <div class="judgeAssignmentTime">${esc(r.time)}</div>
+            <div class="judgeAssignmentMain">
+              <b>${esc(r.event)}</b>
+              <div class="judgeAssignmentMeta">
+                <span class="judgeAssignmentChip">${esc(r.role)}</span>
+                ${r.note?`<span class="judgeAssignmentChip">${esc(r.note)}</span>`:""}
+              </div>
+            </div>
+            ${r.class?`<div class="judgeAssignmentClass">${esc(r.class)}</div>`:""}
+          </div>
+        `).join("")}
+      </div>`;
+  }catch(error){
+    console.error(error);
+    result.innerHTML='<div class="judgeSearchEmpty">검색 중 오류가 발생했습니다. 브라우저를 새로고침한 뒤 다시 시도해 주세요.</div>';
+  }
+}
+
+function initJudgeFinder(){
+  const nameInput=document.getElementById("judgeNameSearch");
+  const extInput=document.getElementById("judgeExtensionSearch");
+
+  const enterHandler=e=>{
+    if(e.key==="Enter"){
+      e.preventDefault();
+      findJudgeAssignments();
+    }
+  };
+
+  if(nameInput)nameInput.addEventListener("keydown",enterHandler);
+  if(extInput){
+    extInput.addEventListener("input",()=>{
+      extInput.value=extInput.value.replace(/\D/g,"").slice(0,3);
+    });
+    extInput.addEventListener("keydown",enterHandler);
+  }
+}
+
 function renderStaff(){staffBody.innerHTML=STAFF.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td><td class="muted">${esc(r[2])}</td></tr>`).join("");judgeBody.innerHTML=JUDGES.map(r=>`<tr><td><b>${esc(r[0])}</b></td><td>${esc(r[1])}</td><td>${esc(r[2])}</td><td class="muted">${esc(r[3])}</td></tr>`).join("")}
 function renderNotices(){noticeList.innerHTML=(data.notices||[]).map(n=>`<div class="notice"><span class="tag ${n.type==="긴급"?"yellow":"cyan"}">${esc(n.type)}</span> <b>${esc(n.text)}</b><time>${esc(n.time)}</time></div>`).join("")}
 
@@ -3366,6 +3638,7 @@ function subscribeRealtime(){
 }
 
 function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderEntranceVoteScores();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();renderBracketAdmin();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
+initJudgeFinder();
 initFlagVoteForm();
 initBracketAdminControls();
 renderAll();
