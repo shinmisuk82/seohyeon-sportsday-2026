@@ -1764,6 +1764,175 @@ summary {
   line-height:1.45;
 }
 
+
+/* ===== v2.42 grade-based flag gallery ===== */
+.flagGradeSelector{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:9px;
+  margin-bottom:13px;
+}
+.flagGradeSelector button{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:7px;
+  min-height:54px;
+  padding:10px 12px;
+  border-radius:15px;
+  border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.045);
+  color:#c9d7e8;
+  cursor:pointer;
+  font-weight:900;
+}
+.flagGradeSelector button b{
+  font-size:15px;
+}
+.flagGradeSelector button small{
+  font-size:10px;
+  color:#879db8;
+}
+.flagGradeSelector button.active{
+  color:#fff;
+  background:linear-gradient(135deg,var(--blue),#39a8ff);
+  border-color:transparent;
+  box-shadow:0 8px 22px rgba(34,130,221,.16);
+}
+.flagGradeSelector button.active small{
+  color:rgba(255,255,255,.78);
+}
+.flagSelectedGradeHead{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:10px;
+  margin:2px 0 11px;
+}
+.flagSelectedGradeEyebrow{
+  display:block;
+  margin-bottom:3px;
+  color:var(--cyan);
+  font-size:9px;
+  font-weight:950;
+}
+.flagSelectedGradeHead h3{
+  margin:0;
+  font-size:19px;
+}
+.flagPanelTitle{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
+.flagPanelTitle h3{
+  margin:0;
+}
+.flagPanelTitle p{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:11px;
+}
+.flagGallerySection{
+  margin-top:14px;
+}
+.flagGalleryHead{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:10px;
+}
+.flagGalleryHead h3{
+  margin:0;
+  font-size:18px;
+}
+.flagGalleryHead p{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:11px;
+}
+#flags .flagGrid{
+  grid-template-columns:repeat(4,minmax(0,1fr));
+}
+@media(max-width:850px){
+  #flags .flagGrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:620px){
+  .flagGradeSelector{gap:6px}
+  .flagGradeSelector button{
+    min-height:49px;
+    flex-direction:column;
+    gap:1px;
+    padding:7px 5px;
+  }
+  .flagVoteLayout{grid-template-columns:1fr}
+}
+@media(max-width:420px){
+  #flags .flagGrid{grid-template-columns:1fr}
+}
+
+
+/* ===== v2.43 stronger flag grade tabs ===== */
+#flags .flagGradeSelector{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-bottom:14px;
+}
+#flags .flagGradeSelector button{
+  flex:1 1 120px;
+  min-width:105px;
+  min-height:48px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:10px 14px;
+  border-radius:12px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.075);
+  color:#fff;
+  font-weight:900;
+  cursor:pointer;
+  box-shadow:none;
+}
+#flags .flagGradeSelector button b{
+  font-size:14px;
+  color:inherit;
+}
+#flags .flagGradeSelector button small{
+  font-size:10px;
+  color:#9fb2c8;
+}
+#flags .flagGradeSelector button:hover{
+  background:rgba(255,255,255,.12);
+}
+#flags .flagGradeSelector button.active{
+  background:linear-gradient(135deg,var(--blue),#39a8ff);
+  border-color:transparent;
+  color:#fff;
+}
+#flags .flagGradeSelector button.active small{
+  color:rgba(255,255,255,.82);
+}
+@media(max-width:520px){
+  #flags .flagGradeSelector{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:6px;
+  }
+  #flags .flagGradeSelector button{
+    min-width:0;
+    min-height:46px;
+    padding:8px 5px;
+    flex-direction:column;
+    gap:1px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1914,7 +2083,7 @@ summary {
   <div class="homeVoteButtons">
     <button type="button" class="homeVoteBtn flag" onclick="openFlagVoteFromHome()">
       <span class="homeVoteBtnIcon">🚩</span>
-      <span><b>학급 깃발 투표</b><small>전 학년 학급 깃발 평가</small></span>
+      <span><b>학급 깃발 투표</b><small>학년별로 선택해 학급 깃발 평가</small></span>
       <span class="homeVoteArrow">→</span>
     </button>
 
@@ -2115,43 +2284,46 @@ summary {
 <div class="titleRow">
   <div>
     <h2>🚩 학급 깃발 갤러리</h2>
-    <p>학년·학급별 완성 깃발을 한눈에 볼 수 있습니다.</p>
+    <p>학년을 선택하면 해당 학년의 투표 · 실시간 결과 · 깃발 이미지만 확인할 수 있습니다.</p>
   </div>
 </div>
 
-<div class="card" style="margin-bottom:12px">
-  <div class="filters">
-    <select id="flagGradeFilter">
-      <option value="">전체 학년</option>
-      <option value="1">1학년</option>
-      <option value="2">2학년</option>
-      <option value="3">3학년</option>
-    </select>
-    <select id="flagClassFilter">
-      <option value="">전체 반</option>
-      <option value="1">1반</option>
-      <option value="2">2반</option>
-      <option value="3">3반</option>
-      <option value="4">4반</option>
-      <option value="5">5반</option>
-      <option value="6">6반</option>
-      <option value="7">7반</option>
-      <option value="8">8반</option>
-    </select>
+<div class="flagGradeSelector" id="flagGradeTabs">
+  <button type="button" class="active" data-grade="1" onclick="setFlagViewGrade('1')">
+    <b>1학년</b><small>1~8반</small>
+  </button>
+  <button type="button" data-grade="2" onclick="setFlagViewGrade('2')">
+    <b>2학년</b><small>1~8반</small>
+  </button>
+  <button type="button" data-grade="3" onclick="setFlagViewGrade('3')">
+    <b>3학년</b><small>1~8반</small>
+  </button>
+</div>
+
+<div class="flagSelectedGradeHead">
+  <div>
+    <span class="flagSelectedGradeEyebrow">현재 선택</span>
+    <h3 id="flagSelectedGradeTitle">1학년 학급 깃발</h3>
   </div>
-  <p class="muted" style="font-size:12px;margin:4px 0 0">
-    선생님 투표는 1위 50점 · 2위 40점 · 3위 30점 · 4위 20점 · 5위 10점으로 누적됩니다.
-  </p>
+  <span class="status"><span class="dot"></span>LIVE</span>
 </div>
 
 <div class="flagVoteLayout">
   <div class="card">
-    <h3>🗳️ 선생님 깃발 투표</h3>
+    <div class="flagPanelTitle">
+      <div>
+        <h3>🗳️ 선생님 깃발 투표</h3>
+        <p><b id="flagVoteGradeLabel">1학년</b> 8개 학급 중 1~5위를 선택합니다.</p>
+      </div>
+      <span class="teacherOnlyBadge">교사 전용</span>
+    </div>
+
     <div class="flagVoteForm">
       <div class="flagVoteIdentity">
         <input id="flagVoterName" maxlength="20" autocomplete="off" placeholder="선생님 이름">
         <input id="flagVoterExtension" maxlength="3" inputmode="numeric" autocomplete="off" placeholder="내선번호 3자리">
       </div>
+
       <div class="flagVoteRanks">
         <label class="flagVoteRank"><b>🥇 1위 <small>50점</small></b><select id="flagVote1"></select></label>
         <label class="flagVoteRank"><b>🥈 2위 <small>40점</small></b><select id="flagVote2"></select></label>
@@ -2159,28 +2331,35 @@ summary {
         <label class="flagVoteRank"><b>4위 <small>20점</small></b><select id="flagVote4"></select></label>
         <label class="flagVoteRank"><b>5위 <small>10점</small></b><select id="flagVote5"></select></label>
       </div>
+
       <div class="voteManageButtons">
-        <button class="btn primary" type="button" onclick="submitFlagVote()">투표 제출 / 수정</button>
-        <button class="btn voteDeleteBtn" type="button" onclick="deleteFlagVote()">내 투표 삭제</button>
+        <button class="btn primary" type="button" onclick="submitFlagVote()">이 학년 투표 제출 / 수정</button>
+        <button class="btn voteDeleteBtn" type="button" onclick="deleteFlagVote()">이 학년 내 투표 삭제</button>
       </div>
     </div>
+
     <p class="muted" style="font-size:11px;line-height:1.65;margin:12px 0 0">
       <b>서현중학교 교사만 투표에 참여 가능합니다.</b><br>
-      등록된 <b>교사 이름과 내선번호가 모두 정확히 일치해야</b> 투표 제출·수정·삭제가 가능합니다.
-      다섯 학급을 서로 다르게 선택해야 하며, 같은 정보로 다시 제출하면 기존 투표가 수정됩니다.
-      이름과 내선번호는 공개 점수 화면에 표시되지 않습니다.
+      선택한 학년에서 다섯 학급을 서로 다르게 선택합니다.
+      등록된 교사 이름과 내선번호가 모두 정확히 일치해야 하며,
+      같은 정보로 다시 제출하면 <b>현재 선택한 학년의 투표만 수정</b>됩니다.
     </p>
   </div>
 
   <div class="card">
     <div class="titleRow" style="margin-top:0">
-      <div><h3 style="margin:0">🏁 실시간 깃발 투표 점수</h3><p>선생님 투표 누적점수</p></div>
+      <div>
+        <h3 style="margin:0">🏁 실시간 깃발 투표 점수</h3>
+        <p><b id="flagScoreGradeLabel">1학년</b> 투표 결과</p>
+      </div>
       <span class="status"><span class="dot"></span>LIVE</span>
     </div>
+
     <div class="flagVoteSummary">
-      <span class="flagVotePill">참여 교사 <strong id="flagBallotCount">0명</strong></span>
+      <span class="flagVotePill"><span id="flagBallotGradeLabel">1학년</span> 참여 교사 <strong id="flagBallotCount">0명</strong></span>
       <span class="flagVotePill">1위 50 · 2위 40 · 3위 30 · 4위 20 · 5위 10</span>
     </div>
+
     <div class="scroll">
       <table class="flagVoteTable">
         <thead><tr><th>순위</th><th>학급</th><th>총점</th><th>1위표</th><th>2위표</th><th>3위표</th><th>4위표</th><th>5위표</th></tr></thead>
@@ -2190,7 +2369,15 @@ summary {
   </div>
 </div>
 
-<div class="flagGrid" id="flagGrid"></div>
+<div class="flagGallerySection">
+  <div class="flagGalleryHead">
+    <div>
+      <h3>🖼️ <span id="flagGalleryGradeLabel">1학년</span> 깃발 이미지</h3>
+      <p>선택한 학년의 1~8반 깃발만 표시됩니다.</p>
+    </div>
+  </div>
+  <div class="flagGrid" id="flagGrid"></div>
+</div>
 </section>
 
 
@@ -2450,7 +2637,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.41</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.43</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -2461,14 +2648,14 @@ const JUDGES = [
   [
     "협동 파도타기 3→2→1",
     "09:40~10:00",
-    "주심: 이○은(2반), 신○숙(3반), 노○연(4반), 황○혜(5반), 신○정(6반), 천○진(7반), 김○희(8반), 이○경(1반) / 부심: 송○주(2반), 강○숙(3반), 박○녀(4반), 한○미(5반), 이○은(6반), 오○필(7반), 권○현(8반), 이○경(1반)",
-    "주심: 2학년 각 담임학급 +1 · 부심: 1학년 각 학급 담임 +1 · 심판은 학급당 2명씩"
+    "주심: 2학년 각 담임학급 +1 · 부심: 1학년 각 학급 담임 +1 · 심판은 학급당 2명씩",
+    ""
   ],
   [
     "8자 줄넘기 2→1→3",
     "10:00~10:20",
-    "주심: 송○주(2반), 강○숙(3반), 박○녀(4반), 한○미(5반), 이○은(6반), 오○필(7반), 권○현(8반), 이○경(1반) / 부심: 임○람(2반), 송○영(3반), 연○흠(4반), 양○희(5반), 송○롬(6반), 유○현(7반), 박○인(8반), 이○선(1반)",
-    "주심: 1학년 각 담임학급 +1 · 부심: 3학년 각 학급 담임 +1 · 심판은 학급당 2명씩"
+    "주심: 1학년 각 담임학급 +1 · 부심: 3학년 각 학급 담임 +1 · 심판은 학급당 2명씩",
+    ""
   ],
   [
     "1학년 축구 결승 · 2학년 피구 결승",
@@ -2491,8 +2678,8 @@ const JUDGES = [
   [
     "릴레이 고리던지기 1→3→2",
     "13:20~13:50",
-    "주심: 임○람(2반), 송○영(3반), 연○흠(4반), 양○희(5반), 송○롬(6반), 유○현(7반), 박○인(8반), 이○선(1반) / 부심: 이○은(2반), 신○숙(3반), 노○연(4반), 황○혜(5반), 신○정(6반), 천○진(7반), 김○희(8반), 이○경(1반)",
-    "주심: 3학년 각 담임학급 +1 · 부심: 2학년 각 학급 담임 +1 · 심판은 학급당 2명씩"
+    "주심: 3학년 각 담임학급 +1 · 부심: 2학년 각 학급 담임 +1 · 심판은 학급당 2명씩",
+    ""
   ],
   [
     "줄다리기 준결승·결승",
@@ -2536,6 +2723,7 @@ const DEFAULT = {
  flags:{},
  flagVoteScores:{},
  flagBallotCount:0,
+ flagBallotCounts:{1:0,2:0,3:0},
  entranceVoteScores:{},
  entranceBallotCount:0,
  bracketResults:{},
@@ -2586,6 +2774,7 @@ function load(){
       flags: cached.flags || {},
       flagVoteScores: cached.flagVoteScores || {},
       flagBallotCount: Number(cached.flagBallotCount)||0,
+      flagBallotCounts: cached.flagBallotCounts || {1:0,2:0,3:0},
       entranceVoteScores: cached.entranceVoteScores || {},
       entranceBallotCount: Number(cached.entranceBallotCount)||0,
       bracketResults: cached.bracketResults || {},
@@ -2638,8 +2827,9 @@ function openJudgeFinderFromHome(){
 
 function openFlagVoteFromHome(){
   openTab("flags");
+  setFlagViewGrade(flagViewGrade||"1");
   setTimeout(()=>{
-    const target=document.querySelector("#flags .flagVoteLayout");
+    const target=document.querySelector("#flags .flagGradeSelector");
     if(target)target.scrollIntoView({behavior:"smooth",block:"start"});
   },120);
 }
@@ -3976,53 +4166,93 @@ async function clearSongs(){
 
 function flagKey(g,c){return `${g}-${c}`}
 
-function renderFlags(){
- const g=flagGradeFilter?.value||"", c=flagClassFilter?.value||"";
- const cards=[];
- for(let grade=1;grade<=3;grade++){
-   if(g && String(grade)!==g) continue;
-   for(let cls=1;cls<=8;cls++){
-     if(c && String(cls)!==c) continue;
-     const key=flagKey(grade,cls), f=data.flags?.[key];
-     cards.push(`<div class="flagCard">
-       <div class="flagImage">
-         ${f?.image
-           ? `<img src="${f.image}" alt="${grade}학년 ${cls}반 깃발">`
-           : `<div class="flagPlaceholder"><span class="icon">🚩</span>${grade}학년 ${cls}반<br>깃발 이미지 준비 중</div>`}
-       </div>
-       <div class="flagInfo">
-         <b>${grade}학년 ${cls}반</b>
-         <span class="flagScoreBadge">🗳️ 교사 투표 ${Number(data.flagVoteScores?.[key]?.score)||0}점</span>
-         ${f?.caption?`<div class="flagCaption">${esc(f.caption)}</div>`:""}
-       </div>
-     </div>`);
-   }
- }
- flagGrid.innerHTML=cards.join("");
-}
-
-if(typeof flagGradeFilter!=="undefined"){
-  flagGradeFilter.addEventListener("input",renderFlags);
-  flagClassFilter.addEventListener("input",renderFlags);
-}
-
-
+let flagViewGrade="1";
 let flagVoteFormReady=false;
+
+function setFlagViewGrade(g){
+  const grade=String(g||"");
+  if(!["1","2","3"].includes(grade))return;
+  flagViewGrade=grade;
+
+  const tabs=document.getElementById("flagGradeTabs");
+  if(tabs){
+    tabs.querySelectorAll("button[data-grade]").forEach(btn=>{
+      btn.classList.toggle("active",btn.dataset.grade===grade);
+    });
+  }
+
+  const label=`${grade}학년`;
+  const title=document.getElementById("flagSelectedGradeTitle");
+  const voteLabel=document.getElementById("flagVoteGradeLabel");
+  const scoreLabel=document.getElementById("flagScoreGradeLabel");
+  const ballotLabel=document.getElementById("flagBallotGradeLabel");
+  const galleryLabel=document.getElementById("flagGalleryGradeLabel");
+
+  if(title)title.textContent=`${label} 학급 깃발`;
+  if(voteLabel)voteLabel.textContent=label;
+  if(scoreLabel)scoreLabel.textContent=label;
+  if(ballotLabel)ballotLabel.textContent=label;
+  if(galleryLabel)galleryLabel.textContent=label;
+
+  populateFlagVoteOptions(true);
+  renderFlagVoteScores();
+  renderFlags();
+}
+
+function renderFlags(){
+  const grid=document.getElementById("flagGrid");
+  if(!grid)return;
+
+  const grade=Number(flagViewGrade);
+  const cards=[];
+
+  for(let cls=1;cls<=8;cls++){
+    const key=flagKey(grade,cls);
+    const f=data.flags?.[key];
+
+    cards.push(`<div class="flagCard">
+      <div class="flagImage">
+        ${f?.image
+          ? `<img src="${f.image}" alt="${grade}학년 ${cls}반 깃발">`
+          : `<div class="flagPlaceholder"><span class="icon">🚩</span>${grade}학년 ${cls}반<br>깃발 이미지 준비 중</div>`}
+      </div>
+      <div class="flagInfo">
+        <b>${grade}학년 ${cls}반</b>
+        <span class="flagScoreBadge">🗳️ 교사 투표 ${Number(data.flagVoteScores?.[key]?.score)||0}점</span>
+        ${f?.caption?`<div class="flagCaption">${esc(f.caption)}</div>`:""}
+      </div>
+    </div>`);
+  }
+
+  grid.innerHTML=cards.join("");
+}
+
+function populateFlagVoteOptions(clearValues=false){
+  const selects=[1,2,3,4,5]
+    .map(i=>document.getElementById(`flagVote${i}`))
+    .filter(Boolean);
+
+  if(selects.length!==5)return;
+
+  const g=flagViewGrade;
+  const options=Array.from({length:8},(_,i)=>{
+    const c=i+1;
+    return `<option value="${g}-${c}">${g}학년 ${c}반</option>`;
+  }).join("");
+
+  selects.forEach((sel,i)=>{
+    const old=clearValues?"":sel.value;
+    sel.innerHTML=`<option value="">${i+1}위 학급 선택</option>`+options;
+    if(old && old.startsWith(`${g}-`))sel.value=old;
+  });
+}
 
 function initFlagVoteForm(){
   if(flagVoteFormReady)return;
   const selects=[1,2,3,4,5].map(i=>document.getElementById(`flagVote${i}`)).filter(Boolean);
   if(selects.length!==5)return;
 
-  const options=[];
-  for(let g=1;g<=3;g++){
-    for(let c=1;c<=8;c++){
-      options.push(`<option value="${g}-${c}">${g}학년 ${c}반</option>`);
-    }
-  }
-  selects.forEach((sel,i)=>{
-    sel.innerHTML=`<option value="">${i+1}위 학급 선택</option>`+options.join("");
-  });
+  populateFlagVoteOptions(false);
 
   const ext=document.getElementById("flagVoterExtension");
   if(ext){
@@ -4030,6 +4260,7 @@ function initFlagVoteForm(){
       ext.value=ext.value.replace(/\D/g,"").slice(0,3);
     });
   }
+
   flagVoteFormReady=true;
 }
 
@@ -4037,36 +4268,49 @@ function renderFlagVoteScores(){
   const body=document.getElementById("flagVoteScoreBody");
   const count=document.getElementById("flagBallotCount");
   if(!body)return;
-  if(count)count.textContent=`${Number(data.flagBallotCount)||0}명`;
+
+  const g=Number(flagViewGrade);
+  const gradeCount=Number(data.flagBallotCounts?.[flagViewGrade] ?? data.flagBallotCounts?.[g] ?? 0) || 0;
+  if(count)count.textContent=`${gradeCount}명`;
 
   const rows=[];
-  for(let g=1;g<=3;g++){
-    for(let c=1;c<=8;c++){
-      const key=flagKey(g,c);
-      const s=data.flagVoteScores?.[key]||{};
-      rows.push({
-        key,g,c,
-        score:Number(s.score)||0,
-        first:Number(s.first)||0,
-        second:Number(s.second)||0,
-        third:Number(s.third)||0,
-        fourth:Number(s.fourth)||0,
-        fifth:Number(s.fifth)||0
-      });
-    }
+  for(let c=1;c<=8;c++){
+    const key=flagKey(g,c);
+    const s=data.flagVoteScores?.[key]||{};
+    rows.push({
+      key,g,c,
+      score:Number(s.score)||0,
+      first:Number(s.first)||0,
+      second:Number(s.second)||0,
+      third:Number(s.third)||0,
+      fourth:Number(s.fourth)||0,
+      fifth:Number(s.fifth)||0
+    });
   }
 
-  rows.sort((a,b)=>b.score-a.score || b.first-a.first || b.second-a.second || a.g-b.g || a.c-b.c);
+  rows.sort((a,b)=>
+    b.score-a.score ||
+    b.first-a.first ||
+    b.second-a.second ||
+    b.third-a.third ||
+    a.c-b.c
+  );
 
   let previousScore=null, previousRank=0;
   body.innerHTML=rows.map((r,i)=>{
     const rank=(previousScore===r.score)?previousRank:i+1;
-    previousScore=r.score; previousRank=rank;
+    previousScore=r.score;
+    previousRank=rank;
+
     return `<tr>
       <td><span class="flagRankBadge">${rank}</span></td>
       <td><b>${r.g}학년 ${r.c}반</b></td>
       <td><b>${r.score}점</b></td>
-      <td>${r.first}</td><td>${r.second}</td><td>${r.third}</td><td>${r.fourth}</td><td>${r.fifth}</td>
+      <td>${r.first}</td>
+      <td>${r.second}</td>
+      <td>${r.third}</td>
+      <td>${r.fourth}</td>
+      <td>${r.fifth}</td>
     </tr>`;
   }).join("");
 }
@@ -4082,8 +4326,21 @@ async function loadFlagVoteStateFromCloud(){
     return false;
   }
 
-  data.flagVoteScores=(row?.scores&&typeof row.scores==="object")?row.scores:{};
+  const rawScores=(row?.scores&&typeof row.scores==="object")?clone(row.scores):{};
+  const gradeCounts=(rawScores._ballot_counts&&typeof rawScores._ballot_counts==="object")
+    ? rawScores._ballot_counts
+    : {1:0,2:0,3:0};
+
+  delete rawScores._ballot_counts;
+
+  data.flagVoteScores=rawScores;
+  data.flagBallotCounts={
+    1:Number(gradeCounts["1"]||gradeCounts[1])||0,
+    2:Number(gradeCounts["2"]||gradeCounts[2])||0,
+    3:Number(gradeCounts["3"]||gradeCounts[3])||0
+  };
   data.flagBallotCount=Number(row?.ballot_count)||0;
+
   localStorage.setItem("sehyeonSports2026v2",JSON.stringify(data));
   renderFlagVoteScores();
   renderFlags();
@@ -4094,17 +4351,21 @@ async function submitFlagVote(){
   const name=(document.getElementById("flagVoterName")?.value||"").trim();
   const extension=(document.getElementById("flagVoterExtension")?.value||"").trim();
   const choices=[1,2,3,4,5].map(i=>document.getElementById(`flagVote${i}`)?.value||"");
+  const grade=Number(flagViewGrade);
 
   if(name.length<2)return alert("선생님 이름을 입력해 주세요.");
   if(!/^\d{3}$/.test(extension))return alert("학교 내선번호 3자리를 입력해 주세요.");
+  if(![1,2,3].includes(grade))return alert("투표할 학년을 다시 선택해 주세요.");
   if(choices.some(v=>!v))return alert("1위부터 5위까지 모두 선택해 주세요.");
+  if(choices.some(v=>!v.startsWith(`${grade}-`)))return alert(`${grade}학년 학급만 선택해 주세요.`);
   if(new Set(choices).size!==5)return alert("1위부터 5위까지 서로 다른 학급을 선택해 주세요.");
 
-  if(!confirm(`${name} 선생님, 선택한 1~5위 투표를 제출할까요?\n같은 이름과 내선번호로 다시 제출하면 기존 투표가 수정됩니다.`))return;
+  if(!confirm(`${name} 선생님, ${grade}학년 깃발 1~5위 투표를 제출할까요?\n같은 정보로 다시 제출하면 ${grade}학년 투표만 수정됩니다.`))return;
 
   const {error}=await sb.rpc("submit_flag_vote",{
     p_voter_name:name,
     p_extension:extension,
+    p_vote_grade:grade,
     p_first:choices[0],
     p_second:choices[1],
     p_third:choices[2],
@@ -4114,36 +4375,39 @@ async function submitFlagVote(){
 
   if(error){
     console.error(error);
-    alert("투표 저장에 실패했습니다. 등록된 교사 이름·내선번호가 모두 일치하는지와 순위 선택을 확인해 주세요.");
+    alert("투표 저장에 실패했습니다. v2.42 SQL 적용 여부와 등록된 교사 이름·내선번호를 확인해 주세요.");
     return;
   }
 
   await loadFlagVoteStateFromCloud();
-  alert("깃발 투표가 저장되었습니다. 감사합니다.");
+  alert(`${grade}학년 깃발 투표가 저장되었습니다.`);
 }
 
 async function deleteFlagVote(){
   const name=(document.getElementById("flagVoterName")?.value||"").trim();
   const extension=(document.getElementById("flagVoterExtension")?.value||"").trim();
+  const grade=Number(flagViewGrade);
 
   if(name.length<2)return alert("선생님 이름을 입력해 주세요.");
   if(!/^\d{3}$/.test(extension))return alert("학교 내선번호 3자리를 입력해 주세요.");
+  if(![1,2,3].includes(grade))return alert("삭제할 학년을 다시 선택해 주세요.");
 
-  if(!confirm(`${name} 선생님의 기존 깃발 투표를 삭제할까요?\n삭제 후 같은 정보로 다시 투표할 수 있습니다.`))return;
+  if(!confirm(`${name} 선생님의 ${grade}학년 깃발 투표를 삭제할까요?\n다른 학년의 투표는 유지됩니다.`))return;
 
   const {data:result,error}=await sb.rpc("delete_flag_vote",{
     p_voter_name:name,
-    p_extension:extension
+    p_extension:extension,
+    p_vote_grade:grade
   });
 
   if(error){
     console.error(error);
-    alert("투표 삭제에 실패했습니다. 등록된 교사 이름과 내선번호가 모두 일치하는지 확인해 주세요.");
+    alert("투표 삭제에 실패했습니다. v2.42 SQL 적용 여부와 교사 정보를 확인해 주세요.");
     return;
   }
 
   if(!result?.deleted){
-    alert("해당 이름과 내선번호로 저장된 깃발 투표가 없습니다.");
+    alert(`${grade}학년에 저장된 깃발 투표가 없습니다.`);
     return;
   }
 
@@ -4153,7 +4417,7 @@ async function deleteFlagVote(){
   });
 
   await loadFlagVoteStateFromCloud();
-  alert("기존 깃발 투표를 삭제했습니다. 다시 투표할 수 있습니다.");
+  alert(`${grade}학년 깃발 투표를 삭제했습니다.`);
 }
 
 function refreshFlagAdminPreview(){
