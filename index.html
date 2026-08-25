@@ -1933,6 +1933,35 @@ summary {
   }
 }
 
+
+/* ===== v2.44 shared final officials ===== */
+.sharedFinalOfficialsCell{
+  vertical-align:middle!important;
+  min-width:250px;
+}
+.sharedFinalOfficials{
+  display:grid;
+  gap:10px;
+}
+.sharedFinalOfficials>div{
+  padding:9px 10px;
+  border-radius:12px;
+  background:rgba(255,255,255,.045);
+  border:1px solid rgba(255,255,255,.08);
+}
+.sharedFinalOfficials b{
+  display:block;
+  margin-bottom:5px;
+  color:var(--cyan);
+  font-size:12px;
+}
+.sharedFinalOfficials span{
+  display:block;
+  color:#d6e1ee;
+  font-size:11px;
+  line-height:1.55;
+}
+
 </style>
 </head>
 <body>
@@ -1950,8 +1979,8 @@ summary {
 <button data-tab="bracket">🧩 대진·기록</button>
 <button data-tab="players">👥 출전선수</button>
 <button data-tab="flags">🚩 학급 깃발</button>
-<button data-tab="songs">🎵 노래 신청</button>
 <button data-tab="staff">🦺 운영·심판</button>
+<button data-tab="songs">🎵 노래 신청</button>
 <button data-tab="notice">📢 본부게시판</button>
 <button data-tab="adminTab">⚙️ 관리자</button>
 </nav></div>
@@ -2381,39 +2410,6 @@ summary {
 </section>
 
 
-<section id="songs">
-<div class="titleRow">
-  <div>
-    <h2>🎵 노래 신청</h2>
-    <p>체육 한마당에서 듣고 싶은 노래와 사연을 남겨주세요.</p>
-  </div>
-  <span class="songCount" id="songCount">신청 0곡</span>
-</div>
-
-<div class="songLayout">
-  <div class="card">
-    <h3>🎧 신청곡 등록</h3>
-    <div class="songForm">
-      <input id="songTitleInput" maxlength="80" placeholder="노래 제목">
-      <input id="songArtistInput" maxlength="80" placeholder="가수 이름">
-      <input id="songApplicantInput" maxlength="40" placeholder="신청자 (예: 2315 홍길동)">
-      <textarea id="songStoryInput" maxlength="500" placeholder="사연을 입력하세요. (최대 500자)"></textarea>
-      <button class="btn primary" onclick="submitSong()">노래 신청하기</button>
-    </div>
-    <p class="muted" style="font-size:11px;line-height:1.6;margin:12px 0 0">
-      신청 내용은 사이트의 신청목록에 표시됩니다. 신청자의 전체 학번과 이름은 공개하지 않고 예: 2315 홍길동 → 2학년 3반 홍○동처럼 표시됩니다. 행사 운영에 적절하지 않은 내용은 관리자에 의해 삭제될 수 있습니다.
-    </p>
-  </div>
-
-  <div class="card">
-    <div class="titleRow" style="margin-top:0">
-      <div><h3 style="margin:0">📻 신청 목록</h3><p>최신 신청순</p></div>
-    </div>
-    <div id="songList" class="songList"></div>
-  </div>
-</div>
-</section>
-
 <section id="staff">
 <div class="titleRow"><div><h2>🦺 운영본부 · 심판</h2><p>교사 운영 역할과 경기별 심판을 확인합니다.</p></div></div>
 
@@ -2488,6 +2484,39 @@ summary {
 </div>
 
 <div class="card scroll" style="margin-top:12px"><h3>경기별 심판</h3><table><thead><tr><th>종목</th><th>시간</th><th>주심·부심</th><th>비고</th></tr></thead><tbody id="judgeBody"></tbody></table></div>
+</section>
+
+<section id="songs">
+<div class="titleRow">
+  <div>
+    <h2>🎵 노래 신청</h2>
+    <p>체육 한마당에서 듣고 싶은 노래와 사연을 남겨주세요.</p>
+  </div>
+  <span class="songCount" id="songCount">신청 0곡</span>
+</div>
+
+<div class="songLayout">
+  <div class="card">
+    <h3>🎧 신청곡 등록</h3>
+    <div class="songForm">
+      <input id="songTitleInput" maxlength="80" placeholder="노래 제목">
+      <input id="songArtistInput" maxlength="80" placeholder="가수 이름">
+      <input id="songApplicantInput" maxlength="40" placeholder="신청자 (예: 2315 홍길동)">
+      <textarea id="songStoryInput" maxlength="500" placeholder="사연을 입력하세요. (최대 500자)"></textarea>
+      <button class="btn primary" onclick="submitSong()">노래 신청하기</button>
+    </div>
+    <p class="muted" style="font-size:11px;line-height:1.6;margin:12px 0 0">
+      신청 내용은 사이트의 신청목록에 표시됩니다. 신청자의 전체 학번과 이름은 공개하지 않고 예: 2315 홍길동 → 2학년 3반 홍○동처럼 표시됩니다. 행사 운영에 적절하지 않은 내용은 관리자에 의해 삭제될 수 있습니다.
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="titleRow" style="margin-top:0">
+      <div><h3 style="margin:0">📻 신청 목록</h3><p>최신 신청순</p></div>
+    </div>
+    <div id="songList" class="songList"></div>
+  </div>
+</div>
 </section>
 
 <section id="notice">
@@ -2637,7 +2666,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.43</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.45</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -2660,19 +2689,19 @@ const JUDGES = [
   [
     "1학년 축구 결승 · 2학년 피구 결승",
     "10:20~10:50",
-    "축구 주심: 김○성, 임○묵 / 부심: 축구동아리 학생 6명 / 대기심: 김○성, 임○묵",
+    "",
     ""
   ],
   [
     "1학년 피구 결승 · 2학년 축구 결승",
     "10:50~11:20",
-    "피구 주심: 김○미 / 부심: 피구동아리 학생 4명",
+    "",
     ""
   ],
   [
     "3학년 축구 결승 · 3학년 피구 결승",
     "11:20~12:00",
-    "심판 배정은 운영계획의 경기별 심판표 기준",
+    "",
     ""
   ],
   [
@@ -4643,13 +4672,47 @@ function initJudgeFinder(){
 
 function renderStaff(){
   if(typeof judgeBody==="undefined" || !judgeBody)return;
-  judgeBody.innerHTML=JUDGES.map(r=>`
-    <tr>
+
+  const sharedFinalOfficials=`
+    <div class="sharedFinalOfficials">
+      <div>
+        <b>⚽ 축구</b>
+        <span>주심: 김○성, 임○묵</span>
+        <span>부심: 축구동아리 학생 6명</span>
+        <span>대기심: 김○성, 임○묵</span>
+      </div>
+      <div>
+        <b>🏐 피구</b>
+        <span>주심: 김○미</span>
+        <span>부심: 피구동아리 학생 4명</span>
+      </div>
+    </div>`;
+
+  judgeBody.innerHTML=JUDGES.map((r,i)=>{
+    if(i===2){
+      return `<tr>
+        <td><b>${esc(r[0])}</b></td>
+        <td>${esc(r[1])}</td>
+        <td rowspan="3" class="sharedFinalOfficialsCell">${sharedFinalOfficials}</td>
+        <td class="muted">${esc(r[3])}</td>
+      </tr>`;
+    }
+
+    if(i===3 || i===4){
+      return `<tr>
+        <td><b>${esc(r[0])}</b></td>
+        <td>${esc(r[1])}</td>
+        <td class="muted">${esc(r[3])}</td>
+      </tr>`;
+    }
+
+    return `<tr>
       <td><b>${esc(r[0])}</b></td>
       <td>${esc(r[1])}</td>
       <td>${esc(r[2])}</td>
       <td class="muted">${esc(r[3])}</td>
-    </tr>`).join("");
+    </tr>`;
+  }).join("");
 }
 function renderNotices(){noticeList.innerHTML=(data.notices||[]).map(n=>`<div class="notice"><span class="tag ${n.type==="긴급"?"yellow":"cyan"}">${esc(n.type)}</span> <b>${esc(n.text)}</b><time>${esc(n.time)}</time></div>`).join("")}
 
