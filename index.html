@@ -1543,6 +1543,227 @@ summary {
   .judgeVideoGrid{grid-template-columns:1fr}
 }
 
+
+/* ===== v2.40 match schedule ===== */
+.homeMatchScheduleCard{
+  background:linear-gradient(135deg,#f5faff,#fff);
+  border-color:rgba(57,143,214,.14)!important;
+}
+.homeMatchScheduleHead{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
+  margin-bottom:11px;
+}
+.homeMatchScheduleHead h2{margin:0;color:#17324f}
+.homeMatchScheduleHead p{margin:4px 0 0;color:#6a829a;font-size:12px}
+.homeMatchScheduleDate{
+  display:inline-flex;
+  flex:0 0 auto;
+  padding:7px 10px;
+  border-radius:999px;
+  background:#eef7ff;
+  color:#2d78be;
+  font-size:11px;
+  font-weight:950;
+  border:1px solid rgba(67,151,224,.12);
+}
+.homeMatchScheduleList{display:grid;gap:8px}
+.homeMatchScheduleEmpty{
+  padding:14px;
+  border-radius:14px;
+  background:#fff;
+  border:1px dashed rgba(64,105,148,.16);
+  color:#6f879c;
+  font-size:12px;
+  line-height:1.6;
+}
+.homeMatchScheduleEmpty small{
+  display:block;
+  margin-top:3px;
+  color:#8ba0b3;
+}
+.homeMatchScheduleItem{
+  display:grid;
+  grid-template-columns:78px minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+  padding:11px 12px;
+  border-radius:14px;
+  background:#fff;
+  border:1px solid rgba(64,105,148,.10);
+}
+.homeMatchPeriod{
+  color:#2d78be;
+  font-size:12px;
+  font-weight:950;
+}
+.homeMatchMain{min-width:0}
+.homeMatchMain b{
+  display:block;
+  color:#17324f;
+  font-size:13px;
+  margin-bottom:3px;
+}
+.homeMatchMain span{
+  display:block;
+  color:#6d859a;
+  font-size:11px;
+}
+.homeMatchStatus{
+  padding:5px 8px;
+  border-radius:999px;
+  background:#fff8e8;
+  color:#9b7013;
+  font-size:10px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.homeMatchStatus.done{
+  background:#edf9f3;
+  color:#39815f;
+}
+.adminMatchSchedule{
+  display:grid;
+  grid-template-columns:minmax(135px,.9fr) minmax(105px,.7fr) auto;
+  gap:7px;
+  margin:9px 0;
+}
+.adminMatchSchedule label{min-width:0}
+.adminMatchSchedule label span{
+  display:block;
+  margin:0 0 4px;
+  color:#8ca1b7;
+  font-size:9px;
+  font-weight:900;
+}
+.adminMatchSchedule input{
+  width:100%;
+  min-width:0;
+  box-sizing:border-box;
+  background:#07182f;
+  color:#fff;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:9px;
+  outline:none;
+}
+.scheduleSaveBtn{
+  align-self:end;
+  min-height:38px;
+  background:#f3f8fc!important;
+  color:#3e6e98!important;
+  border-color:rgba(64,105,148,.13)!important;
+  white-space:nowrap;
+}
+.matchState{
+  max-width:155px;
+  text-align:right;
+  line-height:1.35;
+}
+.relayCardHead{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:7px;
+  margin-bottom:8px;
+}
+.relayCardHead h4{margin:0}
+.relayScheduleBadge{
+  display:inline-flex;
+  padding:4px 7px;
+  border-radius:999px;
+  background:#eef7ff;
+  color:#2d78be;
+  font-size:9px;
+  font-weight:900;
+  line-height:1.3;
+  text-align:right;
+}
+@media(max-width:620px){
+  .homeMatchScheduleItem{
+    grid-template-columns:70px 1fr;
+  }
+  .homeMatchStatus{
+    grid-column:2;
+    justify-self:start;
+  }
+  .adminMatchSchedule{
+    grid-template-columns:1fr 1fr;
+  }
+  .scheduleSaveBtn{
+    grid-column:1 / -1;
+  }
+}
+
+
+/* ===== v2.41 teacher operations + judge search ===== */
+.teacherAssignmentSections{
+  display:grid;
+  gap:12px;
+}
+.teacherResultSection{
+  display:grid;
+  gap:8px;
+}
+.teacherResultSectionTitle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+  padding:0 2px;
+}
+.teacherResultSectionTitle b{
+  color:#17324f;
+  font-size:12px;
+}
+.teacherResultSectionTitle span{
+  color:#748da4;
+  font-size:10px;
+  font-weight:900;
+}
+.operationAssignmentList{
+  display:grid;
+  gap:8px;
+}
+.operationAssignmentItem{
+  display:grid;
+  grid-template-columns:auto minmax(0,1fr);
+  gap:10px;
+  align-items:center;
+  min-width:0;
+  padding:12px 13px;
+  border-radius:15px;
+  background:#fffdf7;
+  border:1px solid rgba(218,168,62,.13);
+}
+.operationAssignmentIcon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:34px;
+  height:34px;
+  border-radius:11px;
+  background:#fff7df;
+  font-size:16px;
+}
+.operationAssignmentMain{
+  min-width:0;
+}
+.operationAssignmentMain b{
+  display:block;
+  color:#17324f;
+  font-size:14px;
+}
+.operationAssignmentMain span{
+  display:block;
+  margin-top:4px;
+  color:#71869a;
+  font-size:11px;
+  line-height:1.45;
+}
+
 </style>
 </head>
 <body>
@@ -1583,6 +1804,17 @@ summary {
     <div class="muted" id="curPlace">운동장 · 1~3학년</div>
     <div id="currentProgramStatusWrap" style="margin-top:14px"><span class="status"><span class="dot"></span>운영본부 실시간 반영</span></div>
   </div>
+</div>
+
+<div class="card homeMatchScheduleCard" style="margin-top:15px">
+  <div class="homeMatchScheduleHead">
+    <div>
+      <h2>📅 오늘의 경기일정</h2>
+      <p>관리자가 입력한 학년별 경기 일정을 실시간으로 확인합니다.</p>
+    </div>
+    <span class="homeMatchScheduleDate" id="homeMatchScheduleDate">오늘</span>
+  </div>
+  <div id="homeMatchScheduleList" class="homeMatchScheduleList"></div>
 </div>
 
 <div class="card submissionCard" style="margin-top:15px">
@@ -1654,8 +1886,8 @@ summary {
     <button type="button" class="homeFinderBtn teacher" onclick="openJudgeFinderFromHome()">
       <span class="homeFinderIcon">🦺</span>
       <span class="homeFinderText">
-        <b>내 심판 종목 찾기</b>
-        <small>교사 이름 + 내선번호로 담당 심판 확인</small>
+        <b>내 역할·심판 찾기</b>
+        <small>교사 이름 + 내선번호로 운영 역할·심판 확인</small>
       </span>
       <span class="homeFinderArrow">→</span>
     </button>
@@ -1996,24 +2228,24 @@ summary {
 </section>
 
 <section id="staff">
-<div class="titleRow"><div><h2>🦺 운영본부 · 심판</h2><p>교사·학생 역할 및 경기별 심판</p></div></div>
+<div class="titleRow"><div><h2>🦺 운영본부 · 심판</h2><p>교사 운영 역할과 경기별 심판을 확인합니다.</p></div></div>
 
 <div class="card judgeFinderCard">
   <div class="judgeFinderHead">
     <div>
-      <h3>🔎 내 심판 종목 찾기</h3>
-      <p>선생님 이름과 내선번호를 입력하면 담당 종목과 시간·역할·학급을 바로 확인할 수 있습니다.</p>
+      <h3>🔎 내 역할·심판 찾기</h3>
+      <p>선생님 이름과 내선번호를 입력하면 운영 역할과 심판 배정을 한 번에 확인할 수 있습니다.</p>
     </div>
     <span class="teacherOnlyBadge">교사용</span>
   </div>
   <div class="judgeFinderForm judgeFinderFormVerified">
     <input id="judgeNameSearch" type="text" maxlength="20" autocomplete="off" placeholder="선생님 이름 입력 (예: 신미숙)">
     <input id="judgeExtensionSearch" type="text" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="내선번호 3자리">
-    <button class="btn primary" type="button" onclick="findJudgeAssignments()">내 심판 찾기</button>
+    <button class="btn primary" type="button" onclick="findJudgeAssignments()">내 역할 찾기</button>
   </div>
   <p class="judgeFinderPrivacy">등록된 교사 이름과 내선번호가 모두 일치해야 검색됩니다. 입력한 정보는 저장되지 않습니다.</p>
   <div id="judgeSearchResult" class="judgeSearchResult">
-    <div class="judgeSearchEmpty">이름과 내선번호를 입력하면 배정된 심판 종목이 여기에 표시됩니다.</div>
+    <div class="judgeSearchEmpty">이름과 내선번호를 입력하면 운영 역할과 심판 배정이 여기에 표시됩니다.</div>
   </div>
 </div>
 
@@ -2117,6 +2349,7 @@ summary {
   <button class="btn danger" type="button" onclick="resetSelectedBracket()">선택 종목 경기결과 초기화</button>
 </div>
 <p class="muted" style="font-size:11px;line-height:1.65">
+  각 경기의 <b>날짜와 교시</b>를 저장하면 홈의 오늘 경기일정과 대진표에 실시간으로 표시됩니다.<br>
   축구·피구·빅발리볼·줄다리기는 경기별 승리팀을 입력하면 다음 라운드 대진에 자동 반영됩니다.
   이어달리기는 예선 각 조의 1·2위를 입력하면 결승 진출 4개 학급이 자동 구성됩니다.
 </p>
@@ -2217,7 +2450,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.39</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.41</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -2916,6 +3149,151 @@ async function deleteEntranceVote(){
 let bracketGrade="1";
 let bracketSport="축구";
 
+
+function ensureBracketSchedulePath(g,s){
+  const r=ensureBracketResultPath(g,s);
+  if(!r.schedule||typeof r.schedule!=="object")r.schedule={};
+  return r.schedule;
+}
+
+function getMatchSchedule(g,s,id){
+  const r=getBracketSportResult(g,s);
+  const raw=r?.schedule?.[id];
+  if(!raw||typeof raw!=="object")return {date:"",period:""};
+  return {
+    date:String(raw.date||"").trim(),
+    period:String(raw.period||"").trim()
+  };
+}
+
+function formatScheduleDateShort(date){
+  const m=String(date||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(!m)return "";
+  return `${Number(m[2])}/${Number(m[3])}`;
+}
+
+function scheduleText(g,s,id){
+  const sch=getMatchSchedule(g,s,id);
+  if(!sch.date&&!sch.period)return "";
+  const dateText=formatScheduleDateShort(sch.date);
+  return [dateText,sch.period].filter(Boolean).join(" · ");
+}
+
+function koreaDateISO(){
+  const kst=getKoreaNowParts();
+  return `${kst.year}-${String(kst.month).padStart(2,"0")}-${String(kst.day).padStart(2,"0")}`;
+}
+
+function periodSortValue(period){
+  const text=String(period||"").trim();
+  const m=text.match(/(\d+)\s*교시/);
+  if(m)return Number(m[1]);
+  if(text.includes("아침"))return 0;
+  if(text.includes("점심"))return 50;
+  if(text.includes("방과후")||text.includes("방과 후"))return 90;
+  return 99;
+}
+
+function regularMatchInfo(g,s,id){
+  const st=regularBracketState(g,s);
+  const map={
+    qf1:{label:"8강 1경기",participants:st.qf[0],winner:st.qw[0]},
+    qf2:{label:"8강 2경기",participants:st.qf[1],winner:st.qw[1]},
+    qf3:{label:"8강 3경기",participants:st.qf[2],winner:st.qw[2]},
+    qf4:{label:"8강 4경기",participants:st.qf[3],winner:st.qw[3]},
+    sf1:{label:"4강 1경기",participants:st.sf[0],winner:st.sw[0]},
+    sf2:{label:"4강 2경기",participants:st.sf[1],winner:st.sw[1]},
+    final:{label:"결승",participants:st.final,winner:st.fw}
+  };
+  return map[id]||{label:id,participants:[],winner:null};
+}
+
+function relayMatchInfo(g,id){
+  const st=relayState(g);
+  const r=getBracketSportResult(g,"이어달리기");
+  const map={
+    heat1:{label:"예선 1조",participants:st.heat1,winner:Array.isArray(r.heat1)&&r.heat1.length>=2?true:false},
+    heat2:{label:"예선 2조",participants:st.heat2,winner:Array.isArray(r.heat2)&&r.heat2.length>=2?true:false},
+    final:{label:"결승",participants:st.finalists,winner:Array.isArray(r.final)&&r.final.length===4?true:false}
+  };
+  return map[id]||{label:id,participants:[],winner:false};
+}
+
+function renderHomeMatchSchedule(){
+  if(typeof homeMatchScheduleList==="undefined"||typeof homeMatchScheduleDate==="undefined")return;
+
+  const today=koreaDateISO();
+  const kst=getKoreaNowParts();
+  homeMatchScheduleDate.textContent=`${kst.month}월 ${kst.day}일`;
+
+  const rows=[];
+
+  for(const g of ["1","2","3"]){
+    for(const s of BRACKET_SPORTS_BY_GRADE[g]||[]){
+      if(s==="이어달리기"){
+        for(const id of ["heat1","heat2","final"]){
+          const sch=getMatchSchedule(g,s,id);
+          if(sch.date!==today)continue;
+          const info=relayMatchInfo(g,id);
+          rows.push({
+            g,s,id,
+            label:info.label,
+            participants:info.participants||[],
+            completed:Boolean(info.winner),
+            date:sch.date,
+            period:sch.period
+          });
+        }
+      }else{
+        for(const id of ["qf1","qf2","qf3","qf4","sf1","sf2","final"]){
+          const sch=getMatchSchedule(g,s,id);
+          if(sch.date!==today)continue;
+          const info=regularMatchInfo(g,s,id);
+          rows.push({
+            g,s,id,
+            label:info.label,
+            participants:info.participants||[],
+            completed:Boolean(info.winner),
+            date:sch.date,
+            period:sch.period
+          });
+        }
+      }
+    }
+  }
+
+  rows.sort((a,b)=>
+    periodSortValue(a.period)-periodSortValue(b.period) ||
+    Number(a.g)-Number(b.g) ||
+    a.s.localeCompare(b.s,"ko")
+  );
+
+  if(!rows.length){
+    homeMatchScheduleList.innerHTML=`
+      <div class="homeMatchScheduleEmpty">
+        오늘 등록된 경기 일정이 없습니다.
+        <small>관리자가 경기 날짜와 교시를 입력하면 이곳에 자동으로 표시됩니다.</small>
+      </div>`;
+    return;
+  }
+
+  homeMatchScheduleList.innerHTML=rows.map(r=>{
+    const participants=(r.participants||[]).filter(Boolean);
+    const teams=participants.length
+      ? participants.map(c=>`${c}반`).join(r.s==="이어달리기"?" · ":" vs ")
+      : "진출팀 대기";
+    return `
+      <div class="homeMatchScheduleItem">
+        <div class="homeMatchPeriod">${esc(r.period||"시간 미정")}</div>
+        <div class="homeMatchMain">
+          <b>${r.g}학년 ${esc(r.s)} · ${esc(r.label)}</b>
+          <span>${esc(teams)}</span>
+        </div>
+        <div class="homeMatchStatus ${r.completed?"done":""}">${r.completed?"경기 완료":"경기 예정"}</div>
+      </div>`;
+  }).join("");
+}
+
 function getBracketSportResult(g,s){
   return data.bracketResults?.[g]?.[s]||{};
 }
@@ -2943,12 +3321,22 @@ function regularBracketState(g,s){
   return {qf,qw,sf,sw,final,fw};
 }
 
-function matchCardHtml(label,participants,winner){
+function matchCardHtml(g,s,id,label,participants,winner){
   const ready=participants.length===2&&participants.every(Boolean);
+  const schedule=scheduleText(g,s,id);
+  let stateText;
+  if(winner){
+    stateText=schedule?`경기 완료 · ${schedule}`:"경기 완료";
+  }else if(ready){
+    stateText=schedule?`경기 예정 · ${schedule}`:"경기 예정";
+  }else{
+    stateText=schedule?`진출팀 대기 · ${schedule}`:"진출팀 대기";
+  }
+
   return `<div class="matchCard">
     <div class="matchHead">
       <b>${esc(label)}</b>
-      <span class="matchState ${winner?"done":""}">${winner?"경기 완료":ready?"경기 예정":"진출팀 대기"}</span>
+      <span class="matchState ${winner?"done":""}">${esc(stateText)}</span>
     </div>
     ${participants.map(c=>c
       ?`<div class="teamLine ${winner===c?"winner":""}">
@@ -2969,15 +3357,15 @@ function renderRegularBracket(g,s){
       <div class="bracketRounds">
         <div class="bracketRound">
           <div class="bracketRoundTitle">8강</div>
-          ${st.qf.map((p,i)=>matchCardHtml(`8강 ${i+1}경기`,p,st.qw[i])).join("")}
+          ${st.qf.map((p,i)=>matchCardHtml(g,s,`qf${i+1}`,`8강 ${i+1}경기`,p,st.qw[i])).join("")}
         </div>
         <div class="bracketRound">
           <div class="bracketRoundTitle">4강</div>
-          ${st.sf.map((p,i)=>matchCardHtml(`4강 ${i+1}경기`,p,st.sw[i])).join("")}
+          ${st.sf.map((p,i)=>matchCardHtml(g,s,`sf${i+1}`,`4강 ${i+1}경기`,p,st.sw[i])).join("")}
         </div>
         <div class="bracketRound">
           <div class="bracketRoundTitle">결승</div>
-          ${matchCardHtml("결승",st.final,st.fw)}
+          ${matchCardHtml(g,s,"final","결승",st.final,st.fw)}
         </div>
       </div>
     </div>`;
@@ -3005,9 +3393,13 @@ function relayState(g){
   return {heat1,heat2,h1,h2,finalists,final};
 }
 
-function relayHeatCard(title,teams,result){
+function relayHeatCard(g,id,title,teams,result){
+  const schedule=scheduleText(g,"이어달리기",id);
   return `<div class="relayCard">
-    <h4>${esc(title)}</h4>
+    <div class="relayCardHead">
+      <h4>${esc(title)}</h4>
+      ${schedule?`<span class="relayScheduleBadge">경기 예정 · ${esc(schedule)}</span>`:""}
+    </div>
     ${teams.map(c=>{
       const idx=result.indexOf(c);
       const qualified=idx===0||idx===1;
@@ -3025,6 +3417,7 @@ function relayHeatCard(title,teams,result){
 
 function renderRelayBracket(g){
   const st=relayState(g);
+  const finalSchedule=scheduleText(g,"이어달리기","final");
   return `
     ${st.final.length===4?`<div class="bracketChampion"><span>🏆 ${g}학년 이어달리기 우승</span><b>${st.final[0]}반</b></div>`:""}
     <div class="relayMethodCard">
@@ -3037,10 +3430,13 @@ function renderRelayBracket(g){
       <div class="relayIntro">예선 1조 4팀 · 예선 2조 4팀 → 각 조 1·2위가 결승 진출</div>
     </div>
     <div class="relayGrid">
-      ${relayHeatCard("예선 1조",st.heat1,st.h1)}
-      ${relayHeatCard("예선 2조",st.heat2,st.h2)}
+      ${relayHeatCard(g,"heat1","예선 1조",st.heat1,st.h1)}
+      ${relayHeatCard(g,"heat2","예선 2조",st.heat2,st.h2)}
       <div class="relayCard">
-        <h4>결승</h4>
+        <div class="relayCardHead">
+          <h4>결승</h4>
+          ${finalSchedule?`<span class="relayScheduleBadge">${st.final.length===4?"경기 완료":"경기 예정"} · ${esc(finalSchedule)}</span>`:""}
+        </div>
         ${st.finalists.length===4
           ? st.finalists.map(c=>{
               const idx=st.final.indexOf(c);
@@ -3134,6 +3530,7 @@ async function loadBracketStateFromCloud(){
   localStorage.setItem("sehyeonSports2026v2",JSON.stringify(data));
   renderBrackets();
   renderBracketAdmin();
+  renderHomeMatchSchedule();
   return true;
 }
 
@@ -3158,16 +3555,32 @@ function ensureBracketResultPath(g,s){
   return data.bracketResults[g][s];
 }
 
+function adminScheduleFields(g,s,id){
+  const sch=getMatchSchedule(g,s,id);
+  return `<div class="adminMatchSchedule">
+    <label>
+      <span>날짜</span>
+      <input id="adminDate_${id}" type="date" value="${esc(sch.date)}">
+    </label>
+    <label>
+      <span>교시</span>
+      <input id="adminPeriod_${id}" maxlength="20" placeholder="예: 5교시" value="${esc(sch.period)}">
+    </label>
+    <button class="btn scheduleSaveBtn" type="button" onclick="saveMatchSchedule('${id}')">일정 저장</button>
+  </div>`;
+}
+
 function regularAdminMatchHtml(g,s,id,label,participants,current){
   const ready=participants.length===2&&participants.every(Boolean);
   return `<div class="adminMatch">
     <div class="adminMatchTitle"><b>${esc(label)}</b><small>${ready?participants.map(x=>`${x}반`).join(" vs "):"진출팀 대기"}</small></div>
+    ${adminScheduleFields(g,s,id)}
     <div class="adminMatchControls">
       <select id="adminWinner_${id}" ${ready?"":"disabled"}>
         <option value="">승리팀 선택</option>
         ${ready?participants.map(c=>`<option value="${c}" ${Number(current)===c?"selected":""}>${c}반 승리</option>`).join(""):""}
       </select>
-      <button class="btn primary" type="button" ${ready?"":"disabled"} onclick="saveRegularBracketResult('${id}')">반영</button>
+      <button class="btn primary" type="button" ${ready?"":"disabled"} onclick="saveRegularBracketResult('${id}')">결과 반영</button>
     </div>
   </div>`;
 }
@@ -3194,6 +3607,7 @@ function renderRelayBracketAdmin(g){
   return `
     <div class="relayAdminBlock">
       <h4>예선 1조 · ${st.heat1.map(c=>`${c}반`).join(" · ")}</h4>
+      ${adminScheduleFields(g,"이어달리기","heat1")}
       <div class="relayAdminSelects">
         <select id="relay_heat1_1">${relayOptions(st.heat1,r.heat1?.[0],"1위 선택")}</select>
         <select id="relay_heat1_2">${relayOptions(st.heat1,r.heat1?.[1],"2위 선택")}</select>
@@ -3202,6 +3616,7 @@ function renderRelayBracketAdmin(g){
     </div>
     <div class="relayAdminBlock">
       <h4>예선 2조 · ${st.heat2.map(c=>`${c}반`).join(" · ")}</h4>
+      ${adminScheduleFields(g,"이어달리기","heat2")}
       <div class="relayAdminSelects">
         <select id="relay_heat2_1">${relayOptions(st.heat2,r.heat2?.[0],"1위 선택")}</select>
         <select id="relay_heat2_2">${relayOptions(st.heat2,r.heat2?.[1],"2위 선택")}</select>
@@ -3210,6 +3625,7 @@ function renderRelayBracketAdmin(g){
     </div>
     <div class="relayAdminBlock">
       <h4>결승 · ${finalists.length===4?finalists.map(c=>`${c}반`).join(" · "):"예선 결과 대기"}</h4>
+      ${adminScheduleFields(g,"이어달리기","final")}
       ${finalists.length===4?`
         <div class="relayFinalSelects">
           <select id="relay_final_1">${relayOptions(finalists,r.final?.[0],"결승 1위")}</select>
@@ -3229,6 +3645,33 @@ function renderBracketAdmin(){
   if(!sports.includes(bracketAdminSport.value))updateBracketAdminSportOptions();
   const s=bracketAdminSport.value||(sports[0]||"축구");
   bracketAdminBody.innerHTML=s==="이어달리기"?renderRelayBracketAdmin(g):renderRegularBracketAdmin(g,s);
+}
+
+
+async function saveMatchSchedule(matchId){
+  const g=bracketAdminGrade.value;
+  const s=bracketAdminSport.value;
+  const date=String(document.getElementById(`adminDate_${matchId}`)?.value||"").trim();
+  const period=String(document.getElementById(`adminPeriod_${matchId}`)?.value||"").trim();
+
+  if((date&&!period)||(!date&&period)){
+    return alert("날짜와 교시를 모두 입력해 주세요. 일정을 지우려면 두 칸을 모두 비운 뒤 저장하세요.");
+  }
+
+  const schedules=ensureBracketSchedulePath(g,s);
+
+  if(!date&&!period){
+    delete schedules[matchId];
+  }else{
+    schedules[matchId]={date,period};
+  }
+
+  saveLocal();
+
+  if(await saveBracketResultsToCloud()){
+    await loadBracketStateFromCloud();
+    alert(date?`${g}학년 ${s} 경기 일정이 저장되었습니다.`:"경기 일정이 삭제되었습니다.");
+  }
 }
 
 async function saveRegularBracketResult(matchId){
@@ -3299,8 +3742,17 @@ async function saveRelayFinal(){
 
 async function resetSelectedBracket(){
   const g=bracketAdminGrade.value, s=bracketAdminSport.value;
-  if(!confirm(`${g}학년 ${s} 경기결과를 모두 초기화할까요?\n추첨 대진 자체는 유지됩니다.`))return;
-  if(data.bracketResults?.[g])delete data.bracketResults[g][s];
+  if(!confirm(`${g}학년 ${s} 경기결과를 모두 초기화할까요?\n입력한 경기 날짜와 교시는 유지됩니다.`))return;
+
+  const existing=data.bracketResults?.[g]?.[s];
+  const schedule=existing?.schedule&&typeof existing.schedule==="object"
+    ? clone(existing.schedule)
+    : {};
+
+  if(!data.bracketResults)data.bracketResults={};
+  if(!data.bracketResults[g])data.bracketResults[g]={};
+  data.bracketResults[g][s]={schedule};
+
   saveLocal();
   if(await saveBracketResultsToCloud()){
     await loadBracketStateFromCloud();
@@ -3792,7 +4244,7 @@ async function deleteFlag(){
 
 
 
-const JUDGE_ASSIGNMENTS_BY_HASH={"124b011db0fd9ffec84827675cec3045537ff1d8eb909f6a88411e79e2f43e70":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"2반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"2반"}],"ff6cb0444e3e24102798969120a19b33c88e920d643958f79837dd3a7dd0511e":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"3반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"3반"}],"f89002439f33faacda49da1b8c7171a671e646a9aa3b89784d150436d4cd86b5":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"4반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"4반"}],"f0fe519e51adc613adb2754a92b2cf8b2c4b8c6e3d0beb053d8e8207d3fc18e7":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"5반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"5반"}],"645140991346205670db233de8b6f9e3ad8a8af8d9ad1c206840c2e47bab28c0":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"6반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"6반"}],"2a123045e0932e34ff40537447fe26f185bcb68b438b9631cb14a4cd99324f03":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"7반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"7반"}],"23c78484d015ff3cbce845da43d0a0e0f7c1c5b38368208d51cf207d2d733cfe":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"8반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"8반"}],"2675b9133bec31ec049afd30bf458e8544f9b502d3cb63eacce1b549f83100ce":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"1반"},{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"1반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"1반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"1반"}],"28b79bedae771f7820551014019abd19eed20ac9fb762b88ef5d3c38a1326afe":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"2반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"2반"}],"b890a64bdacb093f61adc6dc89c49450eea78c0304a274ea29c90c7e26b07012":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"3반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"3반"}],"844801fb90d803f9c852502db4b954d9b4ae7098a16a55c4be3db3e7e2d2e57f":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"4반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"4반"}],"ac4198f25a4028ed52a785e24acaf88c9742da7acdb20df6390dba5c81430374":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"5반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"5반"}],"643dd38ca7a2dbcd5aa0a4641b7defc777e4841db301d8c0e9048c64cdc3c3b2":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"6반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"6반"}],"abd81b41cfffd76ee5c8ab0ae1fa0d3cf81d364bc94dbc67b9f0d91d3d57fcf0":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"7반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"7반"}],"07c1f2eab021dba93f3daa3d16a6ca8aa13dc244c337171f51b69a98b2b5c29b":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"8반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"8반"}],"9634e498a3fd38fd426a1d204c76914ba7689c5571be5090af6b1fd41efa6846":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"2반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"2반"}],"6675c66552a163eb8f356b2e5661394882629f5a9e57b7951cc16b3c1f2fb6d5":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"3반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"3반"}],"3af2ab098545bf98ec044858d620e38ed01aa6f0b308607a6b4a3c4b3c0a027f":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"4반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"4반"}],"0d10415c523ade2cd6bec0b9b079664dff6134fb70eda008b65c8334441d3eb1":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"5반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"5반"}],"428b0a1ccdd9d34a7123bd4228cea40467b7a5206323fb9401b0f449d980740b":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"6반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"6반"}],"911fcd5617a5c238380862f101c4f735aec14b8f09c3b87f71bb3dec04355408":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"7반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"7반"}],"5ebae56f2327b4c6c07e96d99c03191788e6a2b0d624ddf67917f13d021d1142":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"8반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"8반"}],"82897e6bd6063308f64e327fc34f04946ec5ed2faa064bcf005a81583ea442e4":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"1반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"1반"}],"8e48037d47f9d2a8c053fc4845eed20fab61d40396e74dc5229567590d8bd5d6":[{"event":"1학년 축구 결승 · 2학년 피구 결승","time":"10:20~10:50","role":"축구 주심 · 대기심"},{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"주심"},{"event":"이어달리기","time":"14:30~14:50","role":"출발점","note":"운동장 뒤쪽"},{"event":"1·2학년 빅발리볼 · 3학년 배구","time":"사전경기","role":"심판 · 진행"}],"9568fc112561a934fd9258c8aa9bbac3dd794d8f55e98f319b7b08c0f43fb80c":[{"event":"1학년 축구 결승 · 2학년 피구 결승","time":"10:20~10:50","role":"축구 주심 · 대기심"},{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"부심","note":"선수정렬 · 인원확인"},{"event":"이어달리기","time":"14:30~14:50","role":"조회대 앞 · 배턴터치존"},{"event":"1·2학년 빅발리볼 · 3학년 배구","time":"사전경기","role":"심판 · 진행"}],"8e5389cc94afa473dac4ab2ff52e9b947533322b28e0c6eb6a74aaf599019708":[{"event":"1학년 피구 결승 · 2학년 축구 결승","time":"10:50~11:20","role":"피구 주심"},{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"부심","note":"다음 경기 학급 정렬"},{"event":"이어달리기","time":"14:30~14:50","role":"골인지점"},{"event":"1·2학년 빅발리볼 · 3학년 배구","time":"사전경기","role":"심판 · 진행"}],"ce5f44cdac3ec445b8a9b15e518e65aadacfaf45ed95f533ed5423ed79e75fc0":[{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"부심","note":"선수정렬 · 인원확인"}],"0aeb29ede1032decb5855391a6f35a4b19071dd4dd97b2b19944f41909f11bcf":[{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"부심","note":"다음 경기 학급 정렬"}],"8eaa70b9eedc3eebef917511ad4817369ae869330b9a62d5b00c9f020a6b42a2":[{"event":"이어달리기","time":"14:30~14:50","role":"주심"},{"event":"1·2학년 빅발리볼 · 3학년 배구","time":"사전경기","role":"심판 · 진행"}],"432a58cc6e5a7b507e3227409e5e8204573c0e12e38a6b88778936d4a9c1e960":[{"event":"이어달리기","time":"14:30~14:50","role":"골인지점"}],"1e68dc53e6ee23febce868d3a8148e49e19753359da5f80a7df4ab26d5d00a4c":[{"event":"이어달리기","time":"14:30~14:50","role":"골인지점"}]};
+const TEACHER_ASSIGNMENTS_BY_HASH={"124b011db0fd9ffec84827675cec3045537ff1d8eb909f6a88411e79e2f43e70":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"2반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"2반"}]},"ff6cb0444e3e24102798969120a19b33c88e920d643958f79837dd3a7dd0511e":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"3반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"3반"}]},"f89002439f33faacda49da1b8c7171a671e646a9aa3b89784d150436d4cd86b5":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"4반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"4반"}]},"f0fe519e51adc613adb2754a92b2cf8b2c4b8c6e3d0beb053d8e8207d3fc18e7":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"5반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"5반"}]},"645140991346205670db233de8b6f9e3ad8a8af8d9ad1c206840c2e47bab28c0":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"6반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"6반"}]},"2a123045e0932e34ff40537447fe26f185bcb68b438b9631cb14a4cd99324f03":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"7반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"7반"}]},"23c78484d015ff3cbce845da43d0a0e0f7c1c5b38368208d51cf207d2d733cfe":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"8반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"8반"}]},"2675b9133bec31ec049afd30bf458e8544f9b502d3cb63eacce1b549f83100ce":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"주심","class":"1반"},{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"1반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"1반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"부심","class":"1반"}]},"28b79bedae771f7820551014019abd19eed20ac9fb762b88ef5d3c38a1326afe":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"2반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"2반"}]},"b890a64bdacb093f61adc6dc89c49450eea78c0304a274ea29c90c7e26b07012":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"3반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"3반"}]},"844801fb90d803f9c852502db4b954d9b4ae7098a16a55c4be3db3e7e2d2e57f":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"4반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"4반"}]},"ac4198f25a4028ed52a785e24acaf88c9742da7acdb20df6390dba5c81430374":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"5반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"5반"}]},"643dd38ca7a2dbcd5aa0a4641b7defc777e4841db301d8c0e9048c64cdc3c3b2":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"6반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"6반"}]},"abd81b41cfffd76ee5c8ab0ae1fa0d3cf81d364bc94dbc67b9f0d91d3d57fcf0":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"7반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"7반"}]},"07c1f2eab021dba93f3daa3d16a6ca8aa13dc244c337171f51b69a98b2b5c29b":{"operations":[],"judges":[{"event":"협동 파도타기","time":"09:40~10:00","role":"부심","class":"8반"},{"event":"8자 줄넘기","time":"10:00~10:20","role":"주심","class":"8반"}]},"9634e498a3fd38fd426a1d204c76914ba7689c5571be5090af6b1fd41efa6846":{"operations":[{"role":"방송준비 및 사진촬영","note":"방송부 · 운동장/강당 · 홈페이지 탑재"}],"judges":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"2반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"2반"}]},"6675c66552a163eb8f356b2e5661394882629f5a9e57b7951cc16b3c1f2fb6d5":{"operations":[],"judges":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"3반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"3반"}]},"3af2ab098545bf98ec044858d620e38ed01aa6f0b308607a6b4a3c4b3c0a027f":{"operations":[],"judges":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"4반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"4반"}]},"0d10415c523ade2cd6bec0b9b079664dff6134fb70eda008b65c8334441d3eb1":{"operations":[],"judges":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"5반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"5반"}]},"428b0a1ccdd9d34a7123bd4228cea40467b7a5206323fb9401b0f449d980740b":{"operations":[],"judges":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"6반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"6반"}]},"911fcd5617a5c238380862f101c4f735aec14b8f09c3b87f71bb3dec04355408":{"operations":[],"judges":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"7반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"7반"}]},"5ebae56f2327b4c6c07e96d99c03191788e6a2b0d624ddf67917f13d021d1142":{"operations":[],"judges":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"8반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"8반"}]},"82897e6bd6063308f64e327fc34f04946ec5ed2faa064bcf005a81583ea442e4":{"operations":[],"judges":[{"event":"8자 줄넘기","time":"10:00~10:20","role":"부심","class":"1반"},{"event":"릴레이 고리던지기","time":"13:20~13:50","role":"주심","class":"1반"}]},"8e48037d47f9d2a8c053fc4845eed20fab61d40396e74dc5229567590d8bd5d6":{"operations":[{"role":"체육 한마당 총괄","note":"체육 한마당 준비 및 진행"},{"role":"용품 및 경기장 사전준비","note":"스포츠 지원단과 함께"}],"judges":[{"event":"1학년 축구 결승 · 2학년 피구 결승","time":"10:20~10:50","role":"축구 주심 · 대기심"},{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"주심"},{"event":"이어달리기","time":"14:30~14:50","role":"출발점","note":"운동장 뒤쪽"},{"event":"1·2학년 빅발리볼 · 3학년 배구","time":"사전경기","role":"심판 · 진행"}]},"9568fc112561a934fd9258c8aa9bbac3dd794d8f55e98f319b7b08c0f43fb80c":{"operations":[{"role":"체육 한마당 총괄","note":"체육 한마당 준비 및 진행"},{"role":"용품 및 경기장 사전준비","note":"스포츠 지원단과 함께"}],"judges":[{"event":"1학년 축구 결승 · 2학년 피구 결승","time":"10:20~10:50","role":"축구 주심 · 대기심"},{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"부심","note":"선수정렬 · 인원확인"},{"event":"이어달리기","time":"14:30~14:50","role":"조회대 앞 · 배턴터치존"},{"event":"1·2학년 빅발리볼 · 3학년 배구","time":"사전경기","role":"심판 · 진행"}]},"8e5389cc94afa473dac4ab2ff52e9b947533322b28e0c6eb6a74aaf599019708":{"operations":[{"role":"체육 한마당 총괄","note":"체육 한마당 준비 및 진행"},{"role":"우승 배너 및 상품 시상","note":"배너 · 상품권 등"}],"judges":[{"event":"1학년 피구 결승 · 2학년 축구 결승","time":"10:50~11:20","role":"피구 주심"},{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"부심","note":"다음 경기 학급 정렬"},{"event":"이어달리기","time":"14:30~14:50","role":"골인지점"},{"event":"1·2학년 빅발리볼 · 3학년 배구","time":"사전경기","role":"심판 · 진행"}]},"ce5f44cdac3ec445b8a9b15e518e65aadacfaf45ed95f533ed5423ed79e75fc0":{"operations":[{"role":"질서(안전)유지","note":"각반 체육부장과 함께 · 전 교사 참여"}],"judges":[{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"부심","note":"선수정렬 · 인원확인"}]},"0aeb29ede1032decb5855391a6f35a4b19071dd4dd97b2b19944f41909f11bcf":{"operations":[{"role":"질서(안전)유지","note":"각반 체육부장과 함께 · 전 교사 참여"}],"judges":[{"event":"줄다리기 준결승·결승","time":"13:50~14:30","role":"부심","note":"다음 경기 학급 정렬"}]},"8eaa70b9eedc3eebef917511ad4817369ae869330b9a62d5b00c9f020a6b42a2":{"operations":[{"role":"체육 한마당 총괄","note":"체육 한마당 준비 및 진행"},{"role":"경기진행 총괄 및 심판위원장","note":"체육 교사 및 전교 체육부장"}],"judges":[{"event":"이어달리기","time":"14:30~14:50","role":"주심"},{"event":"1·2학년 빅발리볼 · 3학년 배구","time":"사전경기","role":"심판 · 진행"}]},"432a58cc6e5a7b507e3227409e5e8204573c0e12e38a6b88778936d4a9c1e960":{"operations":[],"judges":[{"event":"이어달리기","time":"14:30~14:50","role":"골인지점"}]},"1e68dc53e6ee23febce868d3a8148e49e19753359da5f80a7df4ab26d5d00a4c":{"operations":[],"judges":[{"event":"이어달리기","time":"14:30~14:50","role":"골인지점"}]},"3d75126fae798c54e6f88b809e0eb91aa72a03f8383d78b06f840c96ac246012":{"operations":[{"role":"체육 한마당 회장(교장)"}],"judges":[]},"f5bb9944d9de19c9762016edeb11785c112529234cf567016933f6c8ad940301":{"operations":[{"role":"체육 한마당 부회장(교감)"}],"judges":[]},"8b2fa31199099636e3b732eb79774c1e5a638b20f0a67b3f49f0bfd93818379f":{"operations":[{"role":"보건담당","note":"구급약품 준비"}],"judges":[]},"5e530e878aa9913bc4c314d31e699066510e67bdd2c4a6b03fecb40b26ced97c":{"operations":[{"role":"보건담당","note":"구급약품 준비"}],"judges":[]},"b058b99d8686e18a8ae249932a166aefe9f69a7df4271f26299e802aecf22f62":{"operations":[{"role":"점수집계 / 점수현황판 작성","note":"본부석"}],"judges":[]},"bf3619574e2f544a095ad0a638fd45577a3b10f36f5b52d9b9db1f3230fbced7":{"operations":[{"role":"점수집계 / 점수현황판 작성","note":"본부석"}],"judges":[]},"eab6b55e59dc1fefebe38e965f35c50c8109e0e373b881711fba8655fabd60a2":{"operations":[{"role":"점수집계 / 점수현황판 작성","note":"본부석"}],"judges":[]},"c40e7f8a236c9a644d021e85f793edaed4f44d2fc524be17ccb7860dd7aba5a5":{"operations":[{"role":"점수집계 / 점수현황판 작성","note":"본부석"}],"judges":[]},"912c7608af88fd9b81797757d7dfa6c88449ac7c7a78b34fb9d8064fc2f3531e":{"operations":[{"role":"응원점수 집계"}],"judges":[]},"4bc0afb94ac6ab19decafb3964a845719d3fafd31ec52673e8fcc679f806003e":{"operations":[{"role":"응원점수 집계"}],"judges":[]},"0e88a39d0d8a5fe1f1f260369d23d190cbc17b613f36d434945b9b49bd84fdc8":{"operations":[{"role":"교내 환경정리","note":"전교생 · 전 교직원"}],"judges":[]}};
 
 function normalizeJudgeName(value){
   return String(value||"").trim().replace(/\s+/g,"");
@@ -3807,6 +4259,54 @@ async function sha256Hex(value){
   return Array.from(new Uint8Array(digest))
     .map(b=>b.toString(16).padStart(2,"0"))
     .join("");
+}
+
+function operationRowsHtml(rows){
+  if(!rows.length)return "";
+  return `
+    <div class="teacherResultSection">
+      <div class="teacherResultSectionTitle">
+        <b>🏫 운영 역할</b>
+        <span>${rows.length}건</span>
+      </div>
+      <div class="operationAssignmentList">
+        ${rows.map(r=>`
+          <div class="operationAssignmentItem">
+            <div class="operationAssignmentIcon">📌</div>
+            <div class="operationAssignmentMain">
+              <b>${esc(r.role)}</b>
+              ${r.note?`<span>${esc(r.note)}</span>`:""}
+            </div>
+          </div>
+        `).join("")}
+      </div>
+    </div>`;
+}
+
+function judgeRowsHtml(rows){
+  if(!rows.length)return "";
+  return `
+    <div class="teacherResultSection">
+      <div class="teacherResultSectionTitle">
+        <b>🦺 심판 배정</b>
+        <span>${rows.length}건</span>
+      </div>
+      <div class="judgeAssignmentList">
+        ${rows.map(r=>`
+          <div class="judgeAssignmentItem">
+            <div class="judgeAssignmentTime">${esc(r.time)}</div>
+            <div class="judgeAssignmentMain">
+              <b>${esc(r.event)}</b>
+              <div class="judgeAssignmentMeta">
+                <span class="judgeAssignmentChip">${esc(r.role)}</span>
+                ${r.note?`<span class="judgeAssignmentChip">${esc(r.note)}</span>`:""}
+              </div>
+            </div>
+            ${r.class?`<div class="judgeAssignmentClass">${esc(r.class)}</div>`:""}
+          </div>
+        `).join("")}
+      </div>
+    </div>`;
 }
 
 async function findJudgeAssignments(){
@@ -3828,36 +4328,28 @@ async function findJudgeAssignments(){
     return;
   }
 
-  result.innerHTML='<div class="judgeSearchEmpty">심판 배정을 확인하고 있습니다…</div>';
+  result.innerHTML='<div class="judgeSearchEmpty">담당 역할을 확인하고 있습니다…</div>';
 
   try{
     const key=await sha256Hex(`${normalized}:${extension}`);
-    const rows=JUDGE_ASSIGNMENTS_BY_HASH[key]||[];
+    const item=TEACHER_ASSIGNMENTS_BY_HASH[key]||null;
+    const operations=item?.operations||[];
+    const judges=item?.judges||[];
+    const total=operations.length+judges.length;
 
-    if(!rows.length){
-      result.innerHTML='<div class="judgeSearchEmpty">등록된 <b>교사 이름과 내선번호가 일치하지 않거나</b>, 해당 선생님의 심판 배정이 없습니다.</div>';
+    if(!total){
+      result.innerHTML='<div class="judgeSearchEmpty">등록된 <b>교사 이름과 내선번호가 일치하지 않거나</b>, 등록된 운영 역할·심판 배정이 없습니다.</div>';
       return;
     }
 
     result.innerHTML=`
       <div class="judgeSearchHeader">
         <b>🙋 ${esc(displayName)} 선생님</b>
-        <span>심판 배정 ${rows.length}건</span>
+        <span>운영 ${operations.length} · 심판 ${judges.length}</span>
       </div>
-      <div class="judgeAssignmentList">
-        ${rows.map(r=>`
-          <div class="judgeAssignmentItem">
-            <div class="judgeAssignmentTime">${esc(r.time)}</div>
-            <div class="judgeAssignmentMain">
-              <b>${esc(r.event)}</b>
-              <div class="judgeAssignmentMeta">
-                <span class="judgeAssignmentChip">${esc(r.role)}</span>
-                ${r.note?`<span class="judgeAssignmentChip">${esc(r.note)}</span>`:""}
-              </div>
-            </div>
-            ${r.class?`<div class="judgeAssignmentClass">${esc(r.class)}</div>`:""}
-          </div>
-        `).join("")}
+      <div class="teacherAssignmentSections">
+        ${operationRowsHtml(operations)}
+        ${judgeRowsHtml(judges)}
       </div>`;
   }catch(error){
     console.error(error);
@@ -4191,7 +4683,7 @@ function subscribeRealtime(){
  cloudChannels=[songsCh,noticesCh,stateCh,flagsCh,flagVoteCh,entranceVoteCh,bracketCh];
 }
 
-function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderEntranceVoteScores();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();renderBracketAdmin();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
+function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderHomeMatchSchedule();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderEntranceVoteScores();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();renderBracketAdmin();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
 initPlayerFinder();
 initJudgeFinder();
 initFlagVoteForm();
