@@ -2035,6 +2035,62 @@ summary {
   height:8px;
 }
 
+
+/* ===== v2.48 song applicant fields ===== */
+.songApplicantFields{
+  display:grid;
+  grid-template-columns:minmax(135px,.42fr) minmax(0,.58fr);
+  gap:8px;
+}
+.songApplicantFields input{
+  min-width:0;
+  width:100%;
+  box-sizing:border-box;
+}
+@media(max-width:520px){
+  .songApplicantFields{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* ===== v2.49 song applicant student / teacher selector ===== */
+.songApplicantType{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px;
+}
+.songApplicantType button{
+  min-height:42px;
+  border-radius:11px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.055);
+  color:#a9bdd2;
+  font:inherit;
+  font-weight:900;
+  cursor:pointer;
+}
+.songApplicantType button.active{
+  background:linear-gradient(135deg,var(--blue),#39a8ff);
+  color:#fff;
+  border-color:transparent;
+}
+.songApplicantFields{
+  display:grid;
+  grid-template-columns:minmax(135px,.42fr) minmax(0,.58fr);
+  gap:8px;
+}
+.songApplicantFields input{
+  min-width:0;
+  width:100%;
+  box-sizing:border-box;
+}
+@media(max-width:520px){
+  .songApplicantFields{
+    grid-template-columns:1fr;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2574,12 +2630,27 @@ summary {
     <div class="songForm">
       <input id="songTitleInput" maxlength="80" placeholder="노래 제목">
       <input id="songArtistInput" maxlength="80" placeholder="가수 이름">
-      <input id="songApplicantInput" maxlength="40" placeholder="신청자 (예: 2315 홍길동)">
+
+      <div class="songApplicantType" role="group" aria-label="신청자 구분">
+        <button id="songApplicantStudentBtn" class="active" type="button" onclick="setSongApplicantType('student')">👟 학생</button>
+        <button id="songApplicantTeacherBtn" type="button" onclick="setSongApplicantType('teacher')">🧑‍🏫 선생님</button>
+      </div>
+
+      <div id="songStudentFields" class="songApplicantFields">
+        <input id="songStudentNoInput" type="text" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="학번 4자리 (예: 2315)">
+        <input id="songStudentNameInput" type="text" maxlength="20" autocomplete="off" placeholder="학생 이름 (예: 홍길동)">
+      </div>
+
+      <div id="songTeacherFields" class="songApplicantFields" style="display:none">
+        <input id="songTeacherExtensionInput" type="text" inputmode="numeric" maxlength="3" autocomplete="off" placeholder="내선번호 3자리">
+        <input id="songTeacherNameInput" type="text" maxlength="20" autocomplete="off" placeholder="선생님 이름 (예: 신미숙)">
+      </div>
+
       <textarea id="songStoryInput" maxlength="500" placeholder="사연을 입력하세요. (최대 500자)"></textarea>
       <button class="btn primary" onclick="submitSong()">노래 신청하기</button>
     </div>
     <p class="muted" style="font-size:11px;line-height:1.6;margin:12px 0 0">
-      신청 내용은 사이트의 신청목록에 표시됩니다. 신청자의 전체 학번과 이름은 공개하지 않고 예: 2315 홍길동 → 2학년 3반 홍○동처럼 표시됩니다. 행사 운영에 적절하지 않은 내용은 관리자에 의해 삭제될 수 있습니다.
+      신청자는 학생 또는 선생님을 선택할 수 있습니다. 학생은 학번 4자리와 이름, 선생님은 내선번호 3자리와 이름을 입력합니다. 공개 목록에는 학생은 예: 2315 홍길동 → 2학년 3반 홍○동, 선생님은 예: 신미숙 → 신○숙 선생님처럼 표시됩니다. 행사 운영에 적절하지 않은 내용은 관리자에 의해 삭제될 수 있습니다.
     </p>
   </div>
 
@@ -2739,7 +2810,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.47</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.49</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -4164,8 +4235,23 @@ function maskKoreanName(name){
 function publicApplicantLabel(applicant){
   const raw=String(applicant||"").trim();
 
-  // 기본 형식: 2315 홍길동
-  // 2 = 학년, 3 = 반, 15 = 번호
+  // v2.49 이후 학생 저장 형식: S|2315|홍길동
+  const studentStructured=raw.match(/^S\|([1-3])([1-8])(\d{2})\|(.+)$/);
+  if(studentStructured){
+    const grade=Number(studentStructured[1]);
+    const classNo=Number(studentStructured[2]);
+    const name=studentStructured[4].trim();
+    return `${grade}학년 ${classNo}반 ${maskKoreanName(name)}`;
+  }
+
+  // v2.49 이후 교사 저장 형식: T|123|신미숙
+  const teacherStructured=raw.match(/^T\|(\d{3})\|(.+)$/);
+  if(teacherStructured){
+    const name=teacherStructured[2].trim();
+    return `${maskKoreanName(name)} 선생님`;
+  }
+
+  // 기존 학생 형식 호환: 2315 홍길동
   const m=raw.match(/^([1-3])([1-8])(\d{2})\s+(.+)$/);
   if(m){
     const grade=Number(m[1]);
@@ -4174,7 +4260,7 @@ function publicApplicantLabel(applicant){
     return `${grade}학년 ${classNo}반 ${maskKoreanName(name)}`;
   }
 
-  // 공백 없이 입력한 경우도 한글 이름이면 지원: 2315홍길동
+  // 기존 공백 없는 학생 형식도 지원: 2315홍길동
   const compact=raw.match(/^([1-3])([1-8])(\d{2})([가-힣]{2,})$/);
   if(compact){
     const grade=Number(compact[1]);
@@ -4183,8 +4269,8 @@ function publicApplicantLabel(applicant){
     return `${grade}학년 ${classNo}반 ${maskKoreanName(name)}`;
   }
 
-  // 예상 형식이 아니면 학번/숫자는 공개하지 않고 이름으로 보이는 부분만 마스킹
-  const namePart=raw.split(/\s+/).filter(Boolean).pop()||"신청자";
+  // 그 외 형식은 숫자를 노출하지 않고 이름으로 보이는 부분만 마스킹
+  const namePart=raw.split(/[|\s]+/).filter(Boolean).pop()||"신청자";
   return maskKoreanName(namePart);
 }
 
@@ -4208,7 +4294,7 @@ function renderSongs(){
      </div>`).join("");
  }
  if(typeof songAdminSelect!=="undefined"){
-   songAdminSelect.innerHTML='<option value="">신청곡 선택</option>'+(data.songs||[]).map(s=>`<option value="${s.id}">${esc(s.title)} · ${esc(s.artist)} · ${esc(s.applicant)}</option>`).join("");
+   songAdminSelect.innerHTML='<option value="">신청곡 선택</option>'+(data.songs||[]).map(s=>`<option value="${s.id}">${esc(s.title)} · ${esc(s.artist)} · ${esc(publicApplicantLabel(s.applicant))}</option>`).join("");
  }
 }
 
@@ -4226,14 +4312,78 @@ async function loadSongsFromCloud(){
  return true;
 }
 
+
+let songApplicantType="student";
+
+function setSongApplicantType(type){
+  if(!["student","teacher"].includes(type))return;
+  songApplicantType=type;
+
+  const studentBtn=document.getElementById("songApplicantStudentBtn");
+  const teacherBtn=document.getElementById("songApplicantTeacherBtn");
+  const studentFields=document.getElementById("songStudentFields");
+  const teacherFields=document.getElementById("songTeacherFields");
+
+  if(studentBtn)studentBtn.classList.toggle("active",type==="student");
+  if(teacherBtn)teacherBtn.classList.toggle("active",type==="teacher");
+  if(studentFields)studentFields.style.display=type==="student"?"grid":"none";
+  if(teacherFields)teacherFields.style.display=type==="teacher"?"grid":"none";
+}
+
+function initSongApplicantFields(){
+  const studentNo=document.getElementById("songStudentNoInput");
+  const teacherExt=document.getElementById("songTeacherExtensionInput");
+
+  if(studentNo){
+    studentNo.addEventListener("input",()=>{
+      studentNo.value=studentNo.value.replace(/\D/g,"").slice(0,4);
+    });
+  }
+
+  if(teacherExt){
+    teacherExt.addEventListener("input",()=>{
+      teacherExt.value=teacherExt.value.replace(/\D/g,"").slice(0,3);
+    });
+  }
+
+  setSongApplicantType("student");
+}
+
 async function submitSong(){
  const title=songTitleInput.value.trim();
  const artist=songArtistInput.value.trim();
- const applicant=songApplicantInput.value.trim();
  const story=songStoryInput.value.trim();
+
  if(!title)return alert("노래 제목을 입력하세요.");
  if(!artist)return alert("가수 이름을 입력하세요.");
- if(!applicant)return alert("신청자 학번과 이름을 입력하세요.");
+
+ let applicant="";
+
+ if(songApplicantType==="student"){
+   const studentNo=(document.getElementById("songStudentNoInput")?.value||"").trim();
+   const studentName=(document.getElementById("songStudentNameInput")?.value||"").trim().replace(/\s+/g,"");
+
+   // 1~3학년 / 1~8반 / 번호 01~99
+   if(!/^[1-3][1-8](?:0[1-9]|[1-9]\d)$/.test(studentNo)){
+     return alert("학번 4자리를 확인해 주세요. 예: 2학년 3반 15번 → 2315");
+   }
+   if(studentName.length<2)return alert("학생 이름을 두 글자 이상 입력하세요.");
+
+   // 학생 표시용 구조화 값
+   applicant=`S|${studentNo}|${studentName}`;
+ }else{
+   const extension=(document.getElementById("songTeacherExtensionInput")?.value||"").trim();
+   const teacherName=(document.getElementById("songTeacherNameInput")?.value||"").trim().replace(/\s+/g,"");
+
+   if(!/^\d{3}$/.test(extension)){
+     return alert("선생님 내선번호 숫자 3자리를 입력해 주세요.");
+   }
+   if(teacherName.length<2)return alert("선생님 이름을 두 글자 이상 입력하세요.");
+
+   // 교사 표시용 구조화 값
+   applicant=`T|${extension}|${teacherName}`;
+ }
+
  if(!cloudReady)return alert("실시간 DB 연결을 먼저 확인해 주세요. Supabase SQL 설정이 아직 적용되지 않았을 수 있습니다.");
 
  const {error}=await sb.from("song_requests").insert({title,artist,applicant,story});
@@ -4242,10 +4392,20 @@ async function submitSong(){
    alert("노래 신청에 실패했습니다. 관리자에게 DB 설정 상태를 문의해 주세요.");
    return;
  }
+
  songTitleInput.value="";
  songArtistInput.value="";
- songApplicantInput.value="";
+ const studentNo=document.getElementById("songStudentNoInput");
+ const studentName=document.getElementById("songStudentNameInput");
+ const teacherExt=document.getElementById("songTeacherExtensionInput");
+ const teacherName=document.getElementById("songTeacherNameInput");
+ if(studentNo)studentNo.value="";
+ if(studentName)studentName.value="";
+ if(teacherExt)teacherExt.value="";
+ if(teacherName)teacherName.value="";
  songStoryInput.value="";
+ setSongApplicantType("student");
+
  await loadSongsFromCloud();
 }
 
@@ -5081,6 +5241,7 @@ function subscribeRealtime(){
 function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderHomeMatchSchedule();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderEntranceVoteScores();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();renderBracketAdmin();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
 initPlayerFinder();
 initJudgeFinder();
+initSongApplicantFields();
 initFlagVoteForm();
 initBracketAdminControls();
 renderAll();
