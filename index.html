@@ -1327,6 +1327,136 @@ summary {
   .homeFinderButtons{grid-template-columns:1fr}
 }
 
+
+/* ===== v2.35 student number + name finder ===== */
+.playerFinderCard{
+  background:linear-gradient(135deg,#f3f9ff,#fff);
+  border-color:rgba(57,143,214,.14)!important;
+}
+.playerFinderHead{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+.playerFinderHead h3{
+  margin:0;
+  color:#17324f;
+  font-size:20px;
+}
+.playerFinderHead p{
+  margin:5px 0 0;
+  color:#6a829a;
+  font-size:12px;
+  line-height:1.55;
+}
+.studentOnlyBadge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+  padding:7px 10px;
+  border-radius:999px;
+  background:#eef7ff;
+  color:#2d78be;
+  border:1px solid rgba(67,151,224,.13);
+  font-size:10px;
+  font-weight:950;
+}
+.playerFinderForm{
+  display:grid;
+  grid-template-columns:170px minmax(0,1fr) auto;
+  gap:8px;
+  max-width:760px;
+}
+.playerFinderForm input{
+  min-width:0;
+  min-height:44px;
+  background:#07182f;
+  color:#fff;
+  border:1px solid var(--line);
+  border-radius:11px;
+  padding:10px 11px;
+  outline:none;
+  font-size:16px;
+}
+.playerFinderForm .btn{
+  min-height:44px;
+  white-space:nowrap;
+}
+.playerFinderPrivacy{
+  margin:8px 0 0;
+  color:#8196aa;
+  font-size:10px;
+  line-height:1.55;
+}
+.playerSearchResult{margin-top:12px}
+.playerSearchEmpty{
+  padding:14px;
+  border-radius:14px;
+  background:#fff;
+  border:1px dashed rgba(64,105,148,.16);
+  color:#6f879c;
+  font-size:12px;
+  line-height:1.65;
+}
+.playerSearchHeader{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+  padding:10px 12px;
+  border-radius:14px;
+  background:#eef7ff;
+  border:1px solid rgba(67,151,224,.12);
+}
+.playerSearchHeader b{
+  color:#17324f;
+  font-size:14px;
+}
+.playerSearchHeader span{
+  color:#2d78be;
+  font-size:11px;
+  font-weight:900;
+}
+.playerAssignmentList{
+  display:grid;
+  gap:8px;
+}
+.playerAssignmentItem{
+  padding:12px 13px;
+  border-radius:15px;
+  background:#fff;
+  border:1px solid rgba(64,105,148,.10);
+}
+.playerAssignmentSport{
+  color:#17324f;
+  font-size:15px;
+  font-weight:950;
+  margin-bottom:6px;
+}
+.playerAssignmentDetails{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.playerAssignmentDetails span{
+  display:inline-flex;
+  align-items:center;
+  min-height:25px;
+  padding:3px 8px;
+  border-radius:999px;
+  background:#f3f8fc;
+  color:#557590;
+  font-size:10px;
+  font-weight:850;
+}
+@media(max-width:620px){
+  .playerFinderForm{grid-template-columns:1fr}
+}
+
 </style>
 </head>
 <body>
@@ -1430,7 +1560,7 @@ summary {
       <span class="homeFinderIcon">👟</span>
       <span class="homeFinderText">
         <b>내 참가 종목 찾기</b>
-        <small>학생 이름으로 참가 종목 확인</small>
+        <small>학번 + 이름으로 참가 종목 확인</small>
       </span>
       <span class="homeFinderArrow">→</span>
     </button>
@@ -1630,19 +1760,35 @@ summary {
 </section>
 
 <section id="players">
-<div class="titleRow"><div><h2>👟 내 참가 종목 찾기</h2><p>학생 이름·반·종목으로 참가 정보를 확인합니다.</p></div></div>
-<div class="card">
-<div class="filters">
-<input id="playerSearch" placeholder="학생 이름 · 반 · 종목 검색">
-<select id="playerGrade"><option value="">전체 학년</option><option>1</option><option>2</option><option>3</option></select>
-<select id="playerSport"><option value="">전체 종목</option></select>
+<div class="titleRow">
+  <div>
+    <h2>👟 내 참가 종목 찾기</h2>
+    <p>선수 명단 등록 후 학번과 이름으로 본인의 참가 종목을 확인할 수 있습니다.</p>
+  </div>
 </div>
-<div id="playerGrid" class="playerGrid"></div>
-<div id="playerEmpty" class="muted" style="font-size:13px;padding:10px 0">아직 실제 출전 선수 명단이 입력되지 않았습니다.</div>
-</div>
-<div class="card" style="margin-top:12px">
-<h3>명단 입력 형식</h3>
-<p class="muted">나중에 명단을 주시면 <b>학년 / 반 / 번호 / 성별 / 이름 / 종목 / 후보여부</b> 기준으로 바로 검색되게 반영할 수 있습니다.</p>
+
+<div class="card playerFinderCard">
+  <div class="playerFinderHead">
+    <div>
+      <h3>🔎 내 참가 종목 확인</h3>
+      <p>학번 4자리와 이름이 선수 명단과 모두 일치해야 검색됩니다.</p>
+    </div>
+    <span class="studentOnlyBadge">학생용</span>
+  </div>
+
+  <div class="playerFinderForm">
+    <input id="studentNoSearch" type="text" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="학번 4자리 (예: 1101)">
+    <input id="studentNameSearch" type="text" maxlength="20" autocomplete="off" placeholder="학생 이름">
+    <button class="btn primary" type="button" onclick="findPlayerAssignments()">내 참가 종목 찾기</button>
+  </div>
+
+  <p class="playerFinderPrivacy">
+    학번과 이름은 검색에만 사용되며 저장되지 않습니다. 선수 명단 등록 전에는 검색 결과가 표시되지 않습니다.
+  </p>
+
+  <div id="playerSearchResult" class="playerSearchResult">
+    <div class="playerSearchEmpty">아직 실제 출전 선수 명단이 등록되지 않았습니다.</div>
+  </div>
 </div>
 </section>
 
@@ -1745,12 +1891,12 @@ summary {
     <div class="songForm">
       <input id="songTitleInput" maxlength="80" placeholder="노래 제목">
       <input id="songArtistInput" maxlength="80" placeholder="가수 이름">
-      <input id="songApplicantInput" maxlength="40" placeholder="신청자 (예: 20315 홍길동)">
+      <input id="songApplicantInput" maxlength="40" placeholder="신청자 (예: 2315 홍길동)">
       <textarea id="songStoryInput" maxlength="500" placeholder="사연을 입력하세요. (최대 500자)"></textarea>
       <button class="btn primary" onclick="submitSong()">노래 신청하기</button>
     </div>
     <p class="muted" style="font-size:11px;line-height:1.6;margin:12px 0 0">
-      신청 내용은 사이트의 신청목록에 표시됩니다. 신청자의 전체 학번과 이름은 공개하지 않고 예: 20315 홍길동 → 2학년 3반 홍○동처럼 표시됩니다. 행사 운영에 적절하지 않은 내용은 관리자에 의해 삭제될 수 있습니다.
+      신청 내용은 사이트의 신청목록에 표시됩니다. 신청자의 전체 학번과 이름은 공개하지 않고 예: 2315 홍길동 → 2학년 3반 홍○동처럼 표시됩니다. 행사 운영에 적절하지 않은 내용은 관리자에 의해 삭제될 수 있습니다.
     </p>
   </div>
 
@@ -1935,7 +2081,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.34</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.36</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -2049,11 +2195,10 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>openTab(b.datas
 function openPlayerFinderFromHome(){
   openTab("players");
   setTimeout(()=>{
-    const target=document.getElementById("playerSearch");
-    if(target){
-      target.scrollIntoView({behavior:"smooth",block:"center"});
-      setTimeout(()=>target.focus({preventScroll:true}),180);
-    }
+    const card=document.querySelector("#players .playerFinderCard");
+    if(card)card.scrollIntoView({behavior:"smooth",block:"start"});
+    const target=document.getElementById("studentNoSearch");
+    if(target)setTimeout(()=>target.focus({preventScroll:true}),180);
   },120);
 }
 
@@ -2971,16 +3116,108 @@ async function resetSelectedBracket(){
   }
 }
 
-function renderPlayers(){
- const q=playerSearch.value.trim().toLowerCase(),g=playerGrade.value,s=playerSport.value;
- const list=data.players.filter(p=>{const t=`${p.name} ${p.grade}-${p.classNo} ${p.sport}`.toLowerCase();return(!q||t.includes(q))&&(!g||p.grade===g)&&(!s||p.sport===s)});
- playerGrid.innerHTML=list.map(p=>`<div class="player"><b>${esc(p.name)} · ${p.grade}학년 ${p.classNo}반</b><small>${esc(p.sport)}${p.reserve?" · 후보":""}</small></div>`).join("");
- playerEmpty.style.display=list.length?"none":"block";
- const sports=[...new Set(Object.values(SPORTS_BY_GRADE).flat())];playerSport.innerHTML='<option value="">전체 종목</option>'+sports.map(x=>`<option>${esc(x)}</option>`).join("")
+
+/*
+ * 선수 명단이 들어오면 아래 PLAYER_LOOKUP_BY_HASH를 자동 생성해서 채웁니다.
+ * 키: SHA-256("4자리 학번:이름")
+ * 값 예시:
+ * [
+ *   {sport:"축구", time:"10:20~10:50", place:"운동장", opponent:"상대 학급", reserve:false},
+ *   {sport:"이어달리기", time:"14:30~14:50", place:"운동장", reserve:false}
+ * ]
+ *
+ * 현재는 실제 선수 명단이 없으므로 빈 상태입니다.
+ */
+const PLAYER_LOOKUP_BY_HASH={};
+const PLAYER_LOOKUP_READY=false;
+
+function normalizeStudentName(value){
+  return String(value||"").trim().replace(/\s+/g,"");
 }
-[playerSearch,playerGrade,playerSport].forEach(x=>x.addEventListener("input",renderPlayers));
 
+async function findPlayerAssignments(){
+  const noInput=document.getElementById("studentNoSearch");
+  const nameInput=document.getElementById("studentNameSearch");
+  const result=document.getElementById("playerSearchResult");
+  if(!noInput||!nameInput||!result)return;
 
+  const studentNo=String(noInput.value||"").trim();
+  const displayName=String(nameInput.value||"").trim();
+  const normalizedName=normalizeStudentName(displayName);
+
+  if(!/^[1-3][1-8]\d{2}$/.test(studentNo)){
+    result.innerHTML='<div class="playerSearchEmpty">학번 4자리를 확인해 주세요. 예: 1학년 1반 1번 → <b>1101</b></div>';
+    return;
+  }
+  if(normalizedName.length<2){
+    result.innerHTML='<div class="playerSearchEmpty">학생 이름을 두 글자 이상 입력해 주세요.</div>';
+    return;
+  }
+
+  if(!PLAYER_LOOKUP_READY){
+    result.innerHTML='<div class="playerSearchEmpty"><b>아직 선수 명단이 등록되지 않았습니다.</b><br>선수 명단이 등록되면 학번과 이름으로 바로 검색할 수 있습니다.</div>';
+    return;
+  }
+
+  result.innerHTML='<div class="playerSearchEmpty">참가 종목을 확인하고 있습니다…</div>';
+
+  try{
+    const key=await sha256Hex(`${studentNo}:${normalizedName}`);
+    const rows=PLAYER_LOOKUP_BY_HASH[key]||[];
+
+    if(!rows.length){
+      result.innerHTML='<div class="playerSearchEmpty">학번과 이름이 선수 명단과 일치하지 않거나 등록된 참가 종목이 없습니다.</div>';
+      return;
+    }
+
+    result.innerHTML=`
+      <div class="playerSearchHeader">
+        <b>👟 ${esc(displayName)} 학생</b>
+        <span>참가 종목 ${rows.length}건</span>
+      </div>
+      <div class="playerAssignmentList">
+        ${rows.map(r=>`
+          <div class="playerAssignmentItem">
+            <div class="playerAssignmentSport">${esc(r.sport||"참가 종목")}</div>
+            <div class="playerAssignmentDetails">
+              ${r.time?`<span>⏰ ${esc(r.time)}</span>`:""}
+              ${r.place?`<span>📍 ${esc(r.place)}</span>`:""}
+              ${r.opponent?`<span>🆚 ${esc(r.opponent)}</span>`:""}
+              ${r.reserve?`<span>후보</span>`:""}
+            </div>
+          </div>
+        `).join("")}
+      </div>`;
+  }catch(error){
+    console.error(error);
+    result.innerHTML='<div class="playerSearchEmpty">검색 중 오류가 발생했습니다. 새로고침 후 다시 시도해 주세요.</div>';
+  }
+}
+
+function initPlayerFinder(){
+  const noInput=document.getElementById("studentNoSearch");
+  const nameInput=document.getElementById("studentNameSearch");
+
+  const enterHandler=e=>{
+    if(e.key==="Enter"){
+      e.preventDefault();
+      findPlayerAssignments();
+    }
+  };
+
+  if(noInput){
+    noInput.addEventListener("input",()=>{
+      noInput.value=noInput.value.replace(/\D/g,"").slice(0,4);
+    });
+    noInput.addEventListener("keydown",enterHandler);
+  }
+  if(nameInput)nameInput.addEventListener("keydown",enterHandler);
+}
+
+function renderPlayers(){
+  // 기존 전체 선수 명단 공개형 검색은 사용하지 않습니다.
+  // 학번 + 이름 정확 일치 검색만 허용합니다.
+}
 
 function maskKoreanName(name){
   const chars=Array.from(String(name||"").trim());
@@ -2992,9 +3229,9 @@ function maskKoreanName(name){
 function publicApplicantLabel(applicant){
   const raw=String(applicant||"").trim();
 
-  // 기본 형식: 20315 홍길동
-  // 2 = 학년, 03 = 반, 15 = 번호
-  const m=raw.match(/^([1-3])(\d{2})(\d{2})\s+(.+)$/);
+  // 기본 형식: 2315 홍길동
+  // 2 = 학년, 3 = 반, 15 = 번호
+  const m=raw.match(/^([1-3])([1-8])(\d{2})\s+(.+)$/);
   if(m){
     const grade=Number(m[1]);
     const classNo=Number(m[2]);
@@ -3002,8 +3239,8 @@ function publicApplicantLabel(applicant){
     return `${grade}학년 ${classNo}반 ${maskKoreanName(name)}`;
   }
 
-  // 공백 없이 입력한 경우도 한글 이름이면 지원: 20315홍길동
-  const compact=raw.match(/^([1-3])(\d{2})(\d{2})([가-힣]{2,})$/);
+  // 공백 없이 입력한 경우도 한글 이름이면 지원: 2315홍길동
+  const compact=raw.match(/^([1-3])([1-8])(\d{2})([가-힣]{2,})$/);
   if(compact){
     const grade=Number(compact[1]);
     const classNo=Number(compact[2]);
@@ -3755,6 +3992,7 @@ function subscribeRealtime(){
 }
 
 function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderEntranceVoteScores();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();renderBracketAdmin();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
+initPlayerFinder();
 initJudgeFinder();
 initFlagVoteForm();
 initBracketAdminControls();
