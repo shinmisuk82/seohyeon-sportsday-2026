@@ -2267,6 +2267,194 @@ summary {
   }
 }
 
+
+/* ===== v2.56 우리반 경기일정 ===== */
+.classMatchScheduleSection{
+  margin-top:18px;
+}
+.classMatchScheduleTitle{
+  margin-bottom:9px;
+}
+.classMatchScheduleCard{
+  overflow:hidden;
+}
+.classMatchPicker{
+  display:grid;
+  grid-template-columns:1fr 1.5fr;
+  gap:16px;
+  align-items:end;
+}
+.classMatchPickerLabel{
+  display:block;
+  margin-bottom:7px;
+  color:#71879a;
+  font-size:10px;
+  font-weight:900;
+}
+.classMatchGradeTabs,
+.classMatchClassTabs{
+  display:grid;
+  gap:6px;
+}
+.classMatchGradeTabs{
+  grid-template-columns:repeat(3,1fr);
+}
+.classMatchClassTabs{
+  grid-template-columns:repeat(8,1fr);
+}
+.classMatchGradeTabs button,
+.classMatchClassTabs button{
+  appearance:none;
+  border:1px solid rgba(58,105,150,.15);
+  background:#f7fafc;
+  color:#4d667b;
+  border-radius:10px;
+  min-height:37px;
+  padding:7px 5px;
+  font-size:11px;
+  font-weight:900;
+  cursor:pointer;
+}
+.classMatchGradeTabs button.active,
+.classMatchClassTabs button.active{
+  background:linear-gradient(135deg,#246db2,#398bd0);
+  color:#fff;
+  border-color:transparent;
+  box-shadow:0 6px 16px rgba(36,109,178,.16);
+}
+.classMatchSelectedHead{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:16px;
+  padding-top:14px;
+  border-top:1px solid rgba(64,105,148,.10);
+}
+.classMatchSelectedHead small{
+  display:block;
+  color:#8ca0b2;
+  font-size:9px;
+  font-weight:850;
+  margin-bottom:2px;
+}
+.classMatchSelectedHead b{
+  color:#17324f;
+  font-size:15px;
+}
+.classMatchScheduleList{
+  margin-top:10px;
+  display:grid;
+  gap:7px;
+}
+.classMatchDateDivider{
+  margin-top:5px;
+  padding:5px 1px 2px;
+  color:#255f94;
+  font-size:11px;
+}
+.classMatchScheduleItem{
+  display:grid;
+  grid-template-columns:78px minmax(0,1fr) auto;
+  gap:10px;
+  align-items:center;
+  padding:10px 11px;
+  border:1px solid rgba(64,105,148,.09);
+  border-radius:12px;
+  background:#fbfdff;
+}
+.classMatchWhen span{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:58px;
+  padding:5px 7px;
+  border-radius:9px;
+  background:#eef6fd;
+  color:#2573b8;
+  font-size:10px;
+  font-weight:950;
+}
+.classMatchInfo{
+  min-width:0;
+}
+.classMatchInfo b{
+  display:block;
+  color:#17324f;
+  font-size:11px;
+  line-height:1.35;
+}
+.classMatchInfo span{
+  display:block;
+  margin-top:3px;
+  color:#71889b;
+  font-size:10px;
+  line-height:1.35;
+}
+.classMatchBadge{
+  padding:5px 7px;
+  border-radius:999px;
+  background:#edf8f3;
+  color:#378568;
+  font-size:9px;
+  font-weight:900;
+  white-space:nowrap;
+}
+.classMatchScheduleEmpty{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  padding:22px 12px;
+  border:1px dashed rgba(64,105,148,.16);
+  border-radius:13px;
+  color:#7890a4;
+  text-align:center;
+  background:#fbfdff;
+}
+.classMatchScheduleEmpty span{
+  font-size:22px;
+}
+.classMatchScheduleEmpty b{
+  color:#526d84;
+  font-size:11px;
+}
+.classMatchScheduleEmpty small{
+  font-size:9px;
+}
+.classMatchScheduleNote{
+  margin:10px 1px 0;
+  color:#8a9dae;
+  font-size:9px;
+  line-height:1.55;
+}
+@media(max-width:700px){
+  .classMatchPicker{
+    grid-template-columns:1fr;
+    gap:11px;
+  }
+  .classMatchClassTabs{
+    grid-template-columns:repeat(4,1fr);
+  }
+}
+@media(max-width:520px){
+  .classMatchScheduleItem{
+    grid-template-columns:64px minmax(0,1fr);
+  }
+  .classMatchBadge{
+    display:none;
+  }
+}
+
+
+/* ===== v2.57 standalone 우리반 경기일정 ===== */
+#classSchedule .classMatchScheduleSection.standalone{
+  margin-top:0;
+}
+#classSchedule .classMatchScheduleCard{
+  margin-top:0;
+}
+
 </style>
 </head>
 <body>
@@ -2282,6 +2470,7 @@ summary {
 <button data-tab="scores">🏆 실시간 점수</button>
 <button data-tab="rules">📋 경기요강</button>
 <button data-tab="bracket">🧩 대진·기록</button>
+<button data-tab="classSchedule">🏫 우리반 경기일정</button>
 <button data-tab="players">👥 출전선수</button>
 <button data-tab="flags">🚩 학급 깃발</button>
 <button data-tab="staff">🦺 운영·심판</button>
@@ -2608,6 +2797,50 @@ summary {
 </div>
 
 
+</section>
+
+<section id="classSchedule">
+<div class="titleRow">
+  <div>
+    <h2>🏫 우리반 경기일정</h2>
+    <p>학년과 반을 선택하면 우리반의 예정 경기를 가까운 날짜 순으로 한 번에 확인할 수 있습니다.</p>
+  </div>
+  <span class="status"><span class="dot"></span>LIVE</span>
+</div>
+
+<div class="classMatchScheduleSection standalone">
+  <div class="card classMatchScheduleCard">
+    <div class="classMatchPicker">
+      <div>
+        <span class="classMatchPickerLabel">학년 선택</span>
+        <div class="classMatchGradeTabs" id="classMatchGradeTabs">
+          <button type="button" class="active" data-grade="1" onclick="setClassMatchGrade('1')">1학년</button>
+          <button type="button" data-grade="2" onclick="setClassMatchGrade('2')">2학년</button>
+          <button type="button" data-grade="3" onclick="setClassMatchGrade('3')">3학년</button>
+        </div>
+      </div>
+
+      <div>
+        <span class="classMatchPickerLabel">반 선택</span>
+        <div class="classMatchClassTabs" id="classMatchClassTabs"></div>
+      </div>
+    </div>
+
+    <div class="classMatchSelectedHead">
+      <div>
+        <small>선택한 학급</small>
+        <b id="classMatchSelectedLabel">1학년 1반</b>
+      </div>
+      <span class="status"><span class="dot"></span>예정 경기</span>
+    </div>
+
+    <div id="classMatchScheduleList" class="classMatchScheduleList"></div>
+
+    <p class="classMatchScheduleNote">
+      ※ 대진 상대가 확정되고 경기 날짜가 등록된 경기만 표시됩니다. 이미 완료된 경기는 목록에서 제외됩니다.
+    </p>
+  </div>
+</div>
 </section>
 
 <section id="players">
@@ -3016,7 +3249,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.55</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.57</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -3924,6 +4157,152 @@ function homeFutureRowsHtml(rows,emptyText){
   }).join("");
 }
 
+
+let classMatchGrade="1";
+let classMatchClass=1;
+
+function setClassMatchGrade(g){
+  if(!["1","2","3"].includes(String(g)))return;
+  classMatchGrade=String(g);
+  renderClassMatchSchedule();
+}
+
+function setClassMatchClass(c){
+  const n=Number(c);
+  if(!Number.isInteger(n)||n<1||n>8)return;
+  classMatchClass=n;
+  renderClassMatchSchedule();
+}
+
+function isScheduledMatchCompleted(g,s,id){
+  if(s==="이어달리기"){
+    const info=relayMatchInfo(g,id);
+    return Boolean(info.winner);
+  }
+  const info=regularMatchInfo(g,s,id);
+  return Boolean(info.winner);
+}
+
+function collectClassScheduledMatches(g,classNo){
+  const today=koreaDateISO();
+  const target=Number(classNo);
+  const rows=[];
+
+  for(const s of BRACKET_SPORTS_BY_GRADE[g]||[]){
+    if(RECORD_SPORTS.includes(s)||s==="입장식")continue;
+
+    const ids=s==="이어달리기"
+      ?["heat1","heat2","final"]
+      :["qf1","qf2","qf3","qf4","sf1","sf2","final"];
+
+    for(const id of ids){
+      const sch=getMatchSchedule(g,s,id);
+      if(!sch.date||sch.date<today)continue;
+
+      const info=s==="이어달리기"
+        ?relayMatchInfo(g,id)
+        :regularMatchInfo(g,s,id);
+
+      const participants=(info.participants||[])
+        .filter(Boolean)
+        .map(Number);
+
+      if(!participants.includes(target))continue;
+      if(isScheduledMatchCompleted(g,s,id))continue;
+
+      rows.push({
+        g,
+        s,
+        id,
+        label:info.label,
+        date:sch.date,
+        period:sch.period,
+        participants
+      });
+    }
+  }
+
+  rows.sort((a,b)=>
+    a.date.localeCompare(b.date) ||
+    periodSortValue(a.period)-periodSortValue(b.period) ||
+    a.s.localeCompare(b.s,"ko")
+  );
+
+  return rows;
+}
+
+function classMatchOpponentText(row,classNo){
+  const target=Number(classNo);
+  const others=(row.participants||[]).filter(c=>Number(c)!==target);
+
+  if(row.s==="이어달리기"){
+    return others.length
+      ? `함께 경기: ${others.map(c=>`${c}반`).join(" · ")}`
+      : "참가 학급 확정";
+  }
+
+  if(others.length===1)return `상대: ${others[0]}반`;
+  if(others.length>1)return `상대: ${others.map(c=>`${c}반`).join(" · ")}`;
+  return "상대 학급 확인 중";
+}
+
+function renderClassMatchSchedule(){
+  const gradeTabs=document.getElementById("classMatchGradeTabs");
+  const classTabs=document.getElementById("classMatchClassTabs");
+  const selectedLabel=document.getElementById("classMatchSelectedLabel");
+  const list=document.getElementById("classMatchScheduleList");
+  if(!gradeTabs||!classTabs||!selectedLabel||!list)return;
+
+  [...gradeTabs.querySelectorAll("button")].forEach(btn=>{
+    btn.classList.toggle("active",btn.dataset.grade===classMatchGrade);
+  });
+
+  classTabs.innerHTML=Array.from({length:8},(_,i)=>i+1).map(c=>
+    `<button type="button" class="${c===classMatchClass?"active":""}" onclick="setClassMatchClass(${c})">${c}반</button>`
+  ).join("");
+
+  selectedLabel.textContent=`${classMatchGrade}학년 ${classMatchClass}반`;
+
+  const rows=collectClassScheduledMatches(classMatchGrade,classMatchClass);
+
+  if(!rows.length){
+    list.innerHTML=`
+      <div class="classMatchScheduleEmpty">
+        <span>📭</span>
+        <b>현재 등록된 예정 경기가 없습니다.</b>
+        <small>대진 상대와 경기 날짜가 확정되면 이곳에 자동으로 표시됩니다.</small>
+      </div>`;
+    return;
+  }
+
+  let lastDate="";
+  const chunks=[];
+
+  for(const row of rows){
+    if(row.date!==lastDate){
+      lastDate=row.date;
+      chunks.push(`
+        <div class="classMatchDateDivider">
+          <b>${esc(formatKoreanScheduleDate(row.date))}</b>
+        </div>`);
+    }
+
+    chunks.push(`
+      <div class="classMatchScheduleItem">
+        <div class="classMatchWhen">
+          <span>${esc(row.period||"시간 미정")}</span>
+        </div>
+        <div class="classMatchInfo">
+          <b>${esc(row.s)} · ${esc(row.label)}</b>
+          <span>${esc(classMatchOpponentText(row,classMatchClass))}</span>
+        </div>
+        <div class="classMatchBadge">경기 예정</div>
+      </div>`);
+  }
+
+  list.innerHTML=chunks.join("");
+}
+
 function renderHomeMatchSchedule(){
   const todayList=document.getElementById("homeMatchScheduleList");
   const next1List=document.getElementById("homeNextSchedule1List");
@@ -4194,6 +4573,8 @@ function renderBrackets(){
   }else{
     bracketView.innerHTML=renderRegularBracket(bracketGrade,bracketSport);
   }
+
+  renderClassMatchSchedule();
 }
 
 async function loadBracketStateFromCloud(){
@@ -5556,7 +5937,7 @@ function subscribeRealtime(){
  cloudChannels=[songsCh,noticesCh,stateCh,flagsCh,flagVoteCh,entranceVoteCh,bracketCh];
 }
 
-function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderHomeMatchSchedule();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderEntranceVoteScores();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();renderBracketAdmin();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
+function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderHomeMatchSchedule();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderClassMatchSchedule();renderEntranceVoteScores();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();renderBracketAdmin();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
 initPlayerFinder();
 initJudgeFinder();
 initSongApplicantFields();
