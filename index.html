@@ -2091,6 +2091,182 @@ summary {
   }
 }
 
+
+/* ===== v2.53 home schedule: today + next two weekdays ===== */
+.homeScheduleDayBlock{
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid rgba(64,105,148,.10);
+}
+.homeScheduleDayBlock.today{
+  margin-top:0;
+  padding-top:0;
+  border-top:0;
+}
+.homeScheduleDayTitle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  margin-bottom:8px;
+}
+.homeScheduleDayTitle b{
+  color:#17324f;
+  font-size:13px;
+}
+.homeScheduleDayTitle span{
+  color:#879caf;
+  font-size:10px;
+  font-weight:850;
+}
+@media(max-width:520px){
+  .homeScheduleDayTitle{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:2px;
+  }
+}
+
+
+/* ===== v2.54 home schedule hierarchy ===== */
+.homeScheduleToday{
+  margin-top:2px;
+}
+.homeScheduleDayTitle.todayTitle{
+  margin-bottom:9px;
+}
+.homeFutureScheduleWrap{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:9px;
+  margin-top:13px;
+  padding-top:12px;
+  border-top:1px solid rgba(64,105,148,.10);
+}
+.homeFutureScheduleMini{
+  min-width:0;
+  padding:10px;
+  border-radius:13px;
+  background:rgba(247,250,253,.88);
+  border:1px solid rgba(64,105,148,.09);
+}
+.homeFutureScheduleTitle{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:7px;
+  margin-bottom:6px;
+}
+.homeFutureScheduleTitle b{
+  color:#17324f;
+  font-size:11px;
+  line-height:1.3;
+}
+.homeFutureScheduleTitle span{
+  color:#8ba0b3;
+  font-size:9px;
+  font-weight:850;
+  white-space:nowrap;
+}
+.homeFutureScheduleList{
+  display:grid;
+  gap:5px;
+}
+.homeFutureScheduleItem{
+  display:grid;
+  grid-template-columns:52px minmax(0,1fr);
+  gap:7px;
+  align-items:start;
+  padding:7px 8px;
+  border-radius:10px;
+  background:#fff;
+  border:1px solid rgba(64,105,148,.07);
+}
+.homeFuturePeriod{
+  color:#2d78be;
+  font-size:9px;
+  font-weight:950;
+  line-height:1.4;
+  white-space:nowrap;
+}
+.homeFutureMain{
+  min-width:0;
+}
+.homeFutureMain b{
+  display:block;
+  color:#17324f;
+  font-size:10px;
+  line-height:1.35;
+}
+.homeFutureMain span{
+  display:block;
+  margin-top:2px;
+  color:#8295a8;
+  font-size:9px;
+  line-height:1.3;
+}
+.homeFutureScheduleEmpty{
+  padding:9px 8px;
+  border-radius:10px;
+  background:#fff;
+  border:1px dashed rgba(64,105,148,.12);
+  color:#8da0b1;
+  font-size:9px;
+  text-align:center;
+}
+@media(max-width:620px){
+  .homeFutureScheduleWrap{
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+  }
+  .homeFutureScheduleMini{
+    padding:8px;
+  }
+  .homeFutureScheduleTitle{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:1px;
+  }
+  .homeFutureScheduleItem{
+    grid-template-columns:1fr;
+    gap:2px;
+    padding:6px 7px;
+  }
+  .homeFuturePeriod{
+    white-space:normal;
+  }
+}
+@media(max-width:390px){
+  .homeFutureScheduleWrap{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* ===== v2.55 future 3 weekdays ===== */
+.homeFutureScheduleWrap{
+  grid-template-columns:repeat(3,minmax(0,1fr));
+}
+.homeFutureScheduleTitle{
+  justify-content:flex-start;
+}
+.homeFutureScheduleTitle b{
+  font-size:11px;
+}
+@media(max-width:760px){
+  .homeFutureScheduleWrap{
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
+@media(max-width:520px){
+  .homeFutureScheduleWrap{
+    grid-template-columns:1fr;
+  }
+  .homeFutureScheduleTitle{
+    flex-direction:row;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -2137,11 +2313,41 @@ summary {
   <div class="homeMatchScheduleHead">
     <div>
       <h2>📅 오늘의 경기일정</h2>
-      <p>관리자가 입력한 학년별 경기 일정을 실시간으로 확인합니다.</p>
+      <p>오늘 경기는 크게, 가까운 평일 3일 일정은 아래에 미리보기로 표시합니다.</p>
     </div>
     <span class="homeMatchScheduleDate" id="homeMatchScheduleDate">오늘</span>
   </div>
-  <div id="homeMatchScheduleList" class="homeMatchScheduleList"></div>
+
+  <div class="homeScheduleToday">
+    <div class="homeScheduleDayTitle todayTitle">
+      <b id="homeTodayScheduleTitle">오늘</b>
+      <span>오늘의 경기일정</span>
+    </div>
+    <div id="homeMatchScheduleList" class="homeMatchScheduleList"></div>
+  </div>
+
+  <div class="homeFutureScheduleWrap">
+    <div class="homeFutureScheduleMini">
+      <div class="homeFutureScheduleTitle">
+        <b id="homeNextSchedule1Title">다음 경기일</b>
+      </div>
+      <div id="homeNextSchedule1List" class="homeFutureScheduleList"></div>
+    </div>
+
+    <div class="homeFutureScheduleMini">
+      <div class="homeFutureScheduleTitle">
+        <b id="homeNextSchedule2Title">다음 경기일</b>
+      </div>
+      <div id="homeNextSchedule2List" class="homeFutureScheduleList"></div>
+    </div>
+
+    <div class="homeFutureScheduleMini">
+      <div class="homeFutureScheduleTitle">
+        <b id="homeNextSchedule3Title">다음 경기일</b>
+      </div>
+      <div id="homeNextSchedule3List" class="homeFutureScheduleList"></div>
+    </div>
+  </div>
 </div>
 
 <div class="card submissionCard" style="margin-top:15px">
@@ -2810,7 +3016,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.52</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.55</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -3582,13 +3788,47 @@ function relayMatchInfo(g,id){
   return map[id]||{label:id,participants:[],winner:false};
 }
 
-function renderHomeMatchSchedule(){
-  if(typeof homeMatchScheduleList==="undefined"||typeof homeMatchScheduleDate==="undefined")return;
+function isoFromDateParts(year,month,day){
+  const d=new Date(Date.UTC(year,month-1,day,12,0,0));
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,"0")}-${String(d.getUTCDate()).padStart(2,"0")}`;
+}
 
-  const today=koreaDateISO();
-  const kst=getKoreaNowParts();
-  homeMatchScheduleDate.textContent=`${kst.month}월 ${kst.day}일`;
+function addDaysISO(dateIso,days){
+  const m=String(dateIso||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(!m)return "";
+  const d=new Date(Date.UTC(Number(m[1]),Number(m[2])-1,Number(m[3]),12,0,0));
+  d.setUTCDate(d.getUTCDate()+Number(days||0));
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,"0")}-${String(d.getUTCDate()).padStart(2,"0")}`;
+}
 
+function weekdayIndexFromISO(dateIso){
+  const m=String(dateIso||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(!m)return -1;
+  return new Date(Date.UTC(Number(m[1]),Number(m[2])-1,Number(m[3]),12,0,0)).getUTCDay();
+}
+
+function formatKoreanScheduleDate(dateIso){
+  const m=String(dateIso||"").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if(!m)return "";
+  const weekday=["일","월","화","수","목","금","토"][weekdayIndexFromISO(dateIso)]||"";
+  return `${Number(m[2])}월 ${Number(m[3])}일(${weekday})`;
+}
+
+function getNextWeekdayDates(startIso,count=2){
+  const out=[];
+  let cursor=startIso;
+
+  while(out.length<count){
+    cursor=addDaysISO(cursor,1);
+    const day=weekdayIndexFromISO(cursor);
+    if(day===0||day===6)continue;
+    out.push(cursor);
+  }
+
+  return out;
+}
+
+function collectHomeMatchRows(dateIso){
   const rows=[];
 
   for(const g of ["1","2","3"]){
@@ -3596,7 +3836,7 @@ function renderHomeMatchSchedule(){
       if(s==="이어달리기"){
         for(const id of ["heat1","heat2","final"]){
           const sch=getMatchSchedule(g,s,id);
-          if(sch.date!==today)continue;
+          if(sch.date!==dateIso)continue;
           const info=relayMatchInfo(g,id);
           rows.push({
             g,s,id,
@@ -3610,7 +3850,7 @@ function renderHomeMatchSchedule(){
       }else{
         for(const id of ["qf1","qf2","qf3","qf4","sf1","sf2","final"]){
           const sch=getMatchSchedule(g,s,id);
-          if(sch.date!==today)continue;
+          if(sch.date!==dateIso)continue;
           const info=regularMatchInfo(g,s,id);
           rows.push({
             g,s,id,
@@ -3631,20 +3871,24 @@ function renderHomeMatchSchedule(){
     a.s.localeCompare(b.s,"ko")
   );
 
+  return rows;
+}
+
+function homeMatchRowsHtml(rows,emptyText){
   if(!rows.length){
-    homeMatchScheduleList.innerHTML=`
+    return `
       <div class="homeMatchScheduleEmpty">
-        오늘 등록된 경기 일정이 없습니다.
+        ${esc(emptyText)}
         <small>관리자가 경기 날짜와 교시를 입력하면 이곳에 자동으로 표시됩니다.</small>
       </div>`;
-    return;
   }
 
-  homeMatchScheduleList.innerHTML=rows.map(r=>{
+  return rows.map(r=>{
     const participants=(r.participants||[]).filter(Boolean);
     const teams=participants.length
       ? participants.map(c=>`${c}반`).join(r.s==="이어달리기"?" · ":" vs ")
       : "진출팀 대기";
+
     return `
       <div class="homeMatchScheduleItem">
         <div class="homeMatchPeriod">${esc(r.period||"시간 미정")}</div>
@@ -3655,6 +3899,80 @@ function renderHomeMatchSchedule(){
         <div class="homeMatchStatus ${r.completed?"done":""}">${r.completed?"경기 완료":"경기 예정"}</div>
       </div>`;
   }).join("");
+}
+
+
+function homeFutureRowsHtml(rows,emptyText){
+  if(!rows.length){
+    return `<div class="homeFutureScheduleEmpty">${esc(emptyText)}</div>`;
+  }
+
+  return rows.map(r=>{
+    const participants=(r.participants||[]).filter(Boolean);
+    const teams=participants.length
+      ? participants.map(c=>`${c}반`).join(r.s==="이어달리기"?" · ":" vs ")
+      : "진출팀 대기";
+
+    return `
+      <div class="homeFutureScheduleItem">
+        <div class="homeFuturePeriod">${esc(r.period||"시간 미정")}</div>
+        <div class="homeFutureMain">
+          <b>${r.g}학년 ${esc(r.s)} · ${esc(r.label)}</b>
+          <span>${esc(teams)}</span>
+        </div>
+      </div>`;
+  }).join("");
+}
+
+function renderHomeMatchSchedule(){
+  const todayList=document.getElementById("homeMatchScheduleList");
+  const next1List=document.getElementById("homeNextSchedule1List");
+  const next2List=document.getElementById("homeNextSchedule2List");
+  const next3List=document.getElementById("homeNextSchedule3List");
+  const todayTitle=document.getElementById("homeTodayScheduleTitle");
+  const next1Title=document.getElementById("homeNextSchedule1Title");
+  const next2Title=document.getElementById("homeNextSchedule2Title");
+  const next3Title=document.getElementById("homeNextSchedule3Title");
+  const badge=document.getElementById("homeMatchScheduleDate");
+
+  if(!todayList||!next1List||!next2List||!next3List)return;
+
+  const today=koreaDateISO();
+  const futureDates=getNextWeekdayDates(today,3);
+  const next1=futureDates[0];
+  const next2=futureDates[1];
+  const next3=futureDates[2];
+
+  const todayLabel=formatKoreanScheduleDate(today);
+  const next1Label=formatKoreanScheduleDate(next1);
+  const next2Label=formatKoreanScheduleDate(next2);
+  const next3Label=formatKoreanScheduleDate(next3);
+
+  if(badge)badge.textContent=todayLabel;
+  if(todayTitle)todayTitle.textContent=`오늘 · ${todayLabel}`;
+  if(next1Title)next1Title.textContent=next1Label;
+  if(next2Title)next2Title.textContent=next2Label;
+  if(next3Title)next3Title.textContent=next3Label;
+
+  todayList.innerHTML=homeMatchRowsHtml(
+    collectHomeMatchRows(today),
+    "오늘 등록된 경기 일정이 없습니다."
+  );
+
+  next1List.innerHTML=homeFutureRowsHtml(
+    collectHomeMatchRows(next1),
+    "등록된 경기 없음"
+  );
+
+  next2List.innerHTML=homeFutureRowsHtml(
+    collectHomeMatchRows(next2),
+    "등록된 경기 없음"
+  );
+
+  next3List.innerHTML=homeFutureRowsHtml(
+    collectHomeMatchRows(next3),
+    "등록된 경기 없음"
+  );
 }
 
 function getBracketSportResult(g,s){
