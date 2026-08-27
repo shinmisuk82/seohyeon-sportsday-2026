@@ -2455,6 +2455,74 @@ summary {
   margin-top:0;
 }
 
+
+/* ===== v2.58 관리자 CURRENT PROGRAM 직접 설정 ===== */
+.currentProgramAdminCard{
+  grid-column:1/-1;
+  border:1px solid rgba(42,124,194,.16);
+}
+.currentProgramAdminHead{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+.currentProgramAdminHead h3{
+  margin:0 0 4px;
+}
+.currentProgramAdminHead p{
+  margin:0;
+  color:#7a8fa2;
+  font-size:11px;
+  line-height:1.5;
+}
+.currentProgramManualState{
+  flex:0 0 auto;
+  padding:5px 9px;
+  border-radius:999px;
+  font-size:9px;
+  font-weight:950;
+  white-space:nowrap;
+}
+.currentProgramManualState.auto{
+  background:#eef3f7;
+  color:#6b8092;
+}
+.currentProgramManualState.manual{
+  background:#eaf7f1;
+  color:#2f8465;
+}
+.currentProgramAdminForm input{
+  width:100%;
+}
+.currentProgramAdminButtons{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+.currentProgramManualPreview{
+  margin-top:10px;
+  padding:10px 12px;
+  border-radius:11px;
+  background:#f7fafc;
+  border:1px solid rgba(64,105,148,.08);
+  color:#526b80;
+  font-size:11px;
+  line-height:1.55;
+}
+.currentProgramManualPreview b{
+  color:#17324f;
+}
+@media(max-width:560px){
+  .currentProgramAdminHead{
+    flex-direction:column;
+  }
+  .currentProgramAdminButtons .btn{
+    flex:1 1 auto;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3121,6 +3189,32 @@ summary {
 <div id="adminPanel" style="display:none">
 <div class="adminSession"><div><b>✅ 관리자 연결됨</b><br><small id="adminUserLabel"></small></div><button class="btn" onclick="logoutAdmin()">로그아웃</button></div>
 <div class="adminGrid">
+<div class="card currentProgramAdminCard">
+  <div class="currentProgramAdminHead">
+    <div>
+      <h3>⚡ CURRENT PROGRAM 직접 설정</h3>
+      <p>홈 화면의 CURRENT PROGRAM 문구를 관리자에서 바로 바꿀 수 있습니다.</p>
+    </div>
+    <span id="currentProgramManualState" class="currentProgramManualState auto">자동 표시</span>
+  </div>
+
+  <div class="admin currentProgramAdminForm">
+    <input id="currentProgramManualInput" type="text" maxlength="100" autocomplete="off"
+      placeholder="예: 대진 추첨 완료, 선수등록 진행중">
+    <div class="currentProgramAdminButtons">
+      <button class="btn primary" type="button" onclick="saveManualCurrentProgram()">수동 문구 저장</button>
+      <button class="btn" type="button" onclick="clearManualCurrentProgram()">자동 표시로 돌아가기</button>
+    </div>
+  </div>
+
+  <div id="currentProgramManualPreview" class="currentProgramManualPreview">
+    현재는 시간표 기준 자동 표시 상태입니다.
+  </div>
+  <p class="muted" style="font-size:11px;line-height:1.6;margin-bottom:0">
+    수동 문구를 저장하면 홈의 CURRENT PROGRAM에 즉시 반영됩니다.
+    자동 표시로 돌아가면 대회 전 안내 또는 대회 당일 관리자 선택 일정이 다시 표시됩니다.
+  </p>
+</div>
 <div class="card">
 <h3>🏆 종목 순위 입력 → 자동 배점</h3>
 <div class="admin">
@@ -3249,7 +3343,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.57</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.58</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -3329,6 +3423,7 @@ const SPORTS_BY_GRADE = {"1": ["빅발리볼", "협동 파도타기", "8자 줄�
 
 const DEFAULT = {
  current:0,
+ currentProgramManual:"",
  score:{},
  notices:[{type:"안내",text:"운영계획서를 반영한 2차 프로토타입입니다. 실제 경기 결과와 선수 명단은 추후 입력합니다.",time:"초기 안내"}],
  players:[],
@@ -3380,6 +3475,7 @@ function load(){
     return {
       ...clone(DEFAULT),
       ...cached,
+      currentProgramManual: typeof cached.currentProgramManual==="string" ? cached.currentProgramManual : "",
       score: cached.score || clone(DEFAULT.score),
       notices: cached.notices || clone(DEFAULT.notices),
       players: cached.players || [],
@@ -3513,6 +3609,16 @@ function isSelectedProgramLive(scheduleRow){
 
 function renderCurrentProgramLive(){
   if(typeof currentProgramCard==="undefined")return;
+
+  const manualText=String(data.currentProgramManual||"").trim();
+  if(manualText){
+    currentProgramCard.classList.add("is-live");
+    curTime.textContent="";
+    curEvent.textContent=manualText;
+    curPlace.textContent="";
+    if(typeof currentProgramStatusWrap!=="undefined")currentProgramStatusWrap.style.display="";
+    return;
+  }
 
   const kst=getKoreaNowParts();
   const isEventDay=kst.year===2026&&kst.month===9&&kst.day===18;
@@ -5685,6 +5791,7 @@ function initAdmin(){
  aClass.innerHTML=Array.from({length:8},(_,i)=>`<option value="${i+1}">${i+1}반</option>`).join("");
  aRank.innerHTML='<option value="">순위 선택</option>'+Array.from({length:8},(_,i)=>`<option value="${i+1}">${i+1}위</option>`).join("");
  fillSports();aGrade.onchange=fillSports;
+ renderCurrentProgramAdmin();
 }
 
 function fillSports(){aSport.innerHTML=SPORTS_BY_GRADE[aGrade.value].map(s=>`<option>${esc(s)}</option>`).join("")}
@@ -5731,6 +5838,7 @@ async function adjustCheerScore(key,delta){
 async function saveSiteStateToCloud(){
  const scorePayload=clone(data.score);
  scorePayload._cheer=clone(data.cheer||DEFAULT.cheer);
+ scorePayload._current_program_manual=String(data.currentProgramManual||"").trim();
  const {error}=await sb.from("site_state").update({
    current_schedule:data.current,
    scores:scorePayload,
@@ -5746,7 +5854,12 @@ async function loadSiteStateFromCloud(){
  data.current=Number.isInteger(row.current_schedule)?row.current_schedule:0;
  const scores=row.scores||{};
  const cloudCheer=(scores._cheer&&typeof scores._cheer==="object")?scores._cheer:null;
+ const cloudManualProgram=typeof scores._current_program_manual==="string"
+   ?scores._current_program_manual.trim()
+   :"";
  delete scores._cheer;
+ delete scores._current_program_manual;
+ data.currentProgramManual=cloudManualProgram;
  for(const g of ["1","2","3"]){
    if(!scores[g])scores[g]={};
    for(let c=1;c<=8;c++){if(!scores[g][c])scores[g][c]={};}
@@ -5765,6 +5878,7 @@ async function loadSiteStateFromCloud(){
  if(typeof renderCheerScores==="function")renderCheerScores();
  if(typeof renderBrackets==="function")renderBrackets();
  if(typeof renderSchedule==="function")renderSchedule();
+ if(typeof renderCurrentProgramAdmin==="function")renderCurrentProgramAdmin();
  return true;
 }
 
@@ -5777,6 +5891,61 @@ async function applyRank(){
  saveLocal();
  if(typeof renderBrackets==="function")renderBrackets();
  if(!await saveSiteStateToCloud())await loadSiteStateFromCloud();
+}
+
+
+function renderCurrentProgramAdmin(){
+  const input=document.getElementById("currentProgramManualInput");
+  const state=document.getElementById("currentProgramManualState");
+  const preview=document.getElementById("currentProgramManualPreview");
+  if(!input||!state||!preview)return;
+
+  const text=String(data.currentProgramManual||"").trim();
+  input.value=text;
+
+  if(text){
+    state.className="currentProgramManualState manual";
+    state.textContent="수동 표시 중";
+    preview.innerHTML=`<b>현재 표시:</b> ${esc(text)}`;
+  }else{
+    state.className="currentProgramManualState auto";
+    state.textContent="자동 표시";
+    preview.textContent="현재는 시간표 기준 자동 표시 상태입니다.";
+  }
+}
+
+async function saveManualCurrentProgram(){
+  const input=document.getElementById("currentProgramManualInput");
+  if(!input)return;
+
+  const text=input.value.trim();
+  if(!text)return alert("CURRENT PROGRAM에 표시할 문구를 입력하세요.");
+
+  data.currentProgramManual=text;
+  saveLocal();
+  renderCurrentProgramAdmin();
+
+  const ok=await saveSiteStateToCloud();
+  if(!ok){
+    await loadSiteStateFromCloud();
+    return;
+  }
+
+  alert("CURRENT PROGRAM 수동 문구를 저장했습니다.");
+}
+
+async function clearManualCurrentProgram(){
+  data.currentProgramManual="";
+  saveLocal();
+  renderCurrentProgramAdmin();
+
+  const ok=await saveSiteStateToCloud();
+  if(!ok){
+    await loadSiteStateFromCloud();
+    return;
+  }
+
+  alert("자동 표시 상태로 돌아갔습니다.");
 }
 
 async function setCurrent(){
@@ -5937,7 +6106,7 @@ function subscribeRealtime(){
  cloudChannels=[songsCh,noticesCh,stateCh,flagsCh,flagVoteCh,entranceVoteCh,bracketCh];
 }
 
-function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderHomeMatchSchedule();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderClassMatchSchedule();renderEntranceVoteScores();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();renderBracketAdmin();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
+function renderAll(){renderDDay();renderSchedule();renderHomeLeaders();renderHomeMatchSchedule();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderClassMatchSchedule();renderEntranceVoteScores();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();renderBracketAdmin();renderCurrentProgramAdmin();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
 initPlayerFinder();
 initJudgeFinder();
 initSongApplicantFields();
