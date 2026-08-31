@@ -2523,6 +2523,27 @@ summary {
   }
 }
 
+
+/* ===== v2.59 개별 종목점수 입력 초기화 ===== */
+.scoreAdminActionRow{
+  display:flex;
+  gap:7px;
+  flex-wrap:wrap;
+}
+.scoreEntryResetBtn{
+  background:#fff7f3;
+  border-color:#f0c8b7;
+  color:#a85b3a;
+}
+.scoreEntryResetBtn:hover{
+  background:#fff0e8;
+}
+@media(max-width:560px){
+  .scoreAdminActionRow .btn{
+    flex:1 1 100%;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -3222,9 +3243,15 @@ summary {
 <select id="aSport"></select>
 <select id="aClass"></select>
 <select id="aRank"><option value="">순위 선택</option></select>
-<button class="btn primary" onclick="applyRank()">순위·점수 반영</button>
+<div class="scoreAdminActionRow">
+  <button class="btn primary" onclick="applyRank()">순위·점수 반영</button>
+  <button class="btn scoreEntryResetBtn" type="button" onclick="clearSelectedRankEntry()">선택 학급·종목 입력 초기화</button>
 </div>
-<p class="muted" style="font-size:11px">5~8위는 모두 해당 종목의 5위 배점을 공동 적용합니다.</p>
+</div>
+<p class="muted" style="font-size:11px;line-height:1.6">
+  5~8위는 모두 해당 종목의 5위 배점을 공동 적용합니다.<br>
+  잘못 입력한 경우 <b>선택 학급·종목 입력 초기화</b>를 누르면 현재 선택한 학년·반·종목의 순위와 점수만 미입력 상태로 돌아갑니다.
+</p>
 </div>
 
 <div class="card bracketAdminCard">
@@ -3343,7 +3370,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.58</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.59</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -5880,6 +5907,51 @@ async function loadSiteStateFromCloud(){
  if(typeof renderSchedule==="function")renderSchedule();
  if(typeof renderCurrentProgramAdmin==="function")renderCurrentProgramAdmin();
  return true;
+}
+
+
+async function clearSelectedRankEntry(){
+  const g=aGrade.value;
+  const c=aClass.value;
+  const s=aSport.value;
+
+  if(!g||!c||!s)return alert("학년, 반, 종목을 먼저 선택하세요.");
+
+  const current=data.score?.[g]?.[c]?.[s];
+  if(!current){
+    alert(`${g}학년 ${c}반 · ${s}은(는) 현재 입력된 순위/점수가 없습니다.`);
+    return;
+  }
+
+  const rankText=Number(current.rank)?`${Number(current.rank)}위`:"순위";
+  const pointText=typeof current.points==="number"?`${current.points}점`:"미배점";
+
+  const ok=confirm(
+    `${g}학년 ${c}반 · ${s} 입력을 초기화할까요?\n\n`+
+    `현재 값: ${rankText} · ${pointText}\n`+
+    `이 학급의 이 종목 기록만 미입력 상태로 되돌립니다.`
+  );
+  if(!ok)return;
+
+  if(data.score?.[g]?.[c]){
+    delete data.score[g][c][s];
+  }
+
+  saveLocal();
+
+  const saved=await saveSiteStateToCloud();
+  if(!saved){
+    alert("Supabase 저장 중 오류가 발생했습니다. 서버 상태를 다시 불러옵니다.");
+    await loadSiteStateFromCloud();
+    return;
+  }
+
+  if(typeof aRank!=="undefined")aRank.value="";
+  if(typeof renderScores==="function")renderScores();
+  if(typeof renderHomeLeaders==="function")renderHomeLeaders();
+  if(typeof renderBrackets==="function")renderBrackets();
+
+  alert(`${g}학년 ${c}반 · ${s} 입력을 초기화했습니다.`);
 }
 
 async function applyRank(){
