@@ -2936,7 +2936,7 @@ summary {
 <div class="titleRow">
   <div>
     <h2>👟 내 참가 종목 찾기</h2>
-    <p>선수 명단 등록 후 학번과 이름으로 본인의 참가 종목을 확인할 수 있습니다.</p>
+    <p>학번과 이름으로 본인의 참가 종목을 확인할 수 있습니다. 현재 3학년 2반 참가신청서가 등록되어 있습니다.</p>
   </div>
 </div>
 
@@ -2960,7 +2960,7 @@ summary {
   </p>
 
   <div id="playerSearchResult" class="playerSearchResult">
-    <div class="playerSearchEmpty">아직 실제 출전 선수 명단이 등록되지 않았습니다.</div>
+    <div class="playerSearchEmpty"><b>3학년 2반 참가신청서 등록 완료</b><br>학번 4자리와 이름을 입력해 참가 종목을 확인하세요.</div>
   </div>
 </div>
 </section>
@@ -3370,7 +3370,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.59</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.61</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -4956,18 +4956,16 @@ async function resetSelectedBracket(){
 
 
 /*
- * 선수 명단이 들어오면 아래 PLAYER_LOOKUP_BY_HASH를 자동 생성해서 채웁니다.
+ * 선수명단 검색 데이터
  * 키: SHA-256("4자리 학번:이름")
- * 값 예시:
- * [
- *   {sport:"축구", time:"10:20~10:50", place:"운동장", opponent:"상대 학급", reserve:false},
- *   {sport:"이어달리기", time:"14:30~14:50", place:"운동장", reserve:false}
- * ]
- *
- * 현재는 실제 선수 명단이 없으므로 빈 상태입니다.
+ * 값: 참가 종목 + 후보 여부
+ * 개인정보 보호를 위해 이름/학번 원문은 공개 lookup에 저장하지 않습니다.
+ * 현재 등록 학급: 3학년 2반
+ * 협동 파도타기, 줄다리기: 학급 전원 출전 종목
  */
-const PLAYER_LOOKUP_BY_HASH={};
-const PLAYER_LOOKUP_READY=false;
+const PLAYER_LOOKUP_BY_HASH={"6c1cc1173b071c76acbb7d7468c037950a8499e64ee4d805aaffc87e550b0f74":[{"sport":"8자 줄넘기","reserve":false},{"sport":"이어달리기","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"eeff69ad36a2348041484bae45d09a10ea3c0106dc21e954cd6f579dd69c49c2":[{"sport":"배구","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"960452a9b331100f6f6d9f7cee7811d9d4decde6cbe963eebd662c1ed0a50be5":[{"sport":"8자 줄넘기","reserve":false},{"sport":"이어달리기","reserve":true},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"ef15330a8be6a2796bebacb93942b5c3d9482810b9a0209862e4de4f0be4d583":[{"sport":"8자 줄넘기","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"d4e36574887341417c24f59744966bbefcf77f517a2b73bd4508a84bfda3e1a9":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"cc9361702e5bd5b9f5c0f22259790924d8261f5bfdfc17af6a6329a3edbf5141":[{"sport":"8자 줄넘기","reserve":false},{"sport":"배구","reserve":false},{"sport":"이어달리기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"0e4bf00de575db2fc4b262c13157c625778638da3196f9583a91f7340a6d57c9":[{"sport":"8자 줄넘기","reserve":false},{"sport":"배구","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"105d6a5fca1e976786b4b5026d9a5b4deedcce124a80ebc721e7e61b13702856":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"f817b4cfae78fdad8e34c5fdd2a474ad3aeb5089d67111452f7a644dfb757460":[{"sport":"축구","reserve":false},{"sport":"8자 줄넘기","reserve":false},{"sport":"배구","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"2373cf59ce02db85aee95572bd1bf71ae4f30fd7d37b8dbc4b89a8923957475f":[{"sport":"축구","reserve":true},{"sport":"8자 줄넘기","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"00b5fea2a978e63d2baef0cb46a44cc268068e5c7b1d2e4ab71792cf5098cb34":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"248fc13cd843e4e09bcd4023ad3863a00b205de81dc1294c0afd7eee347e0cbb":[{"sport":"축구","reserve":false},{"sport":"8자 줄넘기","reserve":false},{"sport":"배구","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"c4db97e37ba2db51127c5293e4cdf65fe90a40d2871a24a0dcc5c0aabb0017e3":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"f2c720cbdb3e9682789fc5d604cae16a0981f4916988dd34d2f01a9ec0e7c849":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"caab1d5810436816d10d6ce690e47602d3a72d9d5d4c02d751a86724ead2bf25":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"816ca702fce49a176818c2d8ca95bd1c7e7c16a205843eaa081e1c496cb1d716":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"b1f0984380b47d37c9aa9bb5b852369b95728ab6790aa552dbf0a23a9483e426":[{"sport":"축구","reserve":false},{"sport":"배구","reserve":false},{"sport":"이어달리기","reserve":false},{"sport":"릴레이 고리던지기","reserve":true},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"2c124ed84e1f59663a57d59e08285767e883306c8414b26a0275104260ce3103":[{"sport":"축구","reserve":false},{"sport":"8자 줄넘기","reserve":false},{"sport":"이어달리기","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"d6c850d736c581042b4a9432e22ed67f973065faec771c72fe1b087a5ddc5652":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"13b15808d19816ec466b1bebf44ac68276cb0cf655ec9fb4cacbe5cba0de2486":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"972e0167a7f17b5f8e297fd8a485360f7d284e3d00f190beedf79511c2609090":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"8fbf5da764ceb38a7272d95934b8bd3f46b2b916668e79b7cb8c36dc160e6b9f":[{"sport":"축구","reserve":false},{"sport":"배구","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"33646cd009afc37c7aaf924c727ac694fc5a69ea571824b34e078d3a51e86c77":[{"sport":"축구","reserve":false},{"sport":"8자 줄넘기","reserve":false},{"sport":"배구","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"a38679195db7cb0f7bc9c9f4e0b8c5b5264d160fbe4b3c0546c152273b067c60":[{"sport":"축구","reserve":false},{"sport":"8자 줄넘기","reserve":false},{"sport":"배구","reserve":false},{"sport":"이어달리기","reserve":true},{"sport":"릴레이 고리던지기","reserve":true},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"4fe81cb12c926553f378fde94c40b54696509677744ee8d0deece0f13259a0ef":[{"sport":"이어달리기","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"4b4354dd49efa0b35d0fca08ec621253161cca8daf49d2e89774f3960b35a473":[{"sport":"축구","reserve":true},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"2b55513d7567323c426abef6ea4ef3f390e1d099c5a52d594d4a9323144506ba":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"888b7c43137a51ffdd62f56a5f5349120d3cfb2a14a36bf8887f8bbe61c33c6b":[{"sport":"8자 줄넘기","reserve":false},{"sport":"이어달리기","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}]};
+const PLAYER_REGISTERED_CLASSES={"32":true};
+const PLAYER_LOOKUP_READY=true;
 
 function normalizeStudentName(value){
   return String(value||"").trim().replace(/\s+/g,"");
@@ -4983,7 +4981,7 @@ async function findPlayerAssignments(){
   const displayName=String(nameInput.value||"").trim();
   const normalizedName=normalizeStudentName(displayName);
 
-  if(!/^[1-3][1-8]\d{2}$/.test(studentNo)){
+  if(!/^[1-3][1-8](?:0[1-9]|[1-9]\d)$/.test(studentNo)){
     result.innerHTML='<div class="playerSearchEmpty">학번 4자리를 확인해 주세요. 예: 1학년 1반 1번 → <b>1101</b></div>';
     return;
   }
@@ -4994,6 +4992,12 @@ async function findPlayerAssignments(){
 
   if(!PLAYER_LOOKUP_READY){
     result.innerHTML='<div class="playerSearchEmpty"><b>아직 선수 명단이 등록되지 않았습니다.</b><br>선수 명단이 등록되면 학번과 이름으로 바로 검색할 수 있습니다.</div>';
+    return;
+  }
+
+  const classKey=studentNo.slice(0,2);
+  if(!PLAYER_REGISTERED_CLASSES[classKey]){
+    result.innerHTML='<div class="playerSearchEmpty"><b>해당 학급 선수 명단은 아직 등록되지 않았습니다.</b><br>현재는 3학년 2반 참가신청서가 등록되어 있습니다.</div>';
     return;
   }
 
