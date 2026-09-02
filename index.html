@@ -2544,6 +2544,89 @@ summary {
   }
 }
 
+
+/* ===== v2.62 후보 출전 표시 구분 ===== */
+.playerAssignmentItem.isReserve{
+  background:#fffaf2;
+  border-color:rgba(218,157,56,.20);
+}
+.playerAssignmentItem.isReserve .playerAssignmentSport{
+  color:#9a681d;
+}
+
+
+/* ===== v2.63 multi-admin atomic write ===== */
+.multiAdminSafeBar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  margin:0 0 12px;
+  padding:12px 14px;
+  border-radius:15px;
+  background:#f7fbff;
+  border:1px solid rgba(64,105,148,.12);
+}
+.multiAdminSafeBar b{
+  display:block;
+  color:#17324f;
+  font-size:13px;
+  margin-bottom:3px;
+}
+.multiAdminSafeBar small{
+  display:block;
+  color:#738aa0;
+  font-size:10px;
+  line-height:1.5;
+}
+.multiAdminAtomicStatus{
+  flex:0 0 auto;
+  padding:6px 9px;
+  border-radius:999px;
+  font-size:10px;
+  font-weight:950;
+  white-space:nowrap;
+}
+.multiAdminAtomicStatus.checking{
+  background:#eef3f7;color:#73879a;
+}
+.multiAdminAtomicStatus.ok{
+  background:#eaf7f1;color:#2f8465;
+}
+.multiAdminAtomicStatus.bad{
+  background:#fff3e8;color:#a76528;
+}
+@media(max-width:620px){
+  .multiAdminSafeBar{align-items:flex-start;flex-direction:column}
+}
+
+
+/* ===== v2.64 홈 경기결과 + 선수명단 임의표기 ===== */
+.homeMatchResult{
+  display:block;
+  margin-top:4px;
+  color:#34815f;
+  font-size:11px;
+  font-weight:950;
+}
+.homeFutureResult{
+  display:block;
+  margin-top:3px;
+  color:#4d8b69;
+  font-size:10px;
+  font-weight:900;
+}
+.playerAssignmentItem.isMarked{
+  background:#fffaf2;
+  border-color:rgba(218,157,56,.20);
+}
+.playerAssignmentItem.isMarked .playerAssignmentSport{
+  color:#8f6726;
+}
+.playerAssignmentItem.isReserve{
+  background:#fff8ed;
+}
+
 </style>
 </head>
 <body>
@@ -3209,6 +3292,15 @@ summary {
 </div>
 <div id="adminPanel" style="display:none">
 <div class="adminSession"><div><b>✅ 관리자 연결됨</b><br><small id="adminUserLabel"></small></div><button class="btn" onclick="logoutAdmin()">로그아웃</button></div>
+
+<div class="multiAdminSafeBar">
+  <div>
+    <b>🛡️ 다중 관리자 동시입력 안전모드</b>
+    <small>각 기기에서 바꾼 항목만 서버에서 원자적으로 저장하여 다른 관리자의 입력을 덮어쓰지 않습니다.</small>
+  </div>
+  <span id="multiAdminAtomicStatus" class="multiAdminAtomicStatus checking">확인 중</span>
+</div>
+
 <div class="adminGrid">
 <div class="card currentProgramAdminCard">
   <div class="currentProgramAdminHead">
@@ -3370,7 +3462,7 @@ summary {
 </div>
 </section>
 </main>
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.61</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.64</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -4146,12 +4238,32 @@ function regularMatchInfo(g,s,id){
 function relayMatchInfo(g,id){
   const st=relayState(g);
   const r=getBracketSportResult(g,"이어달리기");
+
+  const heat1Done=Array.isArray(r.heat1)&&r.heat1.length>=2&&st.h1.length===2;
+  const heat2Done=Array.isArray(r.heat2)&&r.heat2.length>=2&&st.h2.length===2;
+  const finalDone=Array.isArray(r.final)&&r.final.length===4&&st.final.length===4;
+
   const map={
-    heat1:{label:"예선 1조",participants:st.heat1,winner:Array.isArray(r.heat1)&&r.heat1.length>=2?true:false},
-    heat2:{label:"예선 2조",participants:st.heat2,winner:Array.isArray(r.heat2)&&r.heat2.length>=2?true:false},
-    final:{label:"결승",participants:st.finalists,winner:Array.isArray(r.final)&&r.final.length===4?true:false}
+    heat1:{
+      label:"예선 1조",
+      participants:st.heat1,
+      winner:heat1Done,
+      resultText:heat1Done?`1위 ${st.h1[0]}반 · 2위 ${st.h1[1]}반`:""
+    },
+    heat2:{
+      label:"예선 2조",
+      participants:st.heat2,
+      winner:heat2Done,
+      resultText:heat2Done?`1위 ${st.h2[0]}반 · 2위 ${st.h2[1]}반`:""
+    },
+    final:{
+      label:"결승",
+      participants:st.finalists,
+      winner:finalDone,
+      resultText:finalDone?`1위 ${st.final[0]}반`:""
+    }
   };
-  return map[id]||{label:id,participants:[],winner:false};
+  return map[id]||{label:id,participants:[],winner:false,resultText:""};
 }
 
 function isoFromDateParts(year,month,day){
@@ -4209,6 +4321,7 @@ function collectHomeMatchRows(dateIso){
             label:info.label,
             participants:info.participants||[],
             completed:Boolean(info.winner),
+            resultText:String(info.resultText||""),
             date:sch.date,
             period:sch.period
           });
@@ -4223,6 +4336,7 @@ function collectHomeMatchRows(dateIso){
             label:info.label,
             participants:info.participants||[],
             completed:Boolean(info.winner),
+            resultText:info.winner?`${info.winner}반 승리`:"",
             date:sch.date,
             period:sch.period
           });
@@ -4261,6 +4375,7 @@ function homeMatchRowsHtml(rows,emptyText){
         <div class="homeMatchMain">
           <b>${r.g}학년 ${esc(r.s)} · ${esc(r.label)}</b>
           <span>${esc(teams)}</span>
+          ${r.resultText?`<strong class="homeMatchResult">🏆 ${esc(r.resultText)}</strong>`:""}
         </div>
         <div class="homeMatchStatus ${r.completed?"done":""}">${r.completed?"경기 완료":"경기 예정"}</div>
       </div>`;
@@ -4285,6 +4400,7 @@ function homeFutureRowsHtml(rows,emptyText){
         <div class="homeFutureMain">
           <b>${r.g}학년 ${esc(r.s)} · ${esc(r.label)}</b>
           <span>${esc(teams)}</span>
+          ${r.resultText?`<strong class="homeFutureResult">🏆 ${esc(r.resultText)}</strong>`:""}
         </div>
       </div>`;
   }).join("");
@@ -4730,17 +4846,8 @@ async function loadBracketStateFromCloud(){
 }
 
 async function saveBracketResultsToCloud(){
-  const {error}=await sb.from("bracket_state")
-    .update({results:data.bracketResults,updated_at:new Date().toISOString()})
-    .eq("id","main");
-
-  if(error){
-    console.error(error);
-    alert("대진 결과 저장에 실패했습니다. 관리자 로그인과 Supabase 설정을 확인해 주세요.");
-    await loadBracketStateFromCloud();
-    return false;
-  }
-  return true;
+  console.warn("v2.63: 전체 bracket_state.results JSON 저장은 동시입력 충돌 방지를 위해 사용하지 않습니다.");
+  return false;
 }
 
 function ensureBracketResultPath(g,s){
@@ -4844,7 +4951,7 @@ function renderBracketAdmin(){
 
 
 async function saveMatchSchedule(matchId){
-  const g=bracketAdminGrade.value;
+  const g=Number(bracketAdminGrade.value);
   const s=bracketAdminSport.value;
   const date=String(document.getElementById(`adminDate_${matchId}`)?.value||"").trim();
   const period=String(document.getElementById(`adminPeriod_${matchId}`)?.value||"").trim();
@@ -4853,26 +4960,26 @@ async function saveMatchSchedule(matchId){
     return alert("날짜와 교시를 모두 입력해 주세요. 일정을 지우려면 두 칸을 모두 비운 뒤 저장하세요.");
   }
 
-  const schedules=ensureBracketSchedulePath(g,s);
-
-  if(!date&&!period){
-    delete schedules[matchId];
-  }else{
-    schedules[matchId]={date,period};
-  }
-
-  saveLocal();
-
-  if(await saveBracketResultsToCloud()){
+  const ok=await runAtomicRpc(
+    "save_bracket_schedule_atomic",
+    {p_grade:g,p_sport:s,p_match_id:matchId,p_date:date,p_period:period},
+    "경기 일정"
+  );
+  if(!ok){
     await loadBracketStateFromCloud();
-    alert(date?`${g}학년 ${s} 경기 일정이 저장되었습니다.`:"경기 일정이 삭제되었습니다.");
+    return;
   }
+
+  await loadBracketStateFromCloud();
+  alert(date?`${g}학년 ${s} 경기 일정이 저장되었습니다.`:"경기 일정이 삭제되었습니다.");
 }
 
 async function saveRegularBracketResult(matchId){
-  const g=bracketAdminGrade.value, s=bracketAdminSport.value;
+  const g=Number(bracketAdminGrade.value);
+  const s=bracketAdminSport.value;
   if(s==="이어달리기")return;
-  const st=regularBracketState(g,s);
+
+  const st=regularBracketState(String(g),s);
   const map={
     qf1:st.qf[0],qf2:st.qf[1],qf3:st.qf[2],qf4:st.qf[3],
     sf1:st.sf[0],sf2:st.sf[1],final:st.final
@@ -4880,85 +4987,98 @@ async function saveRegularBracketResult(matchId){
   const participants=(map[matchId]||[]).filter(Boolean);
   const sel=document.getElementById(`adminWinner_${matchId}`);
   const winner=Number(sel?.value);
-  if(participants.length!==2||!participants.includes(winner))return alert("승리팀을 선택해 주세요.");
 
-  const r=ensureBracketResultPath(g,s);
-  const old=Number(r[matchId])||null;
-  r[matchId]=winner;
-
-  if(old!==winner){
-    if(["qf1","qf2"].includes(matchId)){delete r.sf1;delete r.final}
-    if(["qf3","qf4"].includes(matchId)){delete r.sf2;delete r.final}
-    if(["sf1","sf2"].includes(matchId)){delete r.final}
+  if(participants.length!==2||!participants.includes(winner)){
+    return alert("승리팀을 선택해 주세요.");
   }
 
-  saveLocal();
-  if(await saveBracketResultsToCloud()){
+  const ok=await runAtomicRpc(
+    "save_regular_bracket_result_atomic",
+    {p_grade:g,p_sport:s,p_match_id:matchId,p_winner:winner},
+    "대진 결과"
+  );
+  if(!ok){
     await loadBracketStateFromCloud();
+    return;
   }
+
+  await loadBracketStateFromCloud();
 }
 
 async function saveRelayHeat(heatKey){
-  const g=bracketAdminGrade.value;
-  const st=relayState(g);
+  const g=Number(bracketAdminGrade.value);
+  const st=relayState(String(g));
   const teams=heatKey==="heat1"?st.heat1:st.heat2;
   const first=Number(document.getElementById(`relay_${heatKey}_1`)?.value);
   const second=Number(document.getElementById(`relay_${heatKey}_2`)?.value);
-  if(!teams.includes(first)||!teams.includes(second))return alert("1위와 2위를 모두 선택해 주세요.");
+
+  if(!teams.includes(first)||!teams.includes(second)){
+    return alert("1위와 2위를 모두 선택해 주세요.");
+  }
   if(first===second)return alert("1위와 2위는 서로 다른 학급이어야 합니다.");
 
-  const r=ensureBracketResultPath(g,"이어달리기");
-  const old=Array.isArray(r[heatKey])?r[heatKey].map(Number):[];
-  r[heatKey]=[first,second];
-  if(old[0]!==first||old[1]!==second)delete r.final;
-
-  saveLocal();
-  if(await saveBracketResultsToCloud()){
+  const ok=await runAtomicRpc(
+    "save_relay_heat_atomic",
+    {p_grade:g,p_heat_key:heatKey,p_first:first,p_second:second},
+    "이어달리기 예선 결과"
+  );
+  if(!ok){
     await loadBracketStateFromCloud();
+    return;
   }
+
+  await loadBracketStateFromCloud();
 }
 
 async function saveRelayFinal(){
-  const g=bracketAdminGrade.value;
-  const st=relayState(g);
+  const g=Number(bracketAdminGrade.value);
+  const st=relayState(String(g));
   if(st.finalists.length!==4)return alert("예선 1·2위 결과를 먼저 입력해 주세요.");
 
   const ranks=[1,2,3,4].map(i=>Number(document.getElementById(`relay_final_${i}`)?.value));
   if(ranks.some(x=>!st.finalists.includes(x)))return alert("결승 1~4위를 모두 선택해 주세요.");
   if(new Set(ranks).size!==4)return alert("결승 순위는 서로 다른 학급이어야 합니다.");
 
-  const r=ensureBracketResultPath(g,"이어달리기");
-  r.final=ranks;
-  saveLocal();
-  if(await saveBracketResultsToCloud()){
+  const ok=await runAtomicRpc(
+    "save_relay_final_atomic",
+    {p_grade:g,p_ranks:ranks},
+    "이어달리기 결승 결과"
+  );
+  if(!ok){
     await loadBracketStateFromCloud();
+    return;
   }
+
+  await loadBracketStateFromCloud();
 }
 
 async function resetSelectedBracket(){
-  const g=bracketAdminGrade.value, s=bracketAdminSport.value;
+  const g=Number(bracketAdminGrade.value);
+  const s=bracketAdminSport.value;
+
   if(!confirm(`${g}학년 ${s} 경기결과를 모두 초기화할까요?\n입력한 경기 날짜와 교시는 유지됩니다.`))return;
 
-  const existing=data.bracketResults?.[g]?.[s];
-  const schedule=existing?.schedule&&typeof existing.schedule==="object"
-    ? clone(existing.schedule)
-    : {};
-
-  if(!data.bracketResults)data.bracketResults={};
-  if(!data.bracketResults[g])data.bracketResults[g]={};
-  data.bracketResults[g][s]={schedule};
-
-  saveLocal();
-  if(await saveBracketResultsToCloud()){
+  const ok=await runAtomicRpc(
+    "reset_bracket_sport_atomic",
+    {p_grade:g,p_sport:s},
+    "대진 결과 초기화"
+  );
+  if(!ok){
     await loadBracketStateFromCloud();
+    return;
   }
-}
 
+  await loadBracketStateFromCloud();
+}
 
 /*
  * 선수명단 검색 데이터
  * 키: SHA-256("4자리 학번:이름")
- * 값: 참가 종목 + 후보 여부
+ * 값: 참가 종목 + 신청서 셀의 별도 표기(annotation)
+ * ○ = 정식 출전(별도 표기 없음)
+ * 후보 = 종목(후보)
+ * 후보 외 다른 문자 = 종목(그 문자) 그대로 표시
+ * 기존 reserve:true 데이터도 후보로 호환합니다.
  * 개인정보 보호를 위해 이름/학번 원문은 공개 lookup에 저장하지 않습니다.
  * 현재 등록 학급: 3학년 2반
  * 협동 파도타기, 줄다리기: 학급 전원 출전 종목
@@ -4966,6 +5086,14 @@ async function resetSelectedBracket(){
 const PLAYER_LOOKUP_BY_HASH={"6c1cc1173b071c76acbb7d7468c037950a8499e64ee4d805aaffc87e550b0f74":[{"sport":"8자 줄넘기","reserve":false},{"sport":"이어달리기","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"eeff69ad36a2348041484bae45d09a10ea3c0106dc21e954cd6f579dd69c49c2":[{"sport":"배구","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"960452a9b331100f6f6d9f7cee7811d9d4decde6cbe963eebd662c1ed0a50be5":[{"sport":"8자 줄넘기","reserve":false},{"sport":"이어달리기","reserve":true},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"ef15330a8be6a2796bebacb93942b5c3d9482810b9a0209862e4de4f0be4d583":[{"sport":"8자 줄넘기","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"d4e36574887341417c24f59744966bbefcf77f517a2b73bd4508a84bfda3e1a9":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"cc9361702e5bd5b9f5c0f22259790924d8261f5bfdfc17af6a6329a3edbf5141":[{"sport":"8자 줄넘기","reserve":false},{"sport":"배구","reserve":false},{"sport":"이어달리기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"0e4bf00de575db2fc4b262c13157c625778638da3196f9583a91f7340a6d57c9":[{"sport":"8자 줄넘기","reserve":false},{"sport":"배구","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"105d6a5fca1e976786b4b5026d9a5b4deedcce124a80ebc721e7e61b13702856":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"f817b4cfae78fdad8e34c5fdd2a474ad3aeb5089d67111452f7a644dfb757460":[{"sport":"축구","reserve":false},{"sport":"8자 줄넘기","reserve":false},{"sport":"배구","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"2373cf59ce02db85aee95572bd1bf71ae4f30fd7d37b8dbc4b89a8923957475f":[{"sport":"축구","reserve":true},{"sport":"8자 줄넘기","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"00b5fea2a978e63d2baef0cb46a44cc268068e5c7b1d2e4ab71792cf5098cb34":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"248fc13cd843e4e09bcd4023ad3863a00b205de81dc1294c0afd7eee347e0cbb":[{"sport":"축구","reserve":false},{"sport":"8자 줄넘기","reserve":false},{"sport":"배구","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"c4db97e37ba2db51127c5293e4cdf65fe90a40d2871a24a0dcc5c0aabb0017e3":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"f2c720cbdb3e9682789fc5d604cae16a0981f4916988dd34d2f01a9ec0e7c849":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"caab1d5810436816d10d6ce690e47602d3a72d9d5d4c02d751a86724ead2bf25":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"816ca702fce49a176818c2d8ca95bd1c7e7c16a205843eaa081e1c496cb1d716":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"b1f0984380b47d37c9aa9bb5b852369b95728ab6790aa552dbf0a23a9483e426":[{"sport":"축구","reserve":false},{"sport":"배구","reserve":false},{"sport":"이어달리기","reserve":false},{"sport":"릴레이 고리던지기","reserve":true},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"2c124ed84e1f59663a57d59e08285767e883306c8414b26a0275104260ce3103":[{"sport":"축구","reserve":false},{"sport":"8자 줄넘기","reserve":false},{"sport":"이어달리기","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"d6c850d736c581042b4a9432e22ed67f973065faec771c72fe1b087a5ddc5652":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"13b15808d19816ec466b1bebf44ac68276cb0cf655ec9fb4cacbe5cba0de2486":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"972e0167a7f17b5f8e297fd8a485360f7d284e3d00f190beedf79511c2609090":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"8fbf5da764ceb38a7272d95934b8bd3f46b2b916668e79b7cb8c36dc160e6b9f":[{"sport":"축구","reserve":false},{"sport":"배구","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"33646cd009afc37c7aaf924c727ac694fc5a69ea571824b34e078d3a51e86c77":[{"sport":"축구","reserve":false},{"sport":"8자 줄넘기","reserve":false},{"sport":"배구","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"a38679195db7cb0f7bc9c9f4e0b8c5b5264d160fbe4b3c0546c152273b067c60":[{"sport":"축구","reserve":false},{"sport":"8자 줄넘기","reserve":false},{"sport":"배구","reserve":false},{"sport":"이어달리기","reserve":true},{"sport":"릴레이 고리던지기","reserve":true},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"4fe81cb12c926553f378fde94c40b54696509677744ee8d0deece0f13259a0ef":[{"sport":"이어달리기","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"4b4354dd49efa0b35d0fca08ec621253161cca8daf49d2e89774f3960b35a473":[{"sport":"축구","reserve":true},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"2b55513d7567323c426abef6ea4ef3f390e1d099c5a52d594d4a9323144506ba":[{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}],"888b7c43137a51ffdd62f56a5f5349120d3cfb2a14a36bf8887f8bbe61c33c6b":[{"sport":"8자 줄넘기","reserve":false},{"sport":"이어달리기","reserve":false},{"sport":"릴레이 고리던지기","reserve":false},{"sport":"피구","reserve":false},{"sport":"협동 파도타기","reserve":false},{"sport":"줄다리기","reserve":false}]};
 const PLAYER_REGISTERED_CLASSES={"32":true};
 const PLAYER_LOOKUP_READY=true;
+
+
+function playerAssignmentAnnotation(row){
+  if(!row||typeof row!=="object")return "";
+  const raw=String(row.annotation??row.note??"").trim();
+  if(raw)return raw;
+  return row.reserve?"후보":"";
+}
 
 function normalizeStudentName(value){
   return String(value||"").trim().replace(/\s+/g,"");
@@ -5012,20 +5140,35 @@ async function findPlayerAssignments(){
       return;
     }
 
+    const annotatedRows=rows.map(r=>({
+      ...r,
+      _annotation:playerAssignmentAnnotation(r)
+    }));
+    const regularRows=annotatedRows.filter(r=>!r._annotation);
+    const reserveRows=annotatedRows.filter(r=>r._annotation==="후보");
+    const otherMarkedRows=annotatedRows.filter(r=>r._annotation&&r._annotation!=="후보");
+
+    const summary=[
+      `정식 출전 ${regularRows.length}종목`,
+      reserveRows.length?`후보 ${reserveRows.length}종목`:"",
+      otherMarkedRows.length?`별도표기 ${otherMarkedRows.length}종목`:""
+    ].filter(Boolean).join(" · ");
+
     result.innerHTML=`
       <div class="playerSearchHeader">
         <b>👟 ${esc(displayName)} 학생</b>
-        <span>참가 종목 ${rows.length}건</span>
+        <span>${esc(summary)}</span>
       </div>
       <div class="playerAssignmentList">
-        ${rows.map(r=>`
-          <div class="playerAssignmentItem">
-            <div class="playerAssignmentSport">${esc(r.sport||"참가 종목")}</div>
+        ${annotatedRows.map(r=>`
+          <div class="playerAssignmentItem ${r._annotation?"isMarked":""} ${r._annotation==="후보"?"isReserve":""}">
+            <div class="playerAssignmentSport">
+              ${esc(r.sport||"참가 종목")}${r._annotation?`(${esc(r._annotation)})`:""}
+            </div>
             <div class="playerAssignmentDetails">
               ${r.time?`<span>⏰ ${esc(r.time)}</span>`:""}
               ${r.place?`<span>📍 ${esc(r.place)}</span>`:""}
               ${r.opponent?`<span>🆚 ${esc(r.opponent)}</span>`:""}
-              ${r.reserve?`<span>후보</span>`:""}
             </div>
           </div>
         `).join("")}
@@ -5823,6 +5966,7 @@ function initAdmin(){
  aRank.innerHTML='<option value="">순위 선택</option>'+Array.from({length:8},(_,i)=>`<option value="${i+1}">${i+1}위</option>`).join("");
  fillSports();aGrade.onchange=fillSports;
  renderCurrentProgramAdmin();
+ checkMultiAdminAtomicReady();
 }
 
 function fillSports(){aSport.innerHTML=SPORTS_BY_GRADE[aGrade.value].map(s=>`<option>${esc(s)}</option>`).join("")}
@@ -5847,36 +5991,72 @@ function renderCheerAdmin(){
   });
 }
 
+
+function isAtomicRpcMissing(error){
+  const msg=String(error?.message||error?.details||error?.hint||"");
+  return error?.code==="PGRST202"||error?.code==="42883"||
+    /Could not find the function|does not exist|schema cache/i.test(msg);
+}
+
+async function runAtomicRpc(fn,args,label){
+  const {error}=await sb.rpc(fn,args||{});
+  if(error){
+    console.error(`${label||fn} RPC 오류`,error);
+    if(isAtomicRpcMissing(error)){
+      alert("다중 관리자 동시입력 안전 SQL이 아직 설치되지 않았습니다.\nv2.63 SQL 파일을 Supabase SQL Editor에서 먼저 실행해 주세요.");
+    }else{
+      alert(`${label||"데이터"} 저장에 실패했습니다. 서버 상태를 다시 불러옵니다.`);
+    }
+    return false;
+  }
+  return true;
+}
+
+async function checkMultiAdminAtomicReady(){
+  const badge=document.getElementById("multiAdminAtomicStatus");
+  if(!badge)return false;
+
+  badge.className="multiAdminAtomicStatus checking";
+  badge.textContent="확인 중";
+
+  const {data:ready,error}=await sb.rpc("multi_admin_atomic_ready");
+  if(!error&&ready===true){
+    badge.className="multiAdminAtomicStatus ok";
+    badge.textContent="안전모드 ON";
+    return true;
+  }
+
+  badge.className="multiAdminAtomicStatus bad";
+  badge.textContent="SQL 실행 필요";
+  if(error)console.warn("다중 관리자 안전모드 확인",error);
+  return false;
+}
+
 async function adjustCheerScore(key,delta){
   const item=CHEER_ITEMS.find(x=>x.key===key);
   if(!item)return;
-  const g=cheerAdminGrade.value;
-  const c=cheerAdminClass.value;
-  const row=cheerClass(g,c);
-  row[key]=(Number(row[key])||0)+delta;
-  row.updatedAt=new Date().toISOString();
-  data.cheer[g][c]=row;
-  saveLocal();
-  renderCheerAdmin();
 
-  const ok=await saveSiteStateToCloud();
+  const g=Number(cheerAdminGrade.value);
+  const c=Number(cheerAdminClass.value);
+
+  const ok=await runAtomicRpc(
+    "adjust_cheer_score_atomic",
+    {p_grade:g,p_class:c,p_key:key,p_delta:Number(delta)},
+    "응원점수"
+  );
   if(!ok){
     await loadSiteStateFromCloud();
     renderCheerAdmin();
+    return;
   }
+
+  await loadSiteStateFromCloud();
+  renderCheerAdmin();
 }
 
 async function saveSiteStateToCloud(){
- const scorePayload=clone(data.score);
- scorePayload._cheer=clone(data.cheer||DEFAULT.cheer);
- scorePayload._current_program_manual=String(data.currentProgramManual||"").trim();
- const {error}=await sb.from("site_state").update({
-   current_schedule:data.current,
-   scores:scorePayload,
-   updated_at:new Date().toISOString()
- }).eq("id","main");
- if(error){alert("실시간 상태 저장에 실패했습니다.");console.error(error);return false}
- return true;
+  console.warn("v2.63: 전체 site_state JSON 저장은 동시입력 충돌 방지를 위해 사용하지 않습니다.");
+  return false;
 }
 
 async function loadSiteStateFromCloud(){
@@ -5915,13 +6095,13 @@ async function loadSiteStateFromCloud(){
 
 
 async function clearSelectedRankEntry(){
-  const g=aGrade.value;
-  const c=aClass.value;
+  const g=Number(aGrade.value);
+  const c=Number(aClass.value);
   const s=aSport.value;
 
   if(!g||!c||!s)return alert("학년, 반, 종목을 먼저 선택하세요.");
 
-  const current=data.score?.[g]?.[c]?.[s];
+  const current=data.score?.[String(g)]?.[String(c)]?.[s];
   if(!current){
     alert(`${g}학년 ${c}반 · ${s}은(는) 현재 입력된 순위/점수가 없습니다.`);
     return;
@@ -5930,45 +6110,51 @@ async function clearSelectedRankEntry(){
   const rankText=Number(current.rank)?`${Number(current.rank)}위`:"순위";
   const pointText=typeof current.points==="number"?`${current.points}점`:"미배점";
 
-  const ok=confirm(
+  if(!confirm(
     `${g}학년 ${c}반 · ${s} 입력을 초기화할까요?\n\n`+
     `현재 값: ${rankText} · ${pointText}\n`+
     `이 학급의 이 종목 기록만 미입력 상태로 되돌립니다.`
+  ))return;
+
+  const ok=await runAtomicRpc(
+    "clear_score_entry_atomic",
+    {p_grade:g,p_class:c,p_sport:s},
+    "종목 점수 초기화"
   );
-  if(!ok)return;
-
-  if(data.score?.[g]?.[c]){
-    delete data.score[g][c][s];
-  }
-
-  saveLocal();
-
-  const saved=await saveSiteStateToCloud();
-  if(!saved){
-    alert("Supabase 저장 중 오류가 발생했습니다. 서버 상태를 다시 불러옵니다.");
+  if(!ok){
     await loadSiteStateFromCloud();
     return;
   }
 
+  await loadSiteStateFromCloud();
   if(typeof aRank!=="undefined")aRank.value="";
-  if(typeof renderScores==="function")renderScores();
-  if(typeof renderHomeLeaders==="function")renderHomeLeaders();
-  if(typeof renderBrackets==="function")renderBrackets();
-
   alert(`${g}학년 ${c}반 · ${s} 입력을 초기화했습니다.`);
 }
 
 async function applyRank(){
- const g=aGrade.value,c=aClass.value,s=aSport.value,rank=Number(aRank.value);if(!rank)return alert("순위를 선택하세요.");
- const key=sportKey(g,s);
- const lookupRank = rank>=5 ? 5 : rank;
- const p=POINTS[key]?.[lookupRank];
- data.score[g][c][s]={rank,points:typeof p==="number"?p:null};
- saveLocal();
- if(typeof renderBrackets==="function")renderBrackets();
- if(!await saveSiteStateToCloud())await loadSiteStateFromCloud();
-}
+  const g=Number(aGrade.value);
+  const c=Number(aClass.value);
+  const s=aSport.value;
+  const rank=Number(aRank.value);
+  if(!rank)return alert("순위를 선택하세요.");
 
+  const key=sportKey(String(g),s);
+  const lookupRank=rank>=5?5:rank;
+  const p=POINTS[key]?.[lookupRank];
+  const entry={rank,points:typeof p==="number"?p:null};
+
+  const ok=await runAtomicRpc(
+    "save_score_entry_atomic",
+    {p_grade:g,p_class:c,p_sport:s,p_entry:entry},
+    "종목 순위·점수"
+  );
+  if(!ok){
+    await loadSiteStateFromCloud();
+    return;
+  }
+
+  await loadSiteStateFromCloud();
+}
 
 function renderCurrentProgramAdmin(){
   const input=document.getElementById("currentProgramManualInput");
@@ -5997,37 +6183,47 @@ async function saveManualCurrentProgram(){
   const text=input.value.trim();
   if(!text)return alert("CURRENT PROGRAM에 표시할 문구를 입력하세요.");
 
-  data.currentProgramManual=text;
-  saveLocal();
-  renderCurrentProgramAdmin();
-
-  const ok=await saveSiteStateToCloud();
+  const ok=await runAtomicRpc(
+    "set_current_program_manual_atomic",
+    {p_text:text},
+    "CURRENT PROGRAM"
+  );
   if(!ok){
     await loadSiteStateFromCloud();
     return;
   }
 
+  await loadSiteStateFromCloud();
   alert("CURRENT PROGRAM 수동 문구를 저장했습니다.");
 }
 
 async function clearManualCurrentProgram(){
-  data.currentProgramManual="";
-  saveLocal();
-  renderCurrentProgramAdmin();
-
-  const ok=await saveSiteStateToCloud();
+  const ok=await runAtomicRpc(
+    "set_current_program_manual_atomic",
+    {p_text:""},
+    "CURRENT PROGRAM"
+  );
   if(!ok){
     await loadSiteStateFromCloud();
     return;
   }
 
+  await loadSiteStateFromCloud();
   alert("자동 표시 상태로 돌아갔습니다.");
 }
 
 async function setCurrent(){
- data.current=Number(currentSchedule.value);
- saveLocal();
- if(!await saveSiteStateToCloud())await loadSiteStateFromCloud();
+  const schedule=Number(currentSchedule.value);
+  const ok=await runAtomicRpc(
+    "set_current_schedule_atomic",
+    {p_schedule:schedule},
+    "현재 일정"
+  );
+  if(!ok){
+    await loadSiteStateFromCloud();
+    return;
+  }
+  await loadSiteStateFromCloud();
 }
 
 async function addNotice(){
@@ -6050,45 +6246,27 @@ async function resetSelectedScores(){
     both:"경기점수와 응원점수"
   }[type];
 
-  const message=
+  if(!confirm(
     `${gradeLabel}의 ${typeLabel}를 모두 초기화할까요?\n\n`+
-    `이 작업은 점수를 0점 상태로 되돌리며 되돌리기 기능은 없습니다.`;
+    `이 작업은 선택 범위만 서버에서 안전하게 초기화하며 되돌리기 기능은 없습니다.`
+  ))return;
 
-  if(!confirm(message))return;
+  const grades=grade==="all"?[1,2,3]:[Number(grade)];
 
-  const grades=grade==="all"?["1","2","3"]:[grade];
-
-  // 경기점수 초기화
-  if(type==="game"||type==="both"){
-    for(const g of grades){
-      data.score[g]={};
-      for(let c=1;c<=8;c++){
-        data.score[g][c]={};
-      }
+  for(const g of grades){
+    const ok=await runAtomicRpc(
+      "reset_score_group_atomic",
+      {p_grade:g,p_type:type},
+      `${g}학년 ${typeLabel} 초기화`
+    );
+    if(!ok){
+      await loadSiteStateFromCloud();
+      return;
     }
   }
 
-  // 응원점수 초기화
-  if(type==="cheer"||type==="both"){
-    for(const g of grades){
-      data.cheer[g]={};
-      for(let c=1;c<=8;c++){
-        data.cheer[g][c]=emptyCheerClass();
-      }
-    }
-  }
-
-  saveLocal();
-
-  const ok=await saveSiteStateToCloud();
-  if(!ok){
-    alert("Supabase 저장 중 오류가 발생했습니다. 서버 상태를 다시 불러옵니다.");
-    await loadSiteStateFromCloud();
-    return;
-  }
-
+  await loadSiteStateFromCloud();
   if(typeof cheerAdminGrid!=="undefined")renderCheerAdmin();
-
   alert(`${gradeLabel}의 ${typeLabel}가 초기화되었습니다.`);
 }
 
