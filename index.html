@@ -3735,6 +3735,78 @@ body.flagModalOpen{
   to{transform:scale(1);opacity:1}
 }
 
+
+/* ===== v2.82 깃발 투표 공개화면: 순위만 표시 ===== */
+.flagRankOnlyTable{
+  width:100%;
+  max-width:520px;
+  margin:0 auto;
+}
+.flagRankOnlyTable th:first-child,
+.flagRankOnlyTable td:first-child{
+  width:140px;
+  text-align:center;
+}
+.flagRankOnlyTable th:nth-child(2),
+.flagRankOnlyTable td:nth-child(2){
+  text-align:left;
+}
+.flagRankOnlyTable .flagRankBadge{
+  min-width:58px;
+  height:30px;
+  padding:0 9px;
+  white-space:nowrap;
+}
+.flagRankOnlyTable .rank1{background:rgba(255,201,76,.18);border-color:rgba(255,201,76,.36);color:#9b6b00}
+.flagRankOnlyTable .rank2{background:rgba(145,164,184,.15);border-color:rgba(145,164,184,.32);color:#60768a}
+.flagRankOnlyTable .rank3{background:rgba(202,139,83,.13);border-color:rgba(202,139,83,.30);color:#9a6334}
+.flagRankOnlyTable .rank4{background:rgba(47,145,255,.09);border-color:rgba(47,145,255,.22);color:#3177b3}
+.flagRankOnlyTable .rank5{background:rgba(120,139,158,.07);border-color:rgba(120,139,158,.17);color:#718496}
+.flagRankOnlyTable .pending{color:#93a2af}
+.flagRankOnlyTable tr.sharedFifth td{opacity:.84}
+
+
+/* ===== v2.83 공동 5위 한 줄 표시 ===== */
+.flagRankOnlyTable tr.sharedFifthGroup td{
+  opacity:.92;
+}
+.sharedFifthClasses{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  flex-wrap:nowrap;
+  white-space:nowrap;
+  overflow-x:auto;
+  padding:2px 0;
+  scrollbar-width:thin;
+}
+.sharedFifthClass{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+  padding:6px 9px;
+  border-radius:999px;
+  background:rgba(120,139,158,.07);
+  border:1px solid rgba(120,139,158,.16);
+  color:#61788d;
+  font-size:11px;
+  font-weight:900;
+}
+@media(max-width:520px){
+  .flagRankOnlyTable th:first-child,
+  .flagRankOnlyTable td:first-child{
+    width:92px;
+  }
+  .sharedFifthClasses{
+    gap:5px;
+  }
+  .sharedFifthClass{
+    padding:5px 7px;
+    font-size:9px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -4207,11 +4279,11 @@ body.flagModalOpen{
       </div>
 
       <div class="flagVoteRanks">
-        <label class="flagVoteRank"><b>🥇 1위 <small>50점</small></b><select id="flagVote1"></select></label>
-        <label class="flagVoteRank"><b>🥈 2위 <small>40점</small></b><select id="flagVote2"></select></label>
-        <label class="flagVoteRank"><b>🥉 3위 <small>30점</small></b><select id="flagVote3"></select></label>
-        <label class="flagVoteRank"><b>4위 <small>20점</small></b><select id="flagVote4"></select></label>
-        <label class="flagVoteRank"><b>5위 <small>10점</small></b><select id="flagVote5"></select></label>
+        <label class="flagVoteRank"><b>🥇 1위 </b><select id="flagVote1"></select></label>
+        <label class="flagVoteRank"><b>🥈 2위 </b><select id="flagVote2"></select></label>
+        <label class="flagVoteRank"><b>🥉 3위 </b><select id="flagVote3"></select></label>
+        <label class="flagVoteRank"><b>4위 </b><select id="flagVote4"></select></label>
+        <label class="flagVoteRank"><b>5위 </b><select id="flagVote5"></select></label>
       </div>
 
       <div class="voteManageButtons">
@@ -4231,20 +4303,20 @@ body.flagModalOpen{
   <div class="card">
     <div class="titleRow" style="margin-top:0">
       <div>
-        <h3 style="margin:0">🏁 실시간 깃발 투표 점수</h3>
-        <p><b id="flagScoreGradeLabel">1학년</b> 투표 결과</p>
+        <h3 style="margin:0">🏁 실시간 깃발 투표 순위</h3>
+        <p><b id="flagScoreGradeLabel">1학년</b> 현재 순위 · 점수는 공개하지 않습니다.</p>
       </div>
       <span class="status"><span class="dot"></span>LIVE</span>
     </div>
 
     <div class="flagVoteSummary">
       <span class="flagVotePill"><span id="flagBallotGradeLabel">1학년</span> 참여 교사 <strong id="flagBallotCount">0명</strong></span>
-      <span class="flagVotePill">1위 50 · 2위 40 · 3위 30 · 4위 20 · 5위 10</span>
+      <span class="flagVotePill">1~4위 개별 표시 · 공동 5위는 한 줄에 표시</span>
     </div>
 
     <div class="scroll">
-      <table class="flagVoteTable">
-        <thead><tr><th>순위</th><th>학급</th><th>총점</th><th>1위표</th><th>2위표</th><th>3위표</th><th>4위표</th><th>5위표</th></tr></thead>
+      <table class="flagVoteTable flagRankOnlyTable">
+        <thead><tr><th>순위</th><th>학급</th></tr></thead>
         <tbody id="flagVoteScoreBody"></tbody>
       </table>
     </div>
@@ -4574,7 +4646,7 @@ body.flagModalOpen{
   </div>
 </div>
 
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.81</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.83</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -6941,11 +7013,55 @@ document.addEventListener("keydown",e=>{
   }
 });
 
+
+function getPublicFlagRanks(grade){
+  const g=Number(grade);
+  const gradeCount=Number(data.flagBallotCounts?.[String(g)] ?? data.flagBallotCounts?.[g] ?? 0) || 0;
+  const rows=[];
+
+  for(let c=1;c<=8;c++){
+    const key=flagKey(g,c);
+    const s=data.flagVoteScores?.[key]||{};
+    rows.push({
+      key,g,c,
+      score:Number(s.score)||0,
+      first:Number(s.first)||0,
+      second:Number(s.second)||0,
+      third:Number(s.third)||0,
+      fourth:Number(s.fourth)||0,
+      fifth:Number(s.fifth)||0
+    });
+  }
+
+  rows.sort((a,b)=>
+    b.score-a.score ||
+    b.first-a.first ||
+    b.second-a.second ||
+    b.third-a.third ||
+    b.fourth-a.fourth ||
+    b.fifth-a.fifth ||
+    a.c-b.c
+  );
+
+  const ranks={};
+  if(gradeCount<=0){
+    rows.forEach(r=>{ranks[r.key]=null});
+    return {rows,ranks,gradeCount};
+  }
+
+  rows.forEach((r,i)=>{
+    ranks[r.key]=i<4 ? i+1 : 5;
+  });
+
+  return {rows,ranks,gradeCount};
+}
+
 function renderFlags(){
   const grid=document.getElementById("flagGrid");
   if(!grid)return;
 
   const grade=Number(flagViewGrade);
+  const publicRanking=getPublicFlagRanks(grade);
   const cards=[];
 
   for(let cls=1;cls<=8;cls++){
@@ -6966,7 +7082,7 @@ function renderFlags(){
       </div>
       <div class="flagInfo">
         <b>${grade}학년 ${cls}반</b>
-        <span class="flagScoreBadge">🗳️ 교사 투표 ${Number(data.flagVoteScores?.[key]?.score)||0}점</span>
+        <span class="flagScoreBadge">${publicRanking.ranks[key] ? `🏁 현재 ${publicRanking.ranks[key]}위` : "🗳️ 투표 집계 전"}</span>
         ${f?.caption?`<div class="flagCaption">${esc(f.caption)}</div>`:""}
       </div>
     </div>`);
@@ -7019,49 +7135,45 @@ function renderFlagVoteScores(){
   if(!body)return;
 
   const g=Number(flagViewGrade);
-  const gradeCount=Number(data.flagBallotCounts?.[flagViewGrade] ?? data.flagBallotCounts?.[g] ?? 0) || 0;
-  if(count)count.textContent=`${gradeCount}명`;
+  const result=getPublicFlagRanks(g);
 
-  const rows=[];
-  for(let c=1;c<=8;c++){
-    const key=flagKey(g,c);
-    const s=data.flagVoteScores?.[key]||{};
-    rows.push({
-      key,g,c,
-      score:Number(s.score)||0,
-      first:Number(s.first)||0,
-      second:Number(s.second)||0,
-      third:Number(s.third)||0,
-      fourth:Number(s.fourth)||0,
-      fifth:Number(s.fifth)||0
-    });
+  if(count)count.textContent=`${result.gradeCount}명`;
+
+  if(result.gradeCount<=0){
+    body.innerHTML=`
+      <tr>
+        <td><span class="flagRankBadge pending">—</span></td>
+        <td><b>투표 집계 전</b></td>
+      </tr>`;
+    return;
   }
 
-  rows.sort((a,b)=>
-    b.score-a.score ||
-    b.first-a.first ||
-    b.second-a.second ||
-    b.third-a.third ||
-    a.c-b.c
-  );
+  const topFour=result.rows.slice(0,4);
+  const sharedFifth=result.rows.slice(4).slice().sort((a,b)=>a.c-b.c);
 
-  let previousScore=null, previousRank=0;
-  body.innerHTML=rows.map((r,i)=>{
-    const rank=(previousScore===r.score)?previousRank:i+1;
-    previousScore=r.score;
-    previousRank=rank;
+  const topRows=topFour.map((r,i)=>{
+    const rank=i+1;
+    const rankLabel=rank===1?"🥇 1위":
+                    rank===2?"🥈 2위":
+                    rank===3?"🥉 3위":"4위";
 
     return `<tr>
-      <td><span class="flagRankBadge">${rank}</span></td>
+      <td><span class="flagRankBadge rank${rank}">${rankLabel}</span></td>
       <td><b>${r.g}학년 ${r.c}반</b></td>
-      <td><b>${r.score}점</b></td>
-      <td>${r.first}</td>
-      <td>${r.second}</td>
-      <td>${r.third}</td>
-      <td>${r.fourth}</td>
-      <td>${r.fifth}</td>
     </tr>`;
   }).join("");
+
+  const fifthClasses=sharedFifth
+    .map(r=>`<span class="sharedFifthClass">${r.g}학년 ${r.c}반</span>`)
+    .join("");
+
+  const fifthRow=`
+    <tr class="sharedFifthGroup">
+      <td><span class="flagRankBadge rank5">5위</span></td>
+      <td><div class="sharedFifthClasses">${fifthClasses}</div></td>
+    </tr>`;
+
+  body.innerHTML=topRows+fifthRow;
 }
 
 async function loadFlagVoteStateFromCloud(){
