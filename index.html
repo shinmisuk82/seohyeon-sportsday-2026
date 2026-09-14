@@ -3715,6 +3715,26 @@ body.flagModalOpen{
   }
 }
 
+
+/* ===== v2.81 깃발 확대 클릭 이벤트 수정 ===== */
+.flagImageModal.open{
+  display:flex!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+.flagImageModal:not(.open){
+  visibility:hidden;
+  opacity:0;
+  pointer-events:none;
+}
+.flagImageModal.open .flagImageModalDialog{
+  animation:flagZoomIn .16s ease-out;
+}
+@keyframes flagZoomIn{
+  from{transform:scale(.96);opacity:.2}
+  to{transform:scale(1);opacity:1}
+}
+
 </style>
 </head>
 <body>
@@ -3825,49 +3845,6 @@ body.flagModalOpen{
         <b id="homeNextSchedule3Title">다음 경기일</b>
       </div>
       <div id="homeNextSchedule3List" class="homeFutureScheduleList"></div>
-    </div>
-  </div>
-</div>
-
-<div class="card submissionCard" style="margin-top:15px">
-  <div class="titleRow submissionTitleRow">
-    <div>
-      <h2>📌 스포츠 한마당 제출 일정</h2>
-      <p>제출 기한을 꼭 확인해 주세요.</p>
-    </div>
-  </div>
-  <div class="submissionGrid">
-    <div class="submissionItem urgent">
-      <div class="submissionIcon">👥</div>
-      <div class="submissionContent">
-        <b>선수명단</b>
-        <strong>8월 28일(금) 점심시간까지</strong>
-        <span>3학년 → 신○숙 / 2학년 → 김○성 / 1학년 → 김○미 선생님에게 제출</span>
-      </div>
-    </div>
-    <div class="submissionItem">
-      <div class="submissionIcon">🚩</div>
-      <div class="submissionContent">
-        <b>학급별 깃발</b>
-        <strong>9월 14일(월) 종례시간까지</strong>
-        <span>학급별 완성 깃발 제출</span>
-      </div>
-    </div>
-    <div class="submissionItem">
-      <div class="submissionIcon">🎵</div>
-      <div class="submissionContent">
-        <b>입장식 노래</b>
-        <strong>9월 14일(월) 점심시간까지</strong>
-        <span>3학년에 한함</span>
-      </div>
-    </div>
-    <div class="submissionItem">
-      <div class="submissionIcon">💃</div>
-      <div class="submissionContent">
-        <b>치어리딩 · 댄스부 음원</b>
-        <strong>9월 14일(월) 점심시간까지</strong>
-        <span>공연용 최종 음원 제출</span>
-      </div>
     </div>
   </div>
 </div>
@@ -4597,7 +4574,7 @@ body.flagModalOpen{
   </div>
 </div>
 
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.79</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.81</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -6881,6 +6858,37 @@ function setFlagViewGrade(g){
 
 let flagImageModalLastFocus=null;
 
+
+function bindFlagZoomables(root=document){
+  const scope=root&&typeof root.querySelectorAll==="function"?root:document;
+
+  scope.querySelectorAll(".flagZoomable").forEach(img=>{
+    if(img.dataset.zoomBound==="1")return;
+    img.dataset.zoomBound="1";
+
+    const open=()=>{
+      const title=img.dataset.flagTitle||img.alt||"학급 깃발";
+      const key=img.dataset.flagKey||"";
+      const caption=key ? (data.flags?.[key]?.caption||"") : "";
+      openFlagImageModal(title,img.currentSrc||img.src,caption);
+    };
+
+    img.addEventListener("click",e=>{
+      e.preventDefault();
+      e.stopPropagation();
+      open();
+    });
+
+    img.addEventListener("keydown",e=>{
+      if(e.key==="Enter"||e.key===" "){
+        e.preventDefault();
+        e.stopPropagation();
+        open();
+      }
+    });
+  });
+}
+
 function openFlagImageModal(title,imageUrl,caption){
   const modal=document.getElementById("flagImageModal");
   const img=document.getElementById("flagImageModalImg");
@@ -6952,8 +6960,8 @@ function renderFlags(){
                role="button"
                tabindex="0"
                title="클릭하면 크게 볼 수 있습니다"
-               onclick="openFlagImageModal('${grade}학년 ${cls}반',this.src,${JSON.stringify(f.caption||"")})"
-               onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openFlagImageModal('${grade}학년 ${cls}반',this.src,${JSON.stringify(f.caption||"")})}">`
+               data-flag-title="${grade}학년 ${cls}반"
+               data-flag-key="${key}">`
           : `<div class="flagPlaceholder"><span class="icon">🚩</span>${grade}학년 ${cls}반<br>깃발 이미지 준비 중</div>`}
       </div>
       <div class="flagInfo">
@@ -6965,6 +6973,7 @@ function renderFlags(){
   }
 
   grid.innerHTML=cards.join("");
+  bindFlagZoomables(grid);
 }
 
 function populateFlagVoteOptions(clearValues=false){
@@ -7164,10 +7173,16 @@ function refreshFlagAdminPreview(){
  if(typeof flagGrade==="undefined") return;
  const f=data.flags?.[flagKey(flagGrade.value,flagClass.value)];
  flagAdminPreview.innerHTML=f?.image
-   ? `<img src="${f.image}" alt="깃발 미리보기" class="flagZoomable" title="클릭하면 크게 볼 수 있습니다"
-        onclick="openFlagImageModal('${flagGrade.value}학년 ${flagClass.value}반',this.src,${JSON.stringify(f.caption||"")})">`
+   ? `<img src="${f.image}" alt="깃발 미리보기"
+        class="flagZoomable"
+        role="button"
+        tabindex="0"
+        title="클릭하면 크게 볼 수 있습니다"
+        data-flag-title="${flagGrade.value}학년 ${flagClass.value}반"
+        data-flag-key="${flagKey(flagGrade.value,flagClass.value)}">`
    : '<span class="muted">이미지 미리보기</span>';
  flagCaptionInput.value=f?.caption||"";
+ bindFlagZoomables(flagAdminPreview);
 }
 
 if(typeof flagFile!=="undefined"){
@@ -7176,9 +7191,13 @@ if(typeof flagFile!=="undefined"){
    if(!file){refreshFlagAdminPreview();return}
    const reader=new FileReader();
    reader.onload=()=>{
-     flagAdminPreview.innerHTML=`<img src="${reader.result}" alt="깃발 미리보기" class="flagZoomable"
+     flagAdminPreview.innerHTML=`<img src="${reader.result}" alt="깃발 미리보기"
+       class="flagZoomable"
+       role="button"
+       tabindex="0"
        title="클릭하면 크게 볼 수 있습니다"
-       onclick="openFlagImageModal('${flagGrade.value}학년 ${flagClass.value}반',this.src,'')">`
+       data-flag-title="${flagGrade.value}학년 ${flagClass.value}반">`;
+     bindFlagZoomables(flagAdminPreview);
    };
    reader.readAsDataURL(file);
  });
