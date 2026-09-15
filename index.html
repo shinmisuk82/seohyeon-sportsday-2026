@@ -3870,6 +3870,31 @@ body.flagModalOpen{
   }
 }
 
+
+/* ===== v2.86 학급별 포토그래퍼 ===== */
+.photographerGradeTabs{margin-bottom:12px}
+.photographerGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.photographerCard{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035);padding:14px}
+.photographerClass{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}
+.photographerClass b{font-size:16px}
+.photographerBadge{display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border-radius:999px;background:rgba(47,145,255,.08);border:1px solid rgba(47,145,255,.18);color:var(--cyan);font-size:10px;font-weight:900}
+.photographerNames{display:grid;gap:7px}
+.photographerName{display:flex;align-items:center;gap:7px;padding:8px 9px;border-radius:11px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.05);font-size:13px;font-weight:850}
+.photographerName:before{content:"📷";font-size:14px}
+.photographerEmpty{padding:14px 8px;text-align:center;color:var(--muted);font-size:12px;border:1px dashed var(--line);border-radius:11px}
+.photographerNotice p{margin:6px 0 0;color:var(--muted);font-size:12px;line-height:1.65}
+@media(max-width:850px){.photographerGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:480px){.photographerGrid{grid-template-columns:1fr}}
+
+
+.photographerWarning{
+  display:block;
+  margin-top:8px;
+  color:#b64545;
+  font-weight:950;
+  line-height:1.6;
+}
+
 </style>
 </head>
 <body>
@@ -3887,6 +3912,7 @@ body.flagModalOpen{
 <button data-tab="bracket">🧩 대진·기록</button>
 <button data-tab="classSchedule">🏫 우리반 경기일정</button>
 <button data-tab="players">👥 출전선수</button>
+<button data-tab="photographers">📸 학급 포토그래퍼</button>
 <button data-tab="flags">🚩 학급 깃발</button>
 <button data-tab="staff">🦺 운영·심판</button>
 <button data-tab="songs">🎵 노래 신청</button>
@@ -4296,6 +4322,24 @@ body.flagModalOpen{
 </div>
 </section>
 
+
+
+<section id="photographers">
+<div class="titleRow"><div><h2>📸 학급별 포토그래퍼</h2><p>체육 한마당의 순간을 기록하는 학급별 포토그래퍼 명단입니다.</p></div></div>
+<div class="gradeTabs photographerGradeTabs" id="photographerGradeTabs">
+  <button class="active" data-grade="1">1학년</button>
+  <button data-grade="2">2학년</button>
+  <button data-grade="3">3학년</button>
+</div>
+<div class="photographerGrid" id="photographerGrid"></div>
+<div class="card photographerNotice" style="margin-top:12px">
+  <b>📷 촬영 안내</b>
+  <p>
+    학급 포토그래퍼는 경기와 응원 모습을 기록하는 학급 대표 촬영 담당입니다. 이름은 개인정보 보호를 위해 가운데 글자를 가려 표시합니다.<br>
+    <strong class="photographerWarning">지정된 포토그래퍼 외에는 스마트폰 소지를 금지합니다. 적발 시 응원점수 감점 및 개인 벌점을 부여합니다.</strong>
+  </p>
+</div>
+</section>
 
 <section id="flags">
 <div class="titleRow">
@@ -4710,7 +4754,7 @@ body.flagModalOpen{
   </div>
 </div>
 
-<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.85</footer>
+<footer class="footer wrap">2026. 서현중학교 스포츠한마당 · 실시간 스포츠한마당 운영판 · v2.88</footer>
 
 <script>
 const SCHEDULE = [["08:30~08:50", "경기장 정렬", "1~3학년", "운동장", ""], ["08:50~09:20", "개회식 · 준비운동", "1~3학년", "운동장", ""], ["09:20~09:40", "입장식", "3학년", "3학년 운동장 / 1·2학년 스탠드", "교문방향 1학년 · 산방향 2학년"], ["09:40~10:00", "협동 파도타기", "전학년 전학급", "운동장", "3→2→1 순서"], ["10:00~10:20", "8자 줄넘기", "전학년 전학급", "운동장", "2→1→3 순서"], ["10:20~10:50", "1학년 축구 결승 · 2학년 피구 결승", "1·2학년", "축구 운동장 / 피구 강당", "준결승까지 사전경기"], ["10:50~11:20", "1학년 피구 결승 · 2학년 축구 결승", "1·2학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:20~12:00", "3학년 축구 결승 · 3학년 피구 결승", "3학년", "운동장 · 강당", "준결승까지 사전경기"], ["11:30~13:00", "점심 식사", "1→2→3", "교내", "학년별 순차"], ["13:00~13:20", "공연(치어리딩)", "치어리딩 동아리", "운동장", ""], ["13:20~13:50", "릴레이 고리던지기", "전학년 전학급", "운동장", "1→3→2 순서"], ["13:50~14:30", "줄다리기 준결승·결승", "전학년", "운동장", "사전경기로 5~8위 결정"], ["14:30~14:50", "이어달리기 결승", "전학년", "운동장", "1→2→3 순서"], ["14:50~15:10", "정렬 · 공연(댄스)", "댄스 동아리", "운동장", ""], ["15:10~15:20", "성적 발표 · 시상", "전교생", "운동장", ""], ["15:20~16:10", "폐회식 · 봉사활동", "전교생", "운동장", ""]];
@@ -4804,6 +4848,7 @@ const DEFAULT = {
  songs:[],
  cheer:{}
 };
+const CLASS_PHOTOGRAPHERS={"1":{"1":["임○선","박○현"],"2":["박○인","이○율"],"3":["곽○율","안○린"],"4":["노○률","임○연"],"5":["김○규","김○아"],"6":["김○나","최○서"],"7":["강○아","이○현"],"8":["김○선","김○아"]},"2":{"1":["박○수","이○윤"],"2":["김○아","김○진"],"3":["김○은","김○영"],"4":[],"5":["전○준","목○균"],"6":["이○언","하○주"],"7":["최○윤","박○늘"],"8":["조○성","최○준"]},"3":{"1":["이○경","신○윤"],"2":["김○영","김○음"],"3":["박○진","안○원"],"4":["강○채","소○정"],"5":["김○린","최○서"],"6":["최○지","이○윤"],"7":["김○연","민○미"],"8":["김○음","박○정"]}};
 const CHEER_ITEMS=[
   {key:"flag",label:"깃발제작"},
   {key:"cheering",label:"응원"},
@@ -7163,6 +7208,62 @@ function getPublicFlagRanks(grade){
   return {rows,ranks,gradeCount};
 }
 
+
+let photographerViewGrade="1";
+
+function maskPhotographerName(name){
+  const s=String(name||"").trim();
+  if(!s)return "";
+  if(s.length===1)return s;
+  if(s.length===2)return `${s[0]}○`;
+  return `${s[0]}○${s.slice(2)}`;
+}
+
+function setPhotographerGrade(g){
+  const grade=String(g||"");
+  if(!["1","2","3"].includes(grade))return;
+  photographerViewGrade=grade;
+  const tabs=document.getElementById("photographerGradeTabs");
+  if(tabs){
+    tabs.querySelectorAll("button[data-grade]").forEach(btn=>{
+      btn.classList.toggle("active",btn.dataset.grade===grade);
+    });
+  }
+  renderPhotographers();
+}
+
+function renderPhotographers(){
+  const grid=document.getElementById("photographerGrid");
+  if(!grid)return;
+  const g=photographerViewGrade;
+  const rows=CLASS_PHOTOGRAPHERS?.[g]||{};
+  const cards=[];
+  for(let c=1;c<=8;c++){
+    const names=Array.isArray(rows[String(c)])?rows[String(c)]:[];
+    cards.push(`<div class="photographerCard">
+      <div class="photographerClass">
+        <b>${g}학년 ${c}반</b>
+        <span class="photographerBadge">📸 ${names.length}명</span>
+      </div>
+      <div class="photographerNames">
+        ${names.length
+          ? names.map(name=>`<div class="photographerName">${esc(maskPhotographerName(name))}</div>`).join("")
+          : '<div class="photographerEmpty">포토그래퍼 미등록</div>'}
+      </div>
+    </div>`);
+  }
+  grid.innerHTML=cards.join("");
+}
+
+function initPhotographerTabs(){
+  const tabs=document.getElementById("photographerGradeTabs");
+  if(!tabs||tabs.dataset.ready==="1")return;
+  tabs.dataset.ready="1";
+  tabs.querySelectorAll("button[data-grade]").forEach(btn=>{
+    btn.addEventListener("click",()=>setPhotographerGrade(btn.dataset.grade));
+  });
+}
+
 function renderFlags(){
   const grid=document.getElementById("flagGrid");
   if(!grid)return;
@@ -8153,7 +8254,9 @@ function subscribeRealtime(){
  cloudChannels=[songsCh,noticesCh,stateCh,flagsCh,flagVoteCh,entranceVoteCh,bracketCh];
 }
 
-function renderAll(){renderDDay();renderSportsDayWeather();renderSchedule();renderHomeLeaders();renderHomeMatchSchedule();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderClassMatchSchedule();renderEntranceVoteScores();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();renderBracketAdmin();renderCurrentProgramAdmin();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
+function renderAll(){
+  initPhotographerTabs();
+  renderPhotographers();renderDDay();renderSportsDayWeather();renderSchedule();renderHomeLeaders();renderHomeMatchSchedule();renderScores();renderCheerScores();renderPoints();renderRules();renderBrackets();renderClassMatchSchedule();renderEntranceVoteScores();renderPlayers();renderFlags();renderFlagVoteScores();renderSongs();renderStaff();renderNotices();renderBracketAdmin();renderCurrentProgramAdmin();if(typeof cheerAdminGrid!=="undefined"&&cheerAdminGrid&&cheerAdminGrid.childElementCount)renderCheerAdmin()}
 initPlayerFinder();
 initJudgeFinder();
 initSongApplicantFields();
